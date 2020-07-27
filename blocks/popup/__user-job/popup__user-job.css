@@ -1,0 +1,13 @@
+.popup__user-job {
+  box-sizing: border-box;
+  color: #000;
+  max-width: 358px;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 48px;
+  border: 0;
+  border-bottom: 1px solid rgba( 0, 0, 0, .2);
+  padding-left: 0;
+  padding-top: 0;
+  padding-right: 0;
+}

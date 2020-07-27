@@ -1,0 +1,11 @@
+.profile {
+  max-width: 882px;
+  width: 100%;
+  min-width: 282px;
+}
+
+@media screen and (max-width: 320px) {
+  .profile {
+   width: 88.12%;
+  }
+}

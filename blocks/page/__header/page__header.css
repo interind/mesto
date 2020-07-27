@@ -1,0 +1,11 @@
+.page__header {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: row;
+  -webkit-box-align: flex-start;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  border-bottom: 1px solid rgba( 84, 84, 84, .7);
+  margin: 0 auto 40px;
+  background-color: #000;
+}

@@ -1,0 +1,9 @@
+.popup__input-job {
+  border: 0;
+  width: 100%;
+  font-size: inherit;
+}
+
+.popup__input-job:focus {
+  outline: none;
+}

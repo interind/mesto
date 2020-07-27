@@ -1,0 +1,11 @@
+.page__footer {
+  margin: 0;
+  background-color: #000;
+}
+
+@media screen and (max-width: 320px) {
+  .page__footer {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

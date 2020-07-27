@@ -1,0 +1,25 @@
+.popup__container {
+ box-sizing: border-box;
+ position: relative;
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-start;
+ align-items: center;
+ max-width: 430px;
+ width: 100%;
+ height: 330px;
+ background-color:#fff;
+ padding: 34px 36px 36.51px;
+ font-family: Inter;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 1.2;
+}
+
+@media screen and (max-width: 320px) {
+  .popup__container {
+    width: 80%;
+    padding: 16px 18px 18px;
+  }
+}

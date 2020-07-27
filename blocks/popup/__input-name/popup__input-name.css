@@ -1,0 +1,9 @@
+.popup__input-name {
+  border: 0;
+  width: 100%;
+  font-size: inherit;
+}
+
+.popup__input-name:focus {
+  outline: none;
+}

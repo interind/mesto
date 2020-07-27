@@ -1,0 +1,15 @@
+.page__elements {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 282px);
+  grid-template-rows: repeat(auto-fit, 362px);
+  justify-content: center;
+  grid-gap: 18px;
+  margin: 0 auto 66px;
+  background-color: #000;
+}
+ 
+@media screen and (max-width: 320px) {
+  .page__elements {
+    margin-bottom: 48px;
+  }
+}
