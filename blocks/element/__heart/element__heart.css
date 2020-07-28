@@ -1,6 +1,7 @@
 .element__heart {
   width: 21px;
   height: 19px;
+  padding: 0;
   pointer-events: fill;
 }
 
