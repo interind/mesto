@@ -18,7 +18,7 @@ function formSubmitHandler(evt) {
 			profileSubtitle.textContent = jobInput.value;
 		}
 		else if(nameInput.value != "" || jobInput.value != ""){
-			alert('Для сохрание нужно заполнить все ваши данные');
+			alert('Для сохрания нужно заполнить все ваши данные');
 		}
 		else {
 		};
