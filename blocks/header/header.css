@@ -3,10 +3,3 @@
   height: 74px;
   width: 100%;
 }
-
-@media screen and (max-width: 320px) {
-  .header {
-    max-width: 320px;
-    width: 100%;
-  }
-}
