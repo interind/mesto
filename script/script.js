@@ -2,7 +2,7 @@ let popup = document.querySelector('.popup');
 let popupForm = document.querySelector('.popup__container');//форма
 let profileSection = document.querySelector('.profile');
 let profileInfo = profileSection.querySelector('.profile-info');
-let buttonOpenPopup = document.querySelector('.edit-button');//кнопка открытия формы
+let buttonOpenPopup = document.querySelector('.profile__edit-button');//кнопка открытия формы
 let buttonClosePopup = document.querySelector('.popup__button-close');//кнопка закрытия формы
 let buttonSubmit = popupForm.querySelector('.popup__button-submit');//кнопка отправки данных
 let profileTitle = document.querySelector('.profile__title');
@@ -11,6 +11,7 @@ let jobInput = popupForm.querySelector('.popup__input-job');
 let profileSubtitle = document.querySelector('.profile__subtitle');
 
 function formSubmitHandler(evt) {
+	 evt.preventDefault();
 		if (nameInput.value != "" && jobInput.value != ""){
 			nameInput.value;
    profileTitle.textContent = nameInput.value;
@@ -22,7 +23,6 @@ function formSubmitHandler(evt) {
 		}
 		else {
 		};
-		evt.preventDefault();
 		popup.classList.remove('popup_opened');
 }
 

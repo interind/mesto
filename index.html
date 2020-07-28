@@ -5,119 +5,111 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1 maximum-scale=1">
   <meta name="description" content="пороектная работа №4 Александра Банных на Яндекс.Практикуме">
   <meta name="author" content="Александр Банных">
-  <link rel="stylesheet" href="./pages/index.css" type="text/css">
+  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto Russia</title>
 </head>
 <body class="body">
   <div class="page">
-    <div class="page__content">
-      <header class="header page__header">
-        <img class="logo header__logo" src="./images/header/logo-fon.svg" alt="Логотип">
-      </header>
-      <section class="profile page__profile">
-        <form class="avatar" name="form-avatar">
-          <input class="avatar__image" type="image" src="./images/profile/avatar/image_.jpg" alt="Аватарка">
-        </form>
-        <div class="profile__info">
-          <h1 class="profile__title">
-            Александр
-          </h1>
-          <input class="edit-button" type="image" src="./images/profile/plofile_info/Edit_Button.svg" alt="Редактировать">
-          <p class="profile__subtitle">
-            студент
-          </p>
-        </div>
-        <button class="add-button"></button>
-      </section>
-      <section class="popup">
-        <form class="popup__container">
-          <h2 class="popup__title">
-            Редактировать форму
-          </h2>
-          <fieldset class="popup__user-name">
-            <input class="popup__input-name" type="text" placeholder="Александр">
-          </fieldset>
-          <fieldset class="popup__user-job">
-            <input class="popup__input-job" type="text" placeholder="студент">
-          </fieldset>
-          <button class="popup__button-submit" type="submit">Сохранить</button>
-          <input class="popup__button-close" type="image" src="images/Close-Icon.svg" alt="Закрыть">
-        </form>
-      </section>
-      <section class="elements page__elements">
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/tambov__road.jpg" alt="Дорога на Тамбов">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span  class="element__title">
-                Трасса Тамбов
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/krym.jpg" alt="Крым">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span class="element__title">
-                Крым
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/sochi.jpg" alt="Сочи">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span class="element__title">
-                Сочи
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/piter.jpg" alt="Санкт-Петербург">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span class="element__title">
-                Санкт-Петербург
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/eburg.jpg" alt="Екатеринбург">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span class="element__title">
-                Екатеринбург
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-        <form class="element">
-          <input type="image" class="element__pic" src="./images/elements/moscow.jpg" alt="Москва">
-          <fieldset class="element__info">
-            <label class="element__list">
-              <span class="element__title">
-                Москва
-              </span>
-              <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
-            </label>
-          </fieldset>
-        </form>
-      </section>
-      <footer class="footer page__footer">
-        <p class="footer__copyright">
-          &copy;2020 Mesto Russia
+    <header class="header page__header">
+      <img class="logo header__logo" src="./images/header/logo-fon.svg" alt="Логотип">
+    </header>
+    <section class="profile page__profile">
+      <img class="profile__avatar" src="./images/profile/avatar/image_.jpg" alt="Аватарка">
+      <div class="profile__info">
+        <h1 class="profile__title">
+          Александр
+        </h1>
+        <button class="profile__edit-button"></button>
+        <p class="profile__subtitle">
+          студент
         </p>
-      </footer>
-    </div>
+      </div>
+      <button class="profile__add-button"></button>
+    </section>
+    <section class="popup popup_opened">
+      <form class="popup__container" name="popup">
+        <h2 class="popup__title">
+          Редактировать форму
+        </h2>
+        <input class="popup__input-name" type="text" placeholder="Александр">
+        <input class="popup__input-job" type="text" placeholder="студент">
+        <button class="popup__button-submit" type="submit">Сохранить</button>
+        <button class="popup__button-close"></button>
+      </form>
+    </section>
+    <section class="elements page__elements">
+      <form class="element">
+        <img class="element__pic" src="./images/elements/tambov__road.jpg" alt="Дорога на Тамбов">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span  class="element__title">
+              Трасса Тамбов
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+      </form>
+      <form class="element">
+        <input type="image" class="element__pic" src="./images/elements/krym.jpg" alt="Крым">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span class="element__title">
+              Крым
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+      </form>
+      <form class="element">
+        <input type="image" class="element__pic" src="./images/elements/sochi.jpg" alt="Сочи">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span class="element__title">
+              Сочи
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+      </form>
+      <form class="element">
+        <input type="image" class="element__pic" src="./images/elements/piter.jpg" alt="Санкт-Петербург">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span class="element__title">
+              Санкт-Петербург
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+        </form>
+        <form class="element">
+        <input type="image" class="element__pic" src="./images/elements/eburg.jpg" alt="Екатеринбург">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span class="element__title">
+              Екатеринбург
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+      </form>
+      <form class="element">
+        <input type="image" class="element__pic" src="./images/elements/moscow.jpg" alt="Москва">
+        <fieldset class="element__info">
+          <label class="element__list">
+            <span class="element__title">
+                Москва
+            </span>
+            <input class="element__heart" type="image" src="images/elements/Group.svg" alt="Сердце">
+          </label>
+        </fieldset>
+      </form>
+    </section>
+    <footer class="footer page__footer">
+      <p class="footer__copyright">
+        &copy;2020 Mesto Russia
+      </p>
+    </footer>
   </div>
   <script src="script/script.js"></script>
 </body>

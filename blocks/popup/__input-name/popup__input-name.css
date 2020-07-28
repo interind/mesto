@@ -1,9 +1,13 @@
 .popup__input-name {
   border: 0;
+  max-width: 358px;
   width: 100%;
   font-family: inherit;
   font-size: inherit;
   padding: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba( 0, 0, 0, .2);
+  margin-bottom: 29px;
 }
 
 .popup__input-name:focus {
