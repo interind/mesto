@@ -13,6 +13,7 @@ text-align: center;
 background-color: #000;
 color: #FFFFFF;
 border-radius: 2px;
+border-color: #000;
 }
 
 .popup__button-submit:hover {

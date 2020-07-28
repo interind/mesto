@@ -2,6 +2,8 @@
   border: 0;
   width: 100%;
   font-size: inherit;
+  font-family: inherit;
+  padding: 0;
 }
 
 .popup__input-job:focus {

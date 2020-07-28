@@ -1,7 +1,9 @@
 .popup__input-name {
   border: 0;
   width: 100%;
+  font-family: inherit;
   font-size: inherit;
+  padding: 0;
 }
 
 .popup__input-name:focus {
