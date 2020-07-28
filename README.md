@@ -1,13 +1,25 @@
 # Проект 4: Место
 
-### Обзор
+## Описание работы
+**Структура**
 
-* Figma
-* Картинки
+* header
+* profile
+* avatar
+* popup
+* elements
+* footer
 
-**Figma**
+**В проекте применены**
+* javascript
+* блоки с формами
+* кнопки редактирования и отправки
+* открывающийся блок popup
+* шрифт Inter
+* все интерактивные элементы с функцией прозрачности при наведение
+* адавптивность страницы под разные разрешения экрана от 300px до 1280px
+* 
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
 
 **Картинки**
 
@@ -15,3 +27,4 @@
 Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
 
 Удачи!
+* [Ссылка на макет в Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
