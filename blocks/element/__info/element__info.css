@@ -11,5 +11,12 @@
   margin: 0;
   border: 0;
   list-style-type: none;
-  padding-left: 0;
+  padding-left: 21px;
+  padding-right: 7px;
+}
+
+@media screen and (max-width: 320px) {
+  .element__info {
+    padding-right: 15px;
+  }
 }

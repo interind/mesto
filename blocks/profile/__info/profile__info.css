@@ -10,13 +10,8 @@
   font-family: inherit;
 }
 
-@media screen and (max-width: 720px) {
-  .profile__info {
-    margin-left: 15px;
-  }
-}
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 750px) {
   .profile__info {
     justify-content: center;
     margin-left: 0;

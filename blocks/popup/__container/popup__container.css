@@ -1,19 +1,19 @@
 .popup__container {
- box-sizing: border-box;
- position: relative;
- display: flex;
- flex-direction: column;
- justify-content: flex-start;
- align-items: center;
- max-width: 430px;
- width: 100%;
- background-color:#fff;
- padding: 34px 36px 36.51px;
- font-family: 'Inter', Arial, sans-serif;
-font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 1.2;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 430px;
+  width: 100%;
+  background-color:#fff;
+  padding: 34px 36px 36.51px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 @media screen and (max-width: 520px) {

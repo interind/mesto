@@ -1,7 +1,25 @@
 .profile {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #000;
+  font-family: 'Inter', Arial, sans-serif;
   max-width: 882px;
   width: 100%;
   min-width: 282px;
+}
+
+@media screen and (max-width: 910px) {
+  .profile {
+    width: 68.9vw;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 320px) {

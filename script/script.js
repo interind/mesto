@@ -6,39 +6,41 @@ let buttonOpenPopup = document.querySelector('.profile__edit-button');//кноп
 let buttonClosePopup = document.querySelector('.popup__button-close');//кнопка закрытия формы
 let buttonSubmit = popupForm.querySelector('.popup__button-submit');//кнопка отправки данных
 let profileTitle = document.querySelector('.profile__title');
-let nameInput = popupForm.querySelector('.popup__input-name');
-let jobInput = popupForm.querySelector('.popup__input-job');
+let popupInput = popupForm.querySelector('.popup__input');
+let nameInput = popupForm.querySelector('.popup__input_name');
+let jobInput = popupForm.querySelector('.popup__input_job');
 let profileSubtitle = document.querySelector('.profile__subtitle');
-
-function formSubmitHandler(evt) {
-	 evt.preventDefault();
-		if (nameInput.value != "" && jobInput.value != ""){
-			nameInput.value;
-   profileTitle.textContent = nameInput.value;
-   jobInput.value;
-			profileSubtitle.textContent = jobInput.value;
-		}
-		else if(nameInput.value != "" || jobInput.value != ""){
-			alert('Для сохрания нужно заполнить все ваши данные');
-		}
-		else {
-		};
-		popup.classList.remove('popup_opened');
-}
-
-function openPopup() {
-	popup.classList.add('popup_opened');
-	nameInput.focus();
-}
 
 function closePopup() {
 	popup.classList.remove('popup_opened');
 }
 
-buttonOpenPopup.addEventListener('click' , openPopup);
-
 buttonClosePopup.addEventListener('click' , closePopup);
 
-popupForm.addEventListener('submit', formSubmitHandler);
+function formSubmitHandler(evt) {
+	 evt.preventDefault(evt);
+		if (!nameInput.value || !jobInput.value){
+			alert('Для сохрания нужно заполнить все ваши данные');
+			return
+		}
+		else if (nameInput.value && jobInput.value){
+		profileTitle.textContent = nameInput.value;
+		profileSubtitle.textContent = jobInput.value;
+		closePopup();
+		}
+		else {
+			profileTitle.textContent != nameInput.value;
+			profileSubtitle.textContent != jobInput.value;
+		}
+}
+
+function openPopup() {
+	popup.classList.add('popup_opened');
+	nameInput.value = profileTitle.textContent;
+	jobInput.value = profileSubtitle.textContent;
+	nameInput.focus();
+}
 
 buttonSubmit.addEventListener('click', formSubmitHandler);
+
+buttonOpenPopup.addEventListener('click' , openPopup);

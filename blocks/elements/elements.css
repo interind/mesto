@@ -1,9 +1,23 @@
 .elements {
   max-width: 882px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 282px);
+  grid-template-rows: repeat(auto-fit, 362px);
+  justify-content: center;
+  gap: 18px;
+  background-color: #000;
+}
+
+@media screen and (max-width: 910px) {
+  .elements {
+    width: 68.9vw;
+  }
 }
 
 @media screen and (max-width: 320px) {
   .elements {
     max-width: 282px;
+    width: 100%;
+    gap: 20px;
   }
 }
