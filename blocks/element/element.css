@@ -6,13 +6,3 @@
   border-radius: 10px;
   overflow: hidden;
 }
-/*
-@media screen and (max-width: 320px) {
-  .page__element {
-    margin: 0 auto 20px;
-  }
-
-  .element:last-of-type {
-    margin-bottom: 0;
-  }
-}*/
