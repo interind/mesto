@@ -23,15 +23,9 @@ function formSubmitHandler(evt) {
 			alert('Для сохрания нужно заполнить все ваши данные');
 			return
 		}
-		else if (nameInput.value && jobInput.value){
 		profileTitle.textContent = nameInput.value;
 		profileSubtitle.textContent = jobInput.value;
 		closePopup();
-		}
-		else {
-			profileTitle.textContent != nameInput.value;
-			profileSubtitle.textContent != jobInput.value;
-		}
 }
 
 function openPopup() {
@@ -41,6 +35,6 @@ function openPopup() {
 	nameInput.focus();
 }
 
-buttonSubmit.addEventListener('click', formSubmitHandler);
+popupForm.addEventListener('submit', formSubmitHandler);
 
 buttonOpenPopup.addEventListener('click' , openPopup);
