@@ -1,5 +1,5 @@
 # Проект 4: Место
-[ссылка на мою страницу](https://interind.github.io/mesto/) автор: Банных А.С.
+[ссылка на мою страницу](https://interind.github.io/mesto/index.html) автор: Банных А.С.
 
 ## Описание работы
 
