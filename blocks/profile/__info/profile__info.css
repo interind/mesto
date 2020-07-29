@@ -1,6 +1,6 @@
 .profile__info {
   box-sizing: border-box;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   flex-wrap: wrap;
   max-width: 336px;
