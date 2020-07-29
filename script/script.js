@@ -7,8 +7,8 @@ let buttonClosePopup = document.querySelector('.popup__button-close');//кноп
 let buttonSubmit = popupForm.querySelector('.popup__button-submit');//кнопка отправки данных
 let profileTitle = document.querySelector('.profile__title');
 let popupInput = popupForm.querySelector('.popup__input');
-let nameInput = popupForm.querySelector('.popup__input_name');
-let jobInput = popupForm.querySelector('.popup__input_job');
+let nameInput = popupForm.querySelector('.popup__input_type_name');
+let jobInput = popupForm.querySelector('.popup__input_type_job');
 let profileSubtitle = document.querySelector('.profile__subtitle');
 
 function closePopup() {
