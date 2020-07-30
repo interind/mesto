@@ -1,12 +1,12 @@
 .element__heart {
-  width: 21px;
+  width: 21.5px;
   height: 19px;
   pointer-events: fill;
   background-color: #fff;
   background-image: url(../../../images/elements/Group.svg);
   background-repeat: no-repeat;
   background-position: center;
-  border: 0;
+  border: none;
 }
 
 .element__heart:hover {
