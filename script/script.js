@@ -1,11 +1,12 @@
 let popup = document.querySelector('.popup');
-let popupForm = document.querySelector('.popup__container');//форма
+let popupForm = popup.querySelector('.popup__container');//форма
 let buttonOpenPopup = document.querySelector('.profile__edit-button');//кнопка открытия формы
-let buttonClosePopup = document.querySelector('.popup__button-close');//кнопка закрытия формы
+let buttonClosePopup = popupForm.querySelector('.popup__button-close');//кнопка закрытия формы
 let profileTitle = document.querySelector('.profile__title');
 let nameInput = popupForm.querySelector('.popup__input_type_name');
 let jobInput = popupForm.querySelector('.popup__input_type_job');
 let profileSubtitle = document.querySelector('.profile__subtitle');
+let buttonSavepopupForm = popupForm.querySelector('.popup__button-submit');
 
 function poPup() {
 	if (!popup.classList.contains('popup_opened')){
@@ -17,6 +18,12 @@ function poPup() {
 	else {
 		popup.classList.remove('popup_opened');
 	}
+}
+
+function closePopup(evt) {
+	 evt.preventDefault(evt);
+	 if(evt.target !== evt.currentTarget) return
+	 popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler(evt) {
@@ -32,6 +39,11 @@ function formSubmitHandler(evt) {
 
 popupForm.addEventListener('submit', formSubmitHandler);
 
+popup.addEventListener('click', closePopup), false;
+
+buttonSavepopupForm.addEventListener('click', formSubmitHandler);
+
 buttonOpenPopup.addEventListener('click', poPup);
 
 buttonClosePopup.addEventListener('click', poPup);
+
