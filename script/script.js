@@ -46,4 +46,3 @@ buttonSavepopupForm.addEventListener('click', formSubmitHandler);
 buttonOpenPopup.addEventListener('click', poPup);
 
 buttonClosePopup.addEventListener('click', poPup);
-
