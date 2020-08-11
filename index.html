@@ -5,96 +5,114 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1 maximum-scale=1">
   <meta name="description" content="пороектная работа №4 Александра Банных на Яндекс.Практикуме">
   <meta name="author" content="Александр Банных">
+  <link rel="icon" href="./images/Russia.ico">
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto Russia</title>
 </head>
 <body class="body">
   <div class="page">
     <header class="header page__header">
-      <img class="logo header__logo" src="./images/header/logo-fon.svg" alt="Логотип">
+      <img class="logo header__logo" src="./images/header/logoFon.svg" alt="Логотип">
     </header>
     <section class="profile page__profile">
       <img class="profile__avatar" src="./images/profile/avatar/image_.jpg" alt="Аватарка">
       <div class="profile__info">
         <h1 class="profile__title">Александр</h1>
-        <button class="profile__edit-button" type="button"></button>
+        <button class="profile__edit-button" type="button" title="изменить данные профиля"></button>
         <p class="profile__subtitle">студент</p>
       </div>
-      <button class="profile__add-button" type="button"></button>
+      <button class="profile__add-button" type="button" title="добавить картинки"></button>
     </section>
-    <template class="elements page__elements">
+    <main class="elements page__elements">
       <div class="element">
         <img class="element__pic" src="./images/elements/tambov__road.jpg" alt="Дорога на Тамбов">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2  class="element__title">
             Трасса Тамбов
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
           </div>
       </div>
       <div class="element">
         <img class="element__pic" src="./images/elements/krym.jpg" alt="Крым">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2 class="element__title">
             Крым
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__pic" src="./images/elements/sochi.jpg" alt="Сочи">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2 class="element__title">
             Сочи
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__pic" src="./images/elements/piter.jpg" alt="Санкт-Петербург">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2 class="element__title">
             Санкт-Петербург
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__pic" src="./images/elements/eburg.jpg" alt="Екатеринбург">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2 class="element__title">
             Екатеринбург
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__pic" src="./images/elements/moscow.jpg" alt="Москва">
+        <button class="element__button-trash" type="button" title="удалить"></button>
         <div class="element__info">
           <h2 class="element__title">
             Москва
           </h2>
-          <button class="element__heart" type="button"></button>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
         </div>
       </div>
-    </template>
+    </main>
     <footer class="footer page__footer">
       <p class="footer__copyright">
         &copy;2020 Mesto Russia
       </p>
     </footer>
     <div class="popup">
-      <form class="popup__container" name="popup">
+      <form class="popup__container popup__container_type_profile" name="popup-profile">
         <h2 class="popup__title">
           Редактировать форму
         </h2>
         <input class="popup__input popup__input_type_name" type="text">
         <input class="popup__input popup__input_type_job" type="text">
-        <button class="popup__button-submit" type="submit">Сохранить</button>
-        <button class="popup__button-close" type="button"></button>
+        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
+      <form class="popup__container popup__container_type_cards" name="popup-cards">
+        <h2 class="popup__title">
+          Новое место
+        </h2>
+        <input class="popup__input popup__input_type_place" type="text" placeholder="Название">
+        <input class="popup__input popup__input_type_card" type="url" placeholder="Ссылка на картинку">
+        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" title="закрыть"></button>
+      </form>
+      <figure class="popup__zoom">
+      </figure>
     </div>
   </div>
-  <script src="script/script.js"></script>
+  <script src="script/script.js" async></script>
 </body>
 </html>

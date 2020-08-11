@@ -9,9 +9,9 @@
   min-width: 282px;
 }
 
-@media screen and (max-width: 910px) {
+@media screen and (max-width: 898px) {
   .profile {
-    width: 68.9vw;
+    width: 90%;
   }
 }
 

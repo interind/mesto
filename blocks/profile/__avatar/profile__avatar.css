@@ -1,3 +1,18 @@
+@keyframes scale {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: .9;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: .8;
+  }
+}
+
 .profile__avatar {
   overflow: hidden;
   min-width: 120px;
@@ -6,6 +21,11 @@
   min-height: 120px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.profile__avatar:hover {
+  animation: scale linear 1.5s infinite reverse;
+  cursor: wait;
 }
 
 @media screen and (max-width: 320px) {

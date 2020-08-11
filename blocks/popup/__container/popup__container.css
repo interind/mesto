@@ -1,7 +1,7 @@
 .popup__container {
   box-sizing: border-box;
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -15,11 +15,25 @@
   font-size: 14px;
   line-height: 1.2;
   border-radius: 5px;
+  max-height: 75vh;
+}
+
+@media screen and (max-height: 414px) {
+  .popup__container {
+    padding: 15px 36px;
+  }
 }
 
 @media screen and (max-width: 520px) {
   .popup__container {
     width: 80%;
     padding: 16px 18px 18px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__container {
+    width: 75%; 
+    padding: 30px 20px;
   }
 }

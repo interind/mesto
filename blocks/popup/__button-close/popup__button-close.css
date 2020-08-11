@@ -9,17 +9,27 @@
   background-image: url(../../../images/Close-Icon.svg);
   background-repeat: no-repeat;
   background-position: center;
-  border: 0;
+  background-attachment: scroll;
+  padding: 0;
+  border: none;
+  outline: none;
   pointer-events: fill;
 }
 
+.popup__button-close:active {
+  background-image: url(../../../images/CloseRed.svg);
+}
+
 .popup__button-close:hover {
- opacity: .6;
- cursor: pointer;
+  opacity: .6;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 320px) {
  .popup__button-close {
-   right: -10px;
+   right: -30px;
+   top: -30px;
+   width: 30px;
+   height: 30px;
  }
 }

@@ -1,0 +1,13 @@
+.popup__pic {
+ display: block;
+ object-fit: cover;
+ max-width: 75vw;
+ min-width: 413px;
+ max-height: 75vh;
+}
+
+@media screen and (max-width: 320px) {
+  .popup__pic {
+    min-width: 240px;
+  } 
+}

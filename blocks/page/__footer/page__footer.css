@@ -4,9 +4,9 @@
   margin: 0 auto 60px;
 }/*элемент создан для выравнивания footer*/
 
-@media screen and (max-width: 910px) {
+@media screen and (max-width: 898px) {
   .page__footer {
-    width: 68.9vw;
+    width: 90%;
   }
 }
 

@@ -12,9 +12,9 @@
   background-color: #000;
 }
 
-@media screen and (max-width: 910px) {
+@media screen and (max-width: 898px) {
   .header {
-    width: 68.9vw;
+    width: 90%;
   }
 }
 

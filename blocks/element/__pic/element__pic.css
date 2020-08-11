@@ -3,4 +3,9 @@
   width: 282px;
   height: 282px;
   object-fit: cover;
+  object-position: center;
+}
+
+.element__pic:hover {
+  cursor: zoom-in;
 }
