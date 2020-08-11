@@ -27,7 +27,7 @@ const initialCards = [
 ];
 const elementsCards = document.querySelector('#elements-cards');
 elementsCards.innerHTML = `<div class="element"><img class="element__pic" src="" alt="">
-<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+  <button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
 		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
 		<div class="element"><img class="element__pic" src="" alt="">
 		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
@@ -63,7 +63,7 @@ elementsCards.innerHTML = `<div class="element"><img class="element__pic" src=""
 		const elementCard = elementsCards.querySelectorAll('.element');// карточки
 		const buttonLike = elementsCards.querySelectorAll('.element__button-like');// кнопки лайк
 		const buttonAddCards = profileBlock.querySelector('.profile__add-button');// кнопка добавить картинки
-		const imageCard = elementsCards.querySelectorAll('.element__pic');// картинки
+		let imageCard = elementsCards.querySelectorAll('.element__pic');// картинки
 		const placeCard = elementsCards.querySelectorAll('.element__title');// описание мест
 		const popupZoom = popup.querySelector('.popup__zoom');
 
@@ -206,8 +206,8 @@ function clickZoom(evt) {   // открытие карточек
 			let popupPicPlace = popupZoom.querySelector('.popup__place-pic');
 			popupPicPlace.textContent = popupPic.alt;
 			buttonClosePopupZoom.addEventListener('click', popupZoomOnOff);
-			popupPic.src = target.src;
-			popupPicPlace.textContent = target.alt;
+			popupPic.src = imageCard.src;
+			popupPicPlace.textContent = imageCard.alt;
 			popupZoomOnOff(evt);
 	}
 }
