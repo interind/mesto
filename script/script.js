@@ -1,5 +1,17 @@
-let popup = document.querySelector('.popup');
-let popupForm = popup.querySelector('.popup__container');//форма
+const popup = document.querySelector('.popup');
+const popupForm = popup.querySelector('.popup__container');//форма
+const elementTemplate = document.querySelector('.elements').content;
+const elementCard = document.createElement('div');
+elementCard.classList.add('element');
+const imageCard = document.createElement('img');
+imageCard.classList.add('element__pic');
+const infoCardContainer = document.createElement('div');
+infoCardContainer.classList.add('element__info');
+const titleCard = document.createElement('h2');
+titleCard.classList.add('element__title');
+const buttonLike = document.createElement('button');
+buttonLike.classList.add('element__heart'); 
+
 let buttonOpenPopup = document.querySelector('.profile__edit-button');//кнопка открытия формы
 let buttonClosePopup = popupForm.querySelector('.popup__button-close');//кнопка закрытия формы
 let profileTitle = document.querySelector('.profile__title');
