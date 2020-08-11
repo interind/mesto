@@ -26,18 +26,24 @@ const initialCards = [
 	}
 ];
 const elementsCards = document.querySelector('#elements-cards');
-elementsCards.innerHTML = `<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt=""><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__heart" type="button"></button></div></div>`;
+elementsCards.innerHTML = `<div class="element"><img class="element__pic" src="" alt="">
+<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
+		<div class="element"><img class="element__pic" src="" alt="">
+		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
+		<div class="element"><img class="element__pic" src="" alt="">
+		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
+		<div class="element"><img class="element__pic" src="" alt="">
+		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
+		<div class="element"><img class="element__pic" src="" alt="">
+		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
+		<div class="element"><img class="element__pic" src="" alt="">
+		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
+		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>`;
 
 		const popup = document.querySelector('.popup');// попап
 		const popupProfile = popup.querySelector('.popup__container_type_profile');//форма профиля
