@@ -67,13 +67,13 @@ elementsCards.innerHTML = `<div class="element"><img class="element__pic" src=""
 		const placeCard = elementsCards.querySelectorAll('.element__title');// описание мест
 		const popupZoom = popup.querySelector('.popup__zoom');
 
-for (var i = 0; i < imageCard.length; i++) {
+for (let i = 0; i < imageCard.length; i++) {
 	imageCard[i].src = `${initialCards[i].link}`;
 } // меняет стандарные картинки
-for (var i = 0; i < placeCard.length; i++) {
+for (let i = 0; i < placeCard.length; i++) {
 	placeCard[i].textContent = `${initialCards[i].name}`;
 } // меняет стандарные названия мест
-for (var i = 0; i < imageCard.length; i++) {
+for (let i = 0; i < imageCard.length; i++) {
 	imageCard[i].alt = `${placeCard[i].textContent}`;
 }
 
@@ -146,7 +146,7 @@ function formSubmitHandlerCards(evt) {          // события submit
 					<div class="element__info"><h2  class="element__title">${placeInput.value}</h2>
 					<button class="element__button-like element__button-like_color_white" type="button"></button>
 					</div></div>`);
-			var elementCard = elementsCards.querySelector('.element');
+			let elementCard = elementsCards.querySelector('.element');
 			elementCard.addEventListener('click', clickTrash);
 			popupAddForm(evt);
 	}
@@ -159,8 +159,8 @@ function formSubmitHandlerCards(evt) {          // события submit
 function clickTrash(evt) {   // удаление карточки
 	evt.preventDefault();
 	evt = evt || window.evt;
-	var target = evt.target || evt.typeElement;
-	var elementCard = evt.currentTarget;
+	let target = evt.target;
+	let elementCard = evt.currentTarget;
 	if(target.classList.contains('element__button-trash')) {
 			elementCard.style.display = 'none';
 	}
@@ -168,8 +168,7 @@ function clickTrash(evt) {   // удаление карточки
 
 function clickLike(evt) {   // ставим лайки
 	evt.preventDefault();
-	evt = evt || window.evt;
-	var buttonLike = evt.target;
+	let buttonLike = evt.target;
 	if(buttonLike.classList.contains('element__button-like')) {
 			buttonLike.classList.toggle('element__button-like_color_black');
 	}
@@ -197,14 +196,14 @@ function popupZoomOnOff() {
 function clickZoom(evt) {   // открытие карточек
 	evt.preventDefault();
 	evt = evt || window.evt;
-	var target = evt.target || evt.typeElement;
-	if(target.classList.contains('element__pic')) {
+	let imageCard = evt.target || evt.typeElement;
+	if(imageCard.classList.contains('element__pic')) {
 			popupZoom.innerHTML = `<img class="popup__pic" src="${cardInput.value}" alt="${placeInput.value}">
 					<figcaption class="popup__place-pic">${placeInput.value}</figcaption>
 					<button class="popup__button-close" type="button" title="закрыть"></button>`;
-			var buttonClosePopupZoom = popupZoom.querySelector('.popup__button-close');
-			var popupPic = popupZoom.querySelector('.popup__pic');
-			var popupPicPlace = popupZoom.querySelector('.popup__place-pic');
+			let buttonClosePopupZoom = popupZoom.querySelector('.popup__button-close');
+			let popupPic = popupZoom.querySelector('.popup__pic');
+			let popupPicPlace = popupZoom.querySelector('.popup__place-pic');
 			popupPicPlace.textContent = popupPic.alt;
 			buttonClosePopupZoom.addEventListener('click', popupZoomOnOff);
 			popupPic.src = target.src;
@@ -213,7 +212,7 @@ function clickZoom(evt) {   // открытие карточек
 	}
 }
 // слушатели событий
-for (var i = 0; i < elementCard.length; i++) {
+for (let i = 0; i < elementCard.length; i++) {
 	elementCard[i].addEventListener('click', clickTrash);// слушатель на карточке
 }
 
