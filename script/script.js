@@ -142,7 +142,7 @@ function formSubmitHandlerProfile(evt) {          // submit
  	if (nameInput.value && jobInput.value) {
 		 	profileName.textContent = nameInput.value;
 		 	profileJob.textContent = jobInput.value;
-		 	popupEditForm(evt);
+		 	openClosePopup(evt);
 	 }
 	 else {
 	 		alert('Для сохрания нужно заполнить все ваши данные');
