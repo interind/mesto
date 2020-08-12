@@ -29,6 +29,16 @@ const initialCards = [
 		let elementsCards = document.querySelector('.elements');
 		let cloneCards = templateCards.cloneNode(true);
 		elementsCards.append(cloneCards);
+		const buttonsLike = elementsCards.querySelectorAll('.element__button-like');// кнопки лайк
+  for (let i = 0; i < buttonsLike.length; i++) {
+			buttonsLike[i].classList.add('element__button-like_color_white');
+		}
+		const buttonsTrash = elementsCards.querySelectorAll('.element__button-trash');// кнопки удалить
+  for (let i = 0; i < buttonsTrash.length; i++) {
+			buttonsTrash[i].title = ('удалить');
+		}
+
+
 		const popup = document.querySelector('.popup');// попап
 		const popupProfile = popup.querySelector('.popup__container_type_profile');//форма профиля
 		// const popupCards = popup.querySelector('.popup__container_type_cards');// форма картинок
@@ -44,7 +54,6 @@ const initialCards = [
 		const profileJob = profileBlock.querySelector('.profile__subtitle');// данные профиля
 		const buttonSavePopupProfile = popupProfile.querySelector('.popup__button-submit');
 		// const buttonSavePopupCards = popupCards.querySelector('.popup__button-submit');// кнопка сохранить
-		const buttonLike = elementsCards.querySelectorAll('.element__button-like');// кнопки лайк
 		const buttonAddCards = profileBlock.querySelector('.profile__add-button');// кнопка добавить картинки
 		const imagesCards = elementsCards.querySelectorAll('.element__pic');// картинки
 		const placesCards = elementsCards.querySelectorAll('.element__title');// описание мест
