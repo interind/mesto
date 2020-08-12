@@ -25,26 +25,10 @@ const initialCards = [
 			link: 'https://images.unsplash.com/photo-1543223917-0e9d7131681f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1334&q=80'
 	}
 ];
-const elementsCards = document.querySelector('#elements-cards');
-elementsCards.innerHTML = `<div class="element"><img class="element__pic" src="" alt="">
-  <button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt="">
-		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt="">
-		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt="">
-		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt="">
-		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>
-		<div class="element"><img class="element__pic" src="" alt="">
-		<button class="element__button-trash" type="button" title="удалить"></button><div class="element__info">
-		<h2  class="element__title"></h2><button class="element__button-like element__button-like_color_white" type="button"></button></div></div>`;
-
+		const templateCards = document.querySelector('#cards').content;
+		let elementsCards = document.querySelector('.elements');
+		let cloneCards = templateCards.cloneNode(true);
+		elementsCards.append(cloneCards);
 		const popup = document.querySelector('.popup');// попап
 		const popupProfile = popup.querySelector('.popup__container_type_profile');//форма профиля
 		// const popupCards = popup.querySelector('.popup__container_type_cards');// форма картинок
@@ -62,18 +46,21 @@ elementsCards.innerHTML = `<div class="element"><img class="element__pic" src=""
 		// const buttonSavePopupCards = popupCards.querySelector('.popup__button-submit');// кнопка сохранить
 		const buttonLike = elementsCards.querySelectorAll('.element__button-like');// кнопки лайк
 		const buttonAddCards = profileBlock.querySelector('.profile__add-button');// кнопка добавить картинки
-		let imageCard = elementsCards.querySelectorAll('.element__pic');// картинки
-		const placeCard = elementsCards.querySelectorAll('.element__title');// описание мест
-		const popupZoom = popup.querySelector('.popup__zoom');
+		const imagesCards = elementsCards.querySelectorAll('.element__pic');// картинки
+		const placesCards = elementsCards.querySelectorAll('.element__title');// описание мест
+		const popupZoom = popup.querySelector('.popup__zoom'); // попап с картинкой
+		const templatePopupForm = document.querySelector('#form-cards').content;
+		const popupCards = templatePopupForm.cloneNode(true); // клон шаблона формы картинок
+		popup.append(popupCards);
 
-for (let i = 0; i < imageCard.length; i++) {
-	imageCard[i].src = `${initialCards[i].link}`;
+for (let i = 0; i < imagesCards.length; i++) {
+	imagesCards[i].src = `${initialCards[i].link}`;
 } // меняет стандарные картинки
-for (let i = 0; i < placeCard.length; i++) {
-	placeCard[i].textContent = `${initialCards[i].name}`;
+for (let i = 0; i < placesCards.length; i++) {
+	placesCards[i].textContent = `${initialCards[i].name}`;
 } // меняет стандарные названия мест
-for (let i = 0; i < imageCard.length; i++) {
-	imageCard[i].alt = `${placeCard[i].textContent}`;
+for (let i = 0; i < imagesCards.length; i++) {
+	imagesCards[i].alt = `${placesCards[i].textContent}`;
 }
 
 // функции
@@ -116,6 +103,7 @@ function popupEditForm() {
 			}, 1000);
 	}
 }
+
 function closePopup(evt) {                  // закрытие блока с формой, чтобы закрыть не только по кнопке
 	evt.preventDefault();
 	if(evt.target !== evt.currentTarget)return
@@ -123,6 +111,7 @@ function closePopup(evt) {                  // закрытие блока с ф
 			popupAddForm(evt);
 			popupZoomOnOff(evt);
 }
+
 function formSubmitHandler(evt) {          // события submit
 	evt.preventDefault();
 	if (nameInput.value && jobInput.value) {
