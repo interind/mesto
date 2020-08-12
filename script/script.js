@@ -47,20 +47,19 @@ elementsCards.innerHTML = `<div class="element"><img class="element__pic" src=""
 
 		const popup = document.querySelector('.popup');// попап
 		const popupProfile = popup.querySelector('.popup__container_type_profile');//форма профиля
-		const popupCards = popup.querySelector('.popup__container_type_cards');// форма картинок
+		// const popupCards = popup.querySelector('.popup__container_type_cards');// форма картинок
 		const profileBlock = document.querySelector('.profile');//блок с кнопками открытия форм.
 		const buttonEditContainer = profileBlock.querySelector('.profile__edit-button');//кнопка открытия формы
 		const buttonClosePopupProfile = popupProfile.querySelector('.popup__button-close');//кнопки закрытия форм
-		const buttonClosePopupCards = popupCards.querySelector('.popup__button-close');//кнопки закрытия форм
+		// const buttonClosePopupCards = popupCards.querySelector('.popup__button-close');//кнопки закрытия форм
 		const profileName = profileBlock.querySelector('.profile__title');// имя в профиле
 		const nameInput = popupProfile.querySelector('.popup__input_type_name');// ввод имени для профиля
 		const jobInput = popupProfile.querySelector('.popup__input_type_job');// ввод данных профиля
-		const placeInput = popupCards.querySelector('.popup__input_type_place');// ввод места 
-		const cardInput = popupCards.querySelector('.popup__input_type_card');// ввод картинки
+		// const placeInput = popupCards.querySelector('.popup__input_type_place');// ввод места 
+		// const cardInput = popupCards.querySelector('.popup__input_type_card');// ввод картинки
 		const profileJob = profileBlock.querySelector('.profile__subtitle');// данные профиля
 		const buttonSavePopupProfile = popupProfile.querySelector('.popup__button-submit');
-		const buttonSavePopupCards = popupCards.querySelector('.popup__button-submit');// кнопка сохранить
-		const elementCard = elementsCards.querySelectorAll('.element');// карточки
+		// const buttonSavePopupCards = popupCards.querySelector('.popup__button-submit');// кнопка сохранить
 		const buttonLike = elementsCards.querySelectorAll('.element__button-like');// кнопки лайк
 		const buttonAddCards = profileBlock.querySelector('.profile__add-button');// кнопка добавить картинки
 		let imageCard = elementsCards.querySelectorAll('.element__pic');// картинки
@@ -159,10 +158,9 @@ function formSubmitHandlerCards(evt) {          // события submit
 function clickTrash(evt) {   // удаление карточки
 	evt.preventDefault();
 	evt = evt || window.evt;
-	let target = evt.target;
-	let elementCard = evt.currentTarget;
-	if(target.classList.contains('element__button-trash')) {
-			elementCard.style.display = 'none';
+	let buttonTrash = evt.target;
+	if(buttonTrash.classList.contains('element__button-trash')) {
+		buttonTrash.parentNode.style.display = 'none';
 	}
 }
 
@@ -211,19 +209,16 @@ function clickZoom(evt) {   // открытие карточек
 			popupZoomOnOff(evt);
 	}
 }
-// слушатели событий
-for (let i = 0; i < elementCard.length; i++) {
-	elementCard[i].addEventListener('click', clickTrash);// слушатель на карточке
-}
 
 popupProfile.addEventListener('submit', formSubmitHandler);// на форме для сохранения профиля
-popupCards.addEventListener('submit', formSubmitHandlerCards);// на форме для сохранения карта
+// popupCards.addEventListener('submit', formSubmitHandlerCards);// на форме для сохранения карта
 popup.addEventListener('click', closePopup);// закрытие попапа без кнопки
 buttonEditContainer.addEventListener('click', popupEditForm);// для формы ввода профиля
 buttonAddCards.addEventListener('click', popupAddForm); // для формы ввода картинок
 elementsCards.addEventListener('click', clickLike); // для выбора кнопки лайка
 elementsCards.addEventListener('click', clickZoom); // для открытия попап картинки
+elementsCards.addEventListener('click', clickTrash);
 buttonSavePopupProfile.addEventListener('click', formSubmitHandler); // кнопка сохранения профиля
-buttonSavePopupCards.addEventListener('click', formSubmitHandlerCards); // кнопка сохранения карт
+// buttonSavePopupCards.addEventListener('click', formSubmitHandlerCards); // кнопка сохранения карт
 buttonClosePopupProfile.addEventListener('click', popupEditForm); // кнопка закрытия профиля
-buttonClosePopupCards.addEventListener('click', popupAddForm); // кнопка закрытия формы для карт
+// buttonClosePopupCards.addEventListener('click', popupAddForm); // кнопка закрытия формы для карт
