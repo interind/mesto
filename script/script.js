@@ -65,7 +65,8 @@ const initialCards = [
 		const clonePopupCards = templatePopupForm.cloneNode(true); // клон шаблона формы добавления картинок
 		popup.append(clonePopupCards);
 		const popupCards = popup.querySelector('.popup__container_type_cards');// форма картинок
-		const placeInput = popupCards.querySelector('.popup__input_type_place');// ввод места 
+		const placeInput = popupCards.querySelector('.popup__input_type_place');// ввод места
+		placeInput.maxLength = 40; 
 		const cardInput = popupCards.querySelector('.popup__input_type_card');// ввод картинки
 		const buttonSavePopupCards = popupCards.querySelector('.popup__button-submit');// кнопка сохранить
 		const buttonClosePopupCards = popupCards.querySelector('.popup__button-close');//кнопки закрытия форм
@@ -88,7 +89,7 @@ else {
 }
 }
 
-function closePopup(evt) {                  // закрытие блока с формой, чтобы закрыть не только по кнопке
+function closePopup(evt, mousedown) {                  // закрытие блока с формой, чтобы закрыть не только по кнопке
 	evt.preventDefault();
 	if(evt.target !== evt.currentTarget)return
    openClosePopup(evt);
