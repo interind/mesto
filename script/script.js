@@ -55,6 +55,7 @@ const addCard = (itemCard) => {
 
 		const imageCard = templateContainer.querySelector('.element__pic').src = itemCard.link;
 		const placeCard = templateContainer.querySelector('.element__title').textContent = itemCard.name;
+		const imageCardAlt= templateContainer.querySelector('.element__pic').alt = itemCard.name;
 
 		templateContainer.querySelector('.element__button-like_color_white').addEventListener('click', event =>{
 			const templateContainer = event.target;
