@@ -23,7 +23,7 @@
       </div>
       <button class="profile__add-button" type="button" title="добавить картинки"></button>
     </section>
-    <div class="elements page__elements" id="elements-cards">
+    <div class="elements page__elements">
     </div>
     <footer class="footer page__footer">
       <p class="footer__copyright">
@@ -40,6 +40,19 @@
         <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
+      <form class="popup__container popup__container_type_cards" name="popup-cards">
+        <h2 class="popup__title">
+          Новое место
+        </h2>
+        <input class="popup__input popup__input_type_place" type="text">
+        <input class="popup__input popup__input_type_card" type="url">
+        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" title="закрыть"></button>
+      </form>
+      <figure class="popup__zoom">
+        <img class="popup__pic" src="#" alt="#">
+        <figcaption class="popup__place-pic"></figcaption>
+      </figure>
     </div>
     <template id="cards">
       <div class="element">
@@ -48,8 +61,8 @@
         <div class="element__info">
           <h2  class="element__title">
           </h2>
-          <button class="element__button-like" type="button"></button>
-        </div>
+          <button class="element__button-like element__button-like_color_white" type="button"></button>
+          </div>
       </div>
     </template>
   </div>
