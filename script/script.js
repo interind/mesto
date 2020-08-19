@@ -105,67 +105,29 @@ const addCard = (link, name) => {
 const initialCardsRevers = initialCards.reverse();
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
-const createCard = () => {
-  initialCard();
-  const templateContainer = containerCards
-    .querySelector('.element')
-    .cloneNode(true);
-  const imageCard = (templateContainer.querySelector('.element__pic').src =
-    cardInput.value);
-  const placeCard = (templateContainer.querySelector(
-    '.element__title'
-  ).textContent = placeInput.value);
-  const imageCardAlt = (templateContainer.querySelector('.element__pic').alt =
-    placeInput.value);
-
-  containerCards.prepend(templateContainer);
-
-  templateContainer
-    .querySelector('.element__button-like_color_white')
-    .addEventListener('click', (event) => {
-      const templateContainer = event.target;
-
-      templateContainer.classList.toggle('element__button-like_color_black');
-    });
-
-  templateContainer
-    .querySelector('.element__button-trash')
-    .addEventListener('click', (event) => {
-      const templateContainer = event.target.closest('.element');
-
-      templateContainer.remove();
-    });
-
-  templateContainer
-    .querySelector('.element__pic')
-    .addEventListener('click', (event) => {
-      const templateContainer = event.target;
-      popupPlacePic.textContent = popupPic.alt;
-      popupPic.src = templateContainer.src;
-      popupPlacePic.textContent = templateContainer.alt;
-      popupZoomOnOff();
-      buttonClosePopupZoom.addEventListener('click', popupZoomOnOff);
-    });
-};
-
-let initialCard = () => {
+const createInitialCard = () => {
   initialCard = Object.create(initialCards);
   initialCard.link = cardInput.value;
   initialCard.name = placeInput.value;
   initialCards.unshift(initialCard);
+  addCard(cardInput.value, placeInput.value);
 };
 
 function togglePopup(item) {
   if (!popup.classList.contains('popup_opened')) {
+    popup.style.opacity = '1';
     popup.classList.add('popup_opened');
     item.classList.add('popup__container_opened');
     item
       .querySelector('.popup__button-close')
       .addEventListener('click', togglePopup);
   } else {
+    popup.style.opacity = '0';
+    setTimeout( function () {
     popup.classList.remove('popup_opened');
     popupProfileForm.classList.remove('popup__container_opened');
     popupCardForm.classList.remove('popup__container_opened');
+    }, 1000);
   }
 }
 
@@ -202,8 +164,7 @@ function formSubmitHandlerCards(evt) {
   // submit для новой карточки
   evt.preventDefault();
   if (cardInput.value && placeInput.value) {
-    initialCard();
-    addCard(cardInput.value, placeInput.value);
+    createInitialCard();
     togglePopup(popupCardForm);
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
@@ -214,12 +175,16 @@ function formSubmitHandlerCards(evt) {
 function popupZoomOnOff() {
   if (!popup.classList.contains('popup_opened')) {
     popup.classList.add('popup_opened');
+    popup.style.opacity = '1';
     popup.style.backgroundColor = 'rgba(0, 0, 0, .9)';
     popupZoomCard.classList.add('popup__zoom_opened');
   } else {
+    popup.style.opacity = '0';
+    setTimeout( function () {
     popup.style.backgroundColor = 'rgba(0, 0, 0, .6)';
     popup.classList.remove('popup_opened');
     popupZoomCard.classList.remove('popup__zoom_opened');
+  }, 1000);
   }
 }
 
