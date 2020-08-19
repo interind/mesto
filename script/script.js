@@ -50,13 +50,13 @@ const buttonClosePopupZoom = popupZoomCard.querySelector('.popup__button-close')
 
 const containerCards = document.querySelector('.elements');
 
-const addCard = (itemCard) => {
+const addCard = (initialCard) => {
 	const templateContainer = document.querySelector('#cards').content.cloneNode(true);
 
   
-		const imageCard = templateContainer.querySelector('.element__pic').src = itemCard.link;
-		const placeCard = templateContainer.querySelector('.element__title').textContent = itemCard.name;
-		const imageCardAlt= templateContainer.querySelector('.element__pic').alt = itemCard.name;
+		const imageCard = templateContainer.querySelector('.element__pic').src = initialCard.link;
+		const placeCard = templateContainer.querySelector('.element__title').textContent = initialCard.name;
+		const imageCardAlt= templateContainer.querySelector('.element__pic').alt = initialCard.name;
 
 		templateContainer.querySelector('.element__button-like_color_white').addEventListener('click', event =>{
 			const templateContainer = event.target;
@@ -84,7 +84,8 @@ const addCard = (itemCard) => {
 
 initialCards.forEach(addCard);
 
-const newCard = () => {
+const createCard = () => {
+	 initialCard();
 	 const templateContainer = document.querySelector('#cards').content.cloneNode(true);
 		const imageCard = templateContainer.querySelector('.element__pic').src = cardInput.value;
 		const placeCard = templateContainer.querySelector('.element__title').textContent = placeInput.value;
@@ -92,6 +93,12 @@ const newCard = () => {
 		containerCards.prepend(templateContainer);
 }
 
+let initialCard = () => {
+	  initialCard = Object.create(initialCards);
+			initialCard.link = cardInput.value;
+			initialCard.name = placeInput.value;
+			initialCards.unshift(initialCard);
+}
 
 function togglePopup(item) {
 	if(!popup.classList.contains('popup_opened')){
@@ -139,7 +146,7 @@ function popupAddForm() {
 function formSubmitHandlerCards(evt) {          // submit для новой карточки
 	evt.preventDefault();
 	if (cardInput.value && placeInput.value) {
-	   newCard();
+				createCard();
 			 togglePopup(popupCardForm);
 	}
 	else {
