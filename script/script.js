@@ -50,13 +50,13 @@ const buttonClosePopupZoom = popupZoomCard.querySelector('.popup__button-close')
 
 const containerCards = document.querySelector('.elements');
 
-const addCard = (initialCard) => {
+const addCard = (link, name) => {
 	const templateContainer = document.querySelector('#cards').content.cloneNode(true);
 
   
-		const imageCard = templateContainer.querySelector('.element__pic').src = initialCard.link;
-		const placeCard = templateContainer.querySelector('.element__title').textContent = initialCard.name;
-		const imageCardAlt= templateContainer.querySelector('.element__pic').alt = initialCard.name;
+		const imageCard = templateContainer.querySelector('.element__pic').src = link;
+		const placeCard = templateContainer.querySelector('.element__title').textContent = name;
+		const imageCardAlt= templateContainer.querySelector('.element__pic').alt = name;
 
 		templateContainer.querySelector('.element__button-like_color_white').addEventListener('click', event =>{
 			const templateContainer = event.target;
@@ -82,15 +82,37 @@ const addCard = (initialCard) => {
 		containerCards.append(templateContainer);
 }
 
-initialCards.forEach(addCard);
+initialCards.forEach( card => addCard(card.link, card.name));
 
 const createCard = () => {
 	 initialCard();
-	 const templateContainer = document.querySelector('#cards').content.cloneNode(true);
+	 const templateContainer = containerCards.querySelector('.element').cloneNode(true);
 		const imageCard = templateContainer.querySelector('.element__pic').src = cardInput.value;
 		const placeCard = templateContainer.querySelector('.element__title').textContent = placeInput.value;
 		const imageCardAlt = templateContainer.querySelector('.element__pic').alt = placeInput.value;
+		
 		containerCards.prepend(templateContainer);
+
+		templateContainer.querySelector('.element__button-like_color_white').addEventListener('click', event =>{
+			const templateContainer = event.target;
+			
+			 templateContainer.classList.toggle('element__button-like_color_black');
+		});
+
+		templateContainer.querySelector('.element__button-trash').addEventListener('click', event =>{
+			const templateContainer = event.target.closest('.element');
+
+			templateContainer.remove();
+		});
+
+		templateContainer.querySelector('.element__pic').addEventListener('click', event =>{
+			const templateContainer = event.target;
+			popupPlacePic.textContent = popupPic.alt;
+			popupPic.src = templateContainer.src;
+			popupPlacePic.textContent = templateContainer.alt;
+			popupZoomOnOff();
+			buttonClosePopupZoom.addEventListener('click', popupZoomOnOff);
+		})
 }
 
 let initialCard = () => {
@@ -107,9 +129,9 @@ function togglePopup(item) {
 				item.querySelector('.popup__button-close').addEventListener('click', togglePopup);
 	}
 	else {
-		popup.classList.remove('popup_opened');
-		popupProfileForm.classList.remove('popup__container_opened');
-		popupCardForm.classList.remove('popup__container_opened');
+			popup.classList.remove('popup_opened');
+			popupProfileForm.classList.remove('popup__container_opened');
+			popupCardForm.classList.remove('popup__container_opened');
 	}
 }
 
