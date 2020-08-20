@@ -33,13 +33,13 @@ const initialCards = [
   },
 ];
 
-const popup = document.querySelector('.popup'); // попап
+const popup = document.querySelectorAll('.popup'); // попап
 
-const popupProfileForm = popup.querySelector('.popup__container_type_profile');
+const popupProfileForm = popup[0].querySelector('.popup__container_type_profile');
 const nameInput = popupProfileForm.querySelector('.popup__input_type_name'); // ввод имени для профиля
 const jobInput = popupProfileForm.querySelector('.popup__input_type_job'); // ввод данных профиля
 
-const popupCardForm = popup.querySelector('.popup__container_type_cards'); //форма новых картинок
+const popupCardForm = popup[1].querySelector('.popup__container_type_cards'); //форма новых картинок
 const placeInput = popupCardForm.querySelector('.popup__input_type_place');
 const cardInput = popupCardForm.querySelector('.popup__input_type_card');
 
@@ -49,7 +49,7 @@ const profileName = profileBlock.querySelector('.profile__title'); // имя в 
 const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
 const buttonAddCards = profileBlock.querySelector('.profile__add-button'); // кнопка добавить картинки
 
-const popupZoomCard = popup.querySelector('.popup__zoom'); // блок показа картинки
+const popupZoomCard = popup[2].querySelector('.popup__zoom'); // блок показа картинки
 const popupPic = popupZoomCard.querySelector('.popup__pic');
 const popupPlacePic = popupZoomCard.querySelector('.popup__place-pic');
 const buttonClosePopupZoom = popupZoomCard.querySelector(
@@ -114,21 +114,18 @@ const createInitialCard = () => {
 };
 
 function togglePopup(item) {
-  if (!popup.classList.contains('popup_opened')) {
-    popup.style.opacity = '1';
-    popup.classList.add('popup_opened');
+  if (!item.parentNode.classList.contains('popup_opened')) {
     item.classList.add('popup__container_opened');
+    item.parentNode.classList.add('popup_opened');
     item
       .querySelector('.popup__button-close')
-      .addEventListener('click', togglePopup);
-  } else {
-    popup.style.opacity = '0';
-    setTimeout( function () {
-    popup.classList.remove('popup_opened');
-    popupProfileForm.classList.remove('popup__container_opened');
-    popupCardForm.classList.remove('popup__container_opened');
-    }, 1000);
-  }
+      .addEventListener('click', (event) => {
+        const popup = event.target.parentNode.closest('.popup_opened');
+  
+        item.parentNode.classList.remove('popup_opened');
+        item.classList.remove('popup__container_opened');
+      });
+  } 
 }
 
 function popupEditForm() {
@@ -175,16 +172,13 @@ function formSubmitHandlerCards(evt) {
 function popupZoomOnOff() {
   if (!popup.classList.contains('popup_opened')) {
     popup.classList.add('popup_opened');
-    popup.style.opacity = '1';
     popup.style.backgroundColor = 'rgba(0, 0, 0, .9)';
     popupZoomCard.classList.add('popup__zoom_opened');
-  } else {
-    popup.style.opacity = '0';
-    setTimeout( function () {
+  } 
+  else {
     popup.style.backgroundColor = 'rgba(0, 0, 0, .6)';
     popup.classList.remove('popup_opened');
     popupZoomCard.classList.remove('popup__zoom_opened');
-  }, 1000);
   }
 }
 

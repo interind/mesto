@@ -1,7 +1,6 @@
 .popup__container {
   box-sizing: border-box;
   position: relative;
-  display: none;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -16,6 +15,7 @@
   line-height: 1.2;
   border-radius: 5px;
   max-height: 75vh;
+  opacity: 0;
 }
 
 @media screen and (max-height: 414px) {
