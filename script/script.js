@@ -58,9 +58,9 @@ const buttonClosePopupZoom = popupZoomCard.querySelector(
   '.popup__button-close'
 );
 
-const containerCards = document.querySelector('.elements');
+const containerCards = document.querySelector('.elements'); // контейнер для карточек
 
-const addCard = (link, name) => {
+const addCard = (link, name) => { // добавление новых карточек
   const templateContainer = document
     .querySelector('#cards')
     .content.cloneNode(true);
@@ -77,7 +77,7 @@ const addCard = (link, name) => {
 
   templateContainer
     .querySelector('.element__button-like_color_white')
-    .addEventListener('click', (event) => {
+    .addEventListener('click', (event) => { // ставим лайки
       const buttonLike = event.target;
 
       buttonLike.classList.toggle('element__button-like_color_black');
@@ -85,7 +85,7 @@ const addCard = (link, name) => {
 
   templateContainer
     .querySelector('.element__button-trash')
-    .addEventListener('click', (event) => {
+    .addEventListener('click', (event) => { // удаление карточек
       const Card = event.target.closest('.element');
 
       Card.remove();
@@ -93,7 +93,7 @@ const addCard = (link, name) => {
 
   templateContainer
     .querySelector('.element__pic')
-    .addEventListener('click', (event) => {
+    .addEventListener('click', (event) => { // для открытия карточек
       const cardImage = event.target;
       popupPlacePic.textContent = popupPic.alt;
       popupPic.src = cardImage.src;
@@ -104,10 +104,10 @@ const addCard = (link, name) => {
 
   containerCards.prepend(templateContainer);
 };
-const initialCardsRevers = initialCards.reverse();
+const initialCardsRevers = initialCards.reverse(); // добавление карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
-function togglePopup(item) {
+function togglePopup(item) { // закрытие и открытие попапа и блока какой попадет
   item.classList.toggle('popup__container_opened');
   item.parentNode.classList.toggle('popup_opened');
   item
@@ -120,7 +120,7 @@ function togglePopup(item) {
     });
 }
 
-function popupEditForm() {
+function popupEditForm() { // форма для данных имя и работа
   if (buttonEditProfile.classList.contains('profile__edit-button')) {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
@@ -129,7 +129,7 @@ function popupEditForm() {
 }
 
 function formSubmitHandlerProfile(evt) {
-  // submit
+  // submit для формы имя и работа
   evt.preventDefault();
   if (nameInput.value && jobInput.value) {
     profileName.textContent = nameInput.value;
@@ -141,7 +141,7 @@ function formSubmitHandlerProfile(evt) {
   }
 }
 
-function popupAddForm() {
+function popupAddForm() { // данные для ввода новых карточек
   if (buttonAddCards.classList.contains('profile__add-button')) {
     cardInput.value = '';
     placeInput.value = '';
@@ -150,7 +150,7 @@ function popupAddForm() {
 }
 
 function formSubmitHandlerCards(evt) {
-  // submit для новой карточки
+  // submit для формы с новой карточкой
   evt.preventDefault();
   if (cardInput.value && placeInput.value) {
     addCard(cardInput.value, placeInput.value);
@@ -162,7 +162,7 @@ function formSubmitHandlerCards(evt) {
   }
 }
 
-function popupZoomOnOff() {
+function popupZoomOnOff() { // открытие и закрытие блока с увеличенной картинкой.
   if (!popups[2].classList.contains('popup_opened')) {
     popups[2].classList.add('popup_opened');
     popups[2].style.backgroundColor = 'rgba(0, 0, 0, .9)';
@@ -176,5 +176,5 @@ function popupZoomOnOff() {
 
 popupProfileForm.addEventListener('submit', formSubmitHandlerProfile); // на форме для сохранения профиля
 popupCardForm.addEventListener('submit', formSubmitHandlerCards); // на форме для сохранения карта
-buttonEditProfile.addEventListener('click', popupEditForm);
-buttonAddCards.addEventListener('click', popupAddForm);
+buttonEditProfile.addEventListener('click', popupEditForm); // слушатель на кнопке добавление нового профиля
+buttonAddCards.addEventListener('click', popupAddForm); // слушатель на кнопке для добавления карточек.
