@@ -33,15 +33,17 @@ const initialCards = [
   },
 ];
 
-const popups = document.querySelectorAll('.popup'); // попап
+const popupProfile = document.querySelector('.popup_type_profile'); // попап
+const popupCard = document.querySelector('.popup_type_card'); // попап
+const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
-const popupProfileForm = popups[0].querySelector(
+const popupProfileForm = popupProfile.querySelector(
   '.popup__container_type_profile'
 );
 const nameInput = popupProfileForm.querySelector('.popup__input_type_name'); // ввод имени для профиля
 const jobInput = popupProfileForm.querySelector('.popup__input_type_job'); // ввод данных профиля
 
-const popupCardForm = popups[1].querySelector('.popup__container_type_cards'); //форма новых картинок
+const popupCardForm = popupCard.querySelector('.popup__container_type_cards'); //форма новых картинок
 const placeInput = popupCardForm.querySelector('.popup__input_type_place');
 const cardInput = popupCardForm.querySelector('.popup__input_type_card');
 
@@ -51,31 +53,29 @@ const profileName = profileBlock.querySelector('.profile__title'); // имя в 
 const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
 const buttonAddCards = profileBlock.querySelector('.profile__add-button'); // кнопка добавить картинки
 
-const popupZoomCard = popups[2].querySelector('.popup__zoom'); // блок показа картинки
+const popupZoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
 const popupPic = popupZoomCard.querySelector('.popup__pic');
 const popupPlacePic = popupZoomCard.querySelector('.popup__place-pic');
-const buttonClosePopupZoom = popupZoomCard.querySelector(
-  '.popup__button-close'
-);
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
+const templateContainer = document
+.querySelector('#cards').content;
 
 const addCard = (link, name) => { // добавление новых карточек
-  const templateContainer = document
-    .querySelector('#cards')
-    .content.cloneNode(true);
 
-  const imageCard = (templateContainer.querySelector(
+    const containerCard = templateContainer.cloneNode(true);
+
+  const imageCard = (containerCard.querySelector(
     '.element__pic'
   ).src = link);
-  const placeCard = (templateContainer.querySelector(
+  const placeCard = (containerCard.querySelector(
     '.element__title'
   ).textContent = name);
-  const imageCardAlt = (templateContainer.querySelector(
+  const imageCardAlt = (containerCard.querySelector(
     '.element__pic'
   ).alt = name);
 
-  templateContainer
+  containerCard
     .querySelector('.element__button-like_color_white')
     .addEventListener('click', (event) => { // ставим лайки
       const buttonLike = event.target;
@@ -83,41 +83,57 @@ const addCard = (link, name) => { // добавление новых карто�
       buttonLike.classList.toggle('element__button-like_color_black');
     });
 
-  templateContainer
+    containerCard
     .querySelector('.element__button-trash')
     .addEventListener('click', (event) => { // удаление карточек
-      const Card = event.target.closest('.element');
+      const blockCard = event.target.closest('.element');
 
-      Card.remove();
+      blockCard.remove();
     });
 
-  templateContainer
+    containerCard
     .querySelector('.element__pic')
     .addEventListener('click', (event) => { // для открытия карточек
       const cardImage = event.target;
       popupPlacePic.textContent = popupPic.alt;
       popupPic.src = cardImage.src;
       popupPlacePic.textContent = cardImage.alt;
-      popupZoomOnOff();
-      buttonClosePopupZoom.addEventListener('click', popupZoomOnOff);
+      togglePopup(popupZoomCard);
     });
 
-  containerCards.prepend(templateContainer);
+  containerCards.prepend(containerCard);
 };
 const initialCardsRevers = initialCards.reverse(); // добавление карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
 function togglePopup(item) { // закрытие и открытие попапа и блока какой попадет
-  item.classList.toggle('popup__container_opened');
-  item.parentNode.classList.toggle('popup_opened');
-  item
+
+  if(item === popupZoomCard) {
+    item.classList.toggle('popup__zoom_opened');
+    item.parentNode.classList.toggle('popup_opened');
+    item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .9)';
+    item
     .querySelector('.popup__button-close')
     .addEventListener('click', (event) => {
       const popup = event.target.parentNode.closest('.popup_opened');
+      item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .6)';
 
       item.parentNode.classList.remove('popup_opened');
-      item.classList.remove('popup__container_opened');
+      item.classList.remove('popup__zoom_opened');
     });
+  }
+  else {
+    item.classList.toggle('popup__container_opened');
+    item.parentNode.classList.toggle('popup_opened');
+    item
+      .querySelector('.popup__button-close')
+      .addEventListener('click', (event) => {
+        const popup = event.target.parentNode.closest('.popup_opened');
+  
+        item.parentNode.classList.remove('popup_opened');
+        item.classList.remove('popup__container_opened');
+      });
+  }
 }
 
 function popupEditForm() { // форма для данных имя и работа
@@ -137,7 +153,6 @@ function formSubmitHandlerProfile(evt) {
     togglePopup(popupProfileForm);
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
-    return;
   }
 }
 
@@ -158,19 +173,6 @@ function formSubmitHandlerCards(evt) {
     togglePopup(popupCardForm);
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
-    return;
-  }
-}
-
-function popupZoomOnOff() { // открытие и закрытие блока с увеличенной картинкой.
-  if (!popups[2].classList.contains('popup_opened')) {
-    popups[2].classList.add('popup_opened');
-    popups[2].style.backgroundColor = 'rgba(0, 0, 0, .9)';
-    popupZoomCard.classList.add('popup__zoom_opened');
-  } else {
-    popups[2].style.backgroundColor = 'rgba(0, 0, 0, .6)';
-    popups[2].classList.remove('popup_opened');
-    popupZoomCard.classList.remove('popup__zoom_opened');
   }
 }
 

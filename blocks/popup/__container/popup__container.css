@@ -15,7 +15,6 @@
   line-height: 1.2;
   border-radius: 5px;
   max-height: 75vh;
-  opacity: 0;
 }
 
 @media screen and (max-height: 414px) {
