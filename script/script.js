@@ -61,7 +61,7 @@ const containerCards = document.querySelector('.elements'); // контейне�
 const templateContainer = document
 .querySelector('#cards').content;
 
-const addCard = (link, name) => { // добавление новых карточек
+const createCard = (link, name) => { // добавление новых карточек
 
     const containerCard = templateContainer.cloneNode(true);
 
@@ -100,11 +100,12 @@ const addCard = (link, name) => { // добавление новых карто�
       popupPlacePic.textContent = cardImage.alt;
       togglePopup(popupZoomCard);
     });
-
-  containerCards.prepend(containerCard);
+    return containerCard
 };
 
-
+const addCard = (name, link) => {
+  containerCards.prepend(createCard(name, link));
+}
 
 const initialCardsRevers = initialCards.reverse(); // добавление карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
