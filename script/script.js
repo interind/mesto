@@ -56,6 +56,11 @@ const buttonAddCards = profileBlock.querySelector('.profile__add-button'); // к
 const popupZoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
 const popupPic = popupZoomCard.querySelector('.popup__pic');
 const popupPlacePic = popupZoomCard.querySelector('.popup__place-pic');
+const buttonZoom = document.createElement('button');
+buttonZoom.classList.add('popup__button-close');
+buttonZoom.type = 'button';
+buttonZoom.title = 'закрыть';
+popupZoomCard.append(buttonZoom);
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document
