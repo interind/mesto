@@ -124,7 +124,7 @@ function togglePopup(item) { // закрытие и открытие попап�
 
       item.parentNode.classList.remove('popup_opened');
       item.classList.remove('popup__zoom_opened');
-      buttonClose.removeEventListener('click', event);
+      item.removeEventListener('click', event);
     });
   }
   else {
@@ -137,7 +137,7 @@ function togglePopup(item) { // закрытие и открытие попап�
   
         item.parentNode.classList.remove('popup_opened');
         item.classList.remove('popup__container_opened');
-        buttonClose.removeEventListener('click', event);
+        item.removeEventListener('click', event);
       });
   }
 }
