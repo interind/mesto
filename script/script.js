@@ -92,16 +92,12 @@ const createCard = (link, name) => { // добавление новых карт
     });
 
     containerCard
-    .querySelector('.element__pic')
-    .addEventListener('click', (event) => { // для открытия карточек
-      const cardImage = event.target;
-      popupPlacePic.textContent = popupPic.alt;
-      popupPic.src = cardImage.src;
-      popupPlacePic.textContent = cardImage.alt;
-      togglePopup(popupZoomCard);
-    });
+    .querySelector('.element__pic').addEventListener('click', zoom);
+  
+
     return containerCard
 };
+
 
 const addCard = (name, link) => { // добавление карточек
   containerCards.prepend(createCard(name, link));
@@ -109,6 +105,18 @@ const addCard = (name, link) => { // добавление карточек
 
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
+
+
+function zoom (event) {
+  const cardImage = event.target;
+  if(cardImage.classList.contains('element__pic')) {
+    
+    popupPlacePic.textContent = popupPic.alt;
+    popupPic.src = cardImage.src;
+    popupPlacePic.textContent = cardImage.alt;
+    togglePopup(popupZoomCard);
+  }
+}
 
 function togglePopup(item) { // закрытие и открытие попапа и блока какой попадет
 
