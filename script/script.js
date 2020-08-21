@@ -103,11 +103,11 @@ const createCard = (link, name) => { // добавление новых карт
     return containerCard
 };
 
-const addCard = (name, link) => {
+const addCard = (name, link) => { // добавление карточек
   containerCards.prepend(createCard(name, link));
 }
 
-const initialCardsRevers = initialCards.reverse(); // добавление карточек по порядку
+const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
 function togglePopup(item) { // закрытие и открытие попапа и блока какой попадет
