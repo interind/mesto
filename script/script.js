@@ -103,6 +103,9 @@ const addCard = (link, name) => { // добавление новых карто�
 
   containerCards.prepend(containerCard);
 };
+
+
+
 const initialCardsRevers = initialCards.reverse(); // добавление карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
@@ -115,11 +118,12 @@ function togglePopup(item) { // закрытие и открытие попап�
     item
     .querySelector('.popup__button-close')
     .addEventListener('click', (event) => {
-      const popup = event.target.parentNode.closest('.popup_opened');
+      const buttonClose = event.target.parentNode.closest('.popup_opened');
       item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .6)';
 
       item.parentNode.classList.remove('popup_opened');
       item.classList.remove('popup__zoom_opened');
+      buttonClose.removeEventListener('click', event);
     });
   }
   else {
@@ -128,10 +132,11 @@ function togglePopup(item) { // закрытие и открытие попап�
     item
       .querySelector('.popup__button-close')
       .addEventListener('click', (event) => {
-        const popup = event.target.parentNode.closest('.popup_opened');
+        const buttonClose = event.target.parentNode.closest('.popup_opened');
   
         item.parentNode.classList.remove('popup_opened');
         item.classList.remove('popup__container_opened');
+        buttonClose.removeEventListener('click', event);
       });
   }
 }
@@ -175,6 +180,7 @@ function formSubmitHandlerCards(evt) {
     alert('Для сохрания нужно заполнить все ваши данные');
   }
 }
+
 
 popupProfileForm.addEventListener('submit', formSubmitHandlerProfile); // на форме для сохранения профиля
 popupCardForm.addEventListener('submit', formSubmitHandlerCards); // на форме для сохранения карта
