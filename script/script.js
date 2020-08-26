@@ -135,7 +135,6 @@ function togglePopup(item) {
         item.removeEventListener('click', event);
       });
   } else {
-    item.classList.toggle('popup__container_opened');
     item.parentNode.classList.toggle('popup_opened');
     item
       .querySelector('.popup__button-close')
@@ -143,7 +142,6 @@ function togglePopup(item) {
         const buttonClose = event.target.parentNode.closest('.popup_opened');
 
         item.parentNode.classList.remove('popup_opened');
-        item.classList.remove('popup__container_opened');
         item.removeEventListener('click', event);
       });
   }
