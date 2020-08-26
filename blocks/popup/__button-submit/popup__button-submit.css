@@ -14,9 +14,22 @@
   color: #FFFFFF;
   border-radius: 2px;
   border-color: #000;
+  margin-top: 13.11%;/*48*/
 }
 
 .popup__button-submit:hover {
  background-color: rgba(0, 0, 0, .8);
  cursor: pointer;
+}
+
+@media screen and (max-height: 414px) {
+  .popup__button-submit {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__button-submit {
+   margin-top: 18%;/*36*/
+  }
 }

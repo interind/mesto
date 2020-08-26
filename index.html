@@ -36,9 +36,9 @@
           Редактировать форму
         </h2>
         <input class="popup__input popup__input_type_name" type="text" name="inputName" required minlength="2" maxlength="40">
-        <span>сообщение об ошибке</span>
+        <span class="popup__input-error">сообщение об ошибке</span>
         <input class="popup__input popup__input_type_job" type="text" name="inputJob" required minlength="2" maxlength="200">
-        <span>сообщение об ошибке</span>
+        <span class="popup__input-error">сообщение об ошибке</span>
         <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
@@ -49,9 +49,9 @@
           Новое место
         </h2>
         <input class="popup__input popup__input_type_place" type="text" placeholder="Название" name="inputPlace" minlength="1" maxlength="30" required>
-        <span>сообщение об ошибке</span>
+        <span class="popup__input-error">сообщение об ошибке</span>
         <input class="popup__input popup__input_type_card" type="url" placeholder="Ссылка на картинку" name="inputCard" required>
-        <span>сообщение об ошибке</span>
+        <span class="popup__input-error">сообщение об ошибке</span>
         <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
@@ -75,6 +75,5 @@
     </template>
   </div>
   <script src="script/script.js"></script>
-  <script> </script>
 </body>
 </html>

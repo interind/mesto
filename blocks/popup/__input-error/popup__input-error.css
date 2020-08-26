@@ -1,0 +1,4 @@
+.popup__input-error {
+ color: #f00;
+ align-self: flex-start;
+}
