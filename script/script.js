@@ -38,12 +38,12 @@ const popupCard = document.querySelector('.popup_type_card'); // попап
 const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
 const popupProfileForm = document.forms.formProfile;
-const nameInput = popupProfileForm.querySelector('.popup__input_type_name'); // ввод имени для профиля
-const jobInput = popupProfileForm.querySelector('.popup__input_type_job'); // ввод данных профиля
+const nameInput = popupProfileForm.elements.inputName; // ввод имени для профиля
+const jobInput = popupProfileForm.elements.inputJob; // ввод данных профиля
 
-const popupCardForm = popupCard.querySelector('.popup__container_type_cards'); //форма новых картинок
-const placeInput = popupCardForm.querySelector('.popup__input_type_place');
-const cardInput = popupCardForm.querySelector('.popup__input_type_card');
+const popupCardForm = document.forms.formCard; //форма новых картинок
+const placeInput = popupCardForm.elements.inputPlace;
+const cardInput = popupCardForm.elements.inputCard;
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const buttonEditProfile = profileBlock.querySelector('.profile__edit-button'); //кнопка открытия формы
