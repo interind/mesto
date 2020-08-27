@@ -48,11 +48,11 @@
         <h2 class="popup__title">
           Новое место
         </h2>
-        <input class="popup__input popup__input_type_place" type="text" placeholder="Название" name="place" minlength="1" maxlength="30" required>
-        <span class="popup__input-error" id="input-place-error"></span>
-        <input class="popup__input popup__input_type_card" type="url" placeholder="Ссылка на картинку" name="card" required>
-        <span class="popup__input-error" id="input-card-error"></span>
-        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
+        <input class="popup__input popup__input_type_place" type="text" placeholder="Название" id="name" name="place" minlength="1" maxlength="30" required>
+        <label class="popup__input-error" for="place">Ошибка1</label>
+        <input class="popup__input popup__input_type_card" type="url" placeholder="Ссылка на картинку" id="card" name="card" required>
+        <label class="popup__input-error" for="card">Ошибка</label>
+        <button class="popup__button-submit" type="submit" title="сохранить" disabled>Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
     </div>

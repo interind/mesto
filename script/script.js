@@ -37,7 +37,14 @@ const popupProfile = document.querySelector('.popup_type_profile'); // попа�
 const popupCard = document.querySelector('.popup_type_card'); // попап
 const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
+const popupProfileForm = document.forms.formProfile;
+const inputName = popupProfileForm.elements.name;
+const inputJob = popupProfileForm.elements.job;
 
+const popupCardForm = document.forms.formCard; //форма новых картинок
+const inputPlace = popupCardForm.elements.place;
+const inputCard = popupCardForm.elements.card;
+const buttonSubmit = popupCardForm.querySelector('.popup__button-submit');
 // const formCardError = popupCardForm.querySelector(`${input}-error`);
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
@@ -115,7 +122,7 @@ initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
 
 
-const togglePopup = (item) => {
+const togglePopup = (item, formSubmit) => {
   // закрытие и открытие попапа и блока какой попадет
   if (item === popupZoomCard) {
     item.classList.toggle('popup__zoom_opened');
@@ -132,6 +139,7 @@ const togglePopup = (item) => {
         item.removeEventListener('click', evt);
       });
   } else {
+    item.removeEventListener('submit', formSubmit);
     item.parentNode.classList.toggle('popup_opened');
     item
       .querySelector('.popup__button-close')
@@ -148,7 +156,7 @@ const togglePopup = (item) => {
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
-  if (inputName.value && inputJob.value) {
+  if (inputName.value.length > 0 && inputJob.value.length > 0) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     togglePopup(popupProfileForm);
@@ -157,11 +165,22 @@ const formSubmitHandlerProfile = (evt) => {
   }
 };
 
+function setSubmitButtonState(inputCard, inputPlace) { //проверка валидности инпут
+  if (!inputCard.validity.typeMismatch && inputPlace.value.length > 2) {
+    buttonSubmit.removeAttribute('disabled');
+    buttonSubmit.classList.remove('popup__button-submit_disabled');
+  } else {
+    buttonSubmit.setAttribute('disabled', true);
+    buttonSubmit.classList.add('popup__button-submit_disabled');
+  }
+}
+
 
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
   if (inputCard.value && inputPlace.value) {
+   
     addCard(inputCard.value, inputPlace.value);
     
     togglePopup(popupCardForm);
@@ -172,23 +191,21 @@ const formSubmitHandlerCards = (evt) => {
 };
 
 profileBlock.querySelector('.profile__edit-button').addEventListener('click', () => {
-  const popupProfileForm = document.forms.formProfile;
-  const inputName = popupProfileForm.elements.name;
-  const inputJob = popupProfileForm.elements.job;
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
   togglePopup(popupProfileForm)
   popupProfileForm.addEventListener('submit', formSubmitHandlerProfile);
-  popupProfileForm.removeEventListener('submit', formSubmitHandlerProfile);
+
 });
 
 profileBlock.querySelector('.profile__add-button').addEventListener('click', () =>{
-  const popupCardForm = document.forms.formCard; //форма новых картинок
-  const inputPlace = popupCardForm.elements.place;
-  const inputCard = popupCardForm.elements.card;
   inputCard.value = '';
   inputPlace.value = '';
   togglePopup(popupCardForm);
+  buttonSubmit.classList.add('popup__button-submit_disabled');
   popupCardForm.addEventListener('submit', formSubmitHandlerCards);
-  popupCardForm.removeEventListener('submit', formSubmitHandlerCards);
+});
+
+popupCardForm.addEventListener('input', (evt) => {
+    setSubmitButtonState(inputCard, inputPlace);
 });

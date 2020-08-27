@@ -1,19 +1,24 @@
 .popup__input {
- border: 0;
- max-width: 358px;
- width: 100%;
- font-family: inherit;
- font-size: inherit;
- padding: 10px 5px;
- border-bottom: 1px solid rgba( 0, 0, 0, .2);
- margin-top: 13.11%;/*48*/
- pointer-events: fill;
- margin-bottom: 5px;
+  box-sizing: border-box;
+  border: 0;
+  max-width: 358px;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px 5px;
+  border-bottom: 1px solid #f00;
+  margin-top: 13.11%;/*48*/
+  pointer-events: fill;
+  margin-bottom: 5px;
 }
 
 .popup__input:focus {
   outline: 2px groove rgba(106, 151, 235, 0.657);
 }
+
+.popup__input:valid {
+  border-bottom: 1px solid rgba( 0, 0, 0, .2);
+ }
 
 @media screen and (max-height: 414px) {
   .popup__input {
