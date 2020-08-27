@@ -38,12 +38,13 @@ const popupCard = document.querySelector('.popup_type_card'); // попап
 const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
 const popupProfileForm = document.forms.formProfile;
-const nameInput = popupProfileForm.elements.inputName; // ввод имени для профиля
-const jobInput = popupProfileForm.elements.inputJob; // ввод данных профиля
+const inputName = popupProfileForm.elements.name;
+const inputJob = popupProfileForm.elements.job;// ввод данных профиля
 
 const popupCardForm = document.forms.formCard; //форма новых картинок
-const placeInput = popupCardForm.elements.inputPlace;
-const cardInput = popupCardForm.elements.inputCard;
+const inputPlace = popupCardForm.elements.place;
+const inputCard = popupCardForm.elements.card;
+// const formCardError = popupCardForm.querySelector(`${input}-error`);
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const buttonEditProfile = profileBlock.querySelector('.profile__edit-button'); //кнопка открытия формы
@@ -62,6 +63,15 @@ popupZoomCard.append(buttonZoom);
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document.querySelector('#cards').content;
+const zoom = (event) => {
+  const cardImage = event.target;
+  if (cardImage.classList.contains('element__pic')) {
+    popupPlacePic.textContent = popupPic.alt;
+    popupPic.src = cardImage.src;
+    popupPlacePic.textContent = cardImage.alt;
+    togglePopup(popupZoomCard);
+  }
+};
 
 const createCard = (link, name) => {
   // добавление новых карточек
@@ -99,6 +109,8 @@ const createCard = (link, name) => {
   return containerCard;
 };
 
+
+
 const addCard = (name, link) => {
   // добавление карточек
   containerCards.prepend(createCard(name, link));
@@ -107,17 +119,10 @@ const addCard = (name, link) => {
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
-function zoom(event) {
-  const cardImage = event.target;
-  if (cardImage.classList.contains('element__pic')) {
-    popupPlacePic.textContent = popupPic.alt;
-    popupPic.src = cardImage.src;
-    popupPlacePic.textContent = cardImage.alt;
-    togglePopup(popupZoomCard);
-  }
-}
 
-function togglePopup(item) {
+
+
+const togglePopup = (item) => {
   // закрытие и открытие попапа и блока какой попадет
 
   if (item === popupZoomCard) {
@@ -145,13 +150,13 @@ function togglePopup(item) {
         item.removeEventListener('click', event);
       });
   }
-}
+};
 
 function popupEditForm() {
   // форма для данных имя и работа
   if (buttonEditProfile.classList.contains('profile__edit-button')) {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
     togglePopup(popupProfileForm);
   }
 }
@@ -159,9 +164,9 @@ function popupEditForm() {
 function formSubmitHandlerProfile(evt) {
   // submit для формы имя и работа
   evt.preventDefault();
-  if (nameInput.value && jobInput.value) {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
+  if (inputName.value && inputJob.value) {
+    profileName.textContent = inputName.value;
+    profileJob.textContent = inputJob.value;
     togglePopup(popupProfileForm);
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
@@ -171,8 +176,8 @@ function formSubmitHandlerProfile(evt) {
 function popupAddForm() {
   // данные для ввода новых карточек
   if (buttonAddCards.classList.contains('profile__add-button')) {
-    cardInput.value = '';
-    placeInput.value = '';
+    inputCard.value = '';
+    inputPlace.value = '';
     togglePopup(popupCardForm);
   }
 }
@@ -180,8 +185,8 @@ function popupAddForm() {
 function formSubmitHandlerCards(evt) {
   // submit для формы с новой карточкой
   evt.preventDefault();
-  if (cardInput.value && placeInput.value) {
-    addCard(cardInput.value, placeInput.value);
+  if (inputCard.value && inputPlace.value) {
+    addCard(inputCard.value, inputPlace.value);
 
     togglePopup(popupCardForm);
   } else {
