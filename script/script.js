@@ -124,7 +124,6 @@ initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 
 const togglePopup = (item) => {
   // закрытие и открытие попапа и блока какой попадет
-
   if (item === popupZoomCard) {
     item.classList.toggle('popup__zoom_opened');
     item.parentNode.classList.toggle('popup_opened');
@@ -152,16 +151,8 @@ const togglePopup = (item) => {
   }
 };
 
-function popupEditForm() {
-  // форма для данных имя и работа
-  if (buttonEditProfile.classList.contains('profile__edit-button')) {
-    inputName.value = profileName.textContent;
-    inputJob.value = profileJob.textContent;
-    togglePopup(popupProfileForm);
-  }
-}
 
-function formSubmitHandlerProfile(evt) {
+const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
   if (inputName.value && inputJob.value) {
@@ -171,30 +162,31 @@ function formSubmitHandlerProfile(evt) {
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
   }
-}
+};
 
-function popupAddForm() {
-  // данные для ввода новых карточек
-  if (buttonAddCards.classList.contains('profile__add-button')) {
-    inputCard.value = '';
-    inputPlace.value = '';
-    togglePopup(popupCardForm);
-  }
-}
 
-function formSubmitHandlerCards(evt) {
+const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
   if (inputCard.value && inputPlace.value) {
     addCard(inputCard.value, inputPlace.value);
-
+    
     togglePopup(popupCardForm);
+    
   } else {
     alert('Для сохрания нужно заполнить все ваши данные');
   }
-}
+};
+
+buttonEditProfile.addEventListener('click', () => {
+  inputName.value = profileName.textContent;
+  inputJob.value = profileJob.textContent;
+  togglePopup(popupProfileForm)});
+
+buttonAddCards.addEventListener('click', () =>{
+  inputCard.value = '';
+  inputPlace.value = '';
+  togglePopup(popupCardForm)});
 
 popupProfileForm.addEventListener('submit', formSubmitHandlerProfile); // на форме для сохранения профиля
 popupCardForm.addEventListener('submit', formSubmitHandlerCards); // на форме для сохранения карта
-buttonEditProfile.addEventListener('click', popupEditForm); // слушатель на кнопке добавление нового профиля
-buttonAddCards.addEventListener('click', popupAddForm); // слушатель на кнопке для добавления карточек.
