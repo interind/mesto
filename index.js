@@ -44,7 +44,8 @@ const inputJob = popupProfileForm.elements.job;
 const popupCardForm = document.forms.formCard; //форма новых картинок
 const inputPlace = popupCardForm.elements.place;
 const inputCard = popupCardForm.elements.card;
-// const formCardError = popupCardForm.querySelector(`${input}-error`);
+const formCardError = inputPlace.nextElementSibling;
+// formCardError.textContent = inputPlace.validationMessage;
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
