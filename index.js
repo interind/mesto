@@ -49,7 +49,6 @@ const profileBlock = document.querySelector('.profile'); //блок с кноп�
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
 const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
 
-
 const popupZoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
 const popupPic = popupZoomCard.querySelector('.popup__pic');
 const popupPlacePic = popupZoomCard.querySelector('.popup__place-pic');
@@ -59,13 +58,13 @@ buttonZoom.type = 'button';
 buttonZoom.title = 'закрыть';
 popupZoomCard.append(buttonZoom);
 
-const objValidation =  {
+const objValidation = {
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button-submit',
   inactiveButtonClass: 'popup__button-submit_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
+  errorClass: 'popup__input-error_active',
 };
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
@@ -116,8 +115,6 @@ const createCard = (link, name) => {
   return containerCard;
 };
 
-
-
 const addCard = (name, link) => {
   // добавление карточек
   containerCards.prepend(createCard(name, link));
@@ -125,9 +122,6 @@ const addCard = (name, link) => {
 
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.link, card.name));
-
-
-
 
 const togglePopup = (item, formSubmit) => {
   // закрытие и открытие попапа и блока какой попадет
@@ -159,45 +153,52 @@ const togglePopup = (item, formSubmit) => {
   }
 };
 
-
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
+
   enableValidation(objValidation);
   if (inputName.value && inputJob.value) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     togglePopup(popupProfileForm);
   } else {
-    alert('Для сохрания нужно заполнить все ваши данные');
+    alert('Для сохрания нужно заполнить все поля');
   }
 };
 
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
+
   enableValidation(objValidation);
   if (inputCard.value && inputPlace.value) {
     addCard(inputCard.value, inputPlace.value);
-    
+
     togglePopup(popupCardForm);
-    
   } else {
-    alert('Для сохрания нужно заполнить все ваши данные');
+    alert('Для сохрания нужно заполнить все поля');
   }
 };
 
-profileBlock.querySelector('.profile__edit-button').addEventListener('click', () => {
-  inputName.value = profileName.textContent;
-  inputJob.value = profileJob.textContent;
-  togglePopup(popupProfileForm)
-  popupProfileForm.addEventListener('submit', formSubmitHandlerProfile);
+profileBlock
+  .querySelector('.profile__edit-button')
+  .addEventListener('click', () => {
+    inputName.value = profileName.textContent;
+    inputJob.value = profileJob.textContent;
+    togglePopup(popupProfileForm);
+    popupProfileForm.addEventListener('submit', formSubmitHandlerProfile);
+  });
 
-});
-
-profileBlock.querySelector('.profile__add-button').addEventListener('click', () =>{
-  inputCard.value = '';
-  inputPlace.value = '';
-  togglePopup(popupCardForm);
-  popupCardForm.addEventListener('submit', formSubmitHandlerCards);
-});
+profileBlock
+  .querySelector('.profile__add-button')
+  .addEventListener('click', () => {
+    const buttonSubmit = popupCardForm.querySelector('.popup__button-submit');
+    if (!buttonSubmit.classList.contains('popup__submit-button_disabled')) {
+      buttonSubmit.classList.add('popup__button-submit_disabled');
+      inputCard.value = null;
+      inputPlace.value = null;
+      togglePopup(popupCardForm);
+      popupCardForm.addEventListener('submit', formSubmitHandlerCards);
+    }
+  });
