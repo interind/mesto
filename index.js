@@ -59,6 +59,15 @@ buttonZoom.type = 'button';
 buttonZoom.title = 'закрыть';
 popupZoomCard.append(buttonZoom);
 
+const objValidation =  {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-submit',
+  inactiveButtonClass: 'popup__button-submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document.querySelector('#cards').content;
 const zoom = (evt) => {
@@ -154,7 +163,8 @@ const togglePopup = (item, formSubmit) => {
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
-  if (inputName.value.length > 0 && inputJob.value.length > 0) {
+  enableValidation(objValidation);
+  if (inputName.value && inputJob.value) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     togglePopup(popupProfileForm);
@@ -166,8 +176,8 @@ const formSubmitHandlerProfile = (evt) => {
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
+  enableValidation(objValidation);
   if (inputCard.value && inputPlace.value) {
-   
     addCard(inputCard.value, inputPlace.value);
     
     togglePopup(popupCardForm);
