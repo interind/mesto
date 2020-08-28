@@ -129,6 +129,12 @@ const togglePopup = (item, formSubmit) => {
     item.classList.toggle('popup__zoom_opened');
     item.parentNode.classList.toggle('popup_opened');
     item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .9)';
+    item.parentNode.addEventListener('mousedown', (evt) => {
+      if(evt.target.classList.contains('popup')){
+        evt.target.classList.remove('popup_opened');
+        evt.target.removeEventListener('mousedown', evt);
+      }
+    });
     item
       .querySelector('.popup__button-close')
       .addEventListener('click', (evt) => {
@@ -142,6 +148,12 @@ const togglePopup = (item, formSubmit) => {
   } else {
     item.removeEventListener('submit', formSubmit);
     item.parentNode.classList.toggle('popup_opened');
+    item.parentNode.addEventListener('mousedown', (evt) => {
+      if(evt.target.classList.contains('popup')){
+        evt.target.classList.remove('popup_opened');
+        evt.target.removeEventListener('mousedown', evt);
+      }
+    });
     item
       .querySelector('.popup__button-close')
       .addEventListener('click', (evt) => {
