@@ -44,7 +44,6 @@ const inputJob = popupProfileForm.elements.job;
 const popupCardForm = document.forms.formCard; //форма новых картинок
 const inputPlace = popupCardForm.elements.place;
 const inputCard = popupCardForm.elements.card;
-const buttonSubmit = popupCardForm.querySelector('.popup__button-submit');
 // const formCardError = popupCardForm.querySelector(`${input}-error`);
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
@@ -165,17 +164,6 @@ const formSubmitHandlerProfile = (evt) => {
   }
 };
 
-function setSubmitButtonState(inputCard, inputPlace) { //проверка валидности инпут
-  if (!inputCard.validity.typeMismatch && inputPlace.value.length > 2) {
-    buttonSubmit.removeAttribute('disabled');
-    buttonSubmit.classList.remove('popup__button-submit_disabled');
-  } else {
-    buttonSubmit.setAttribute('disabled', true);
-    buttonSubmit.classList.add('popup__button-submit_disabled');
-  }
-}
-
-
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
@@ -202,10 +190,5 @@ profileBlock.querySelector('.profile__add-button').addEventListener('click', () 
   inputCard.value = '';
   inputPlace.value = '';
   togglePopup(popupCardForm);
-  buttonSubmit.classList.add('popup__button-submit_disabled');
   popupCardForm.addEventListener('submit', formSubmitHandlerCards);
-});
-
-popupCardForm.addEventListener('input', (evt) => {
-    setSubmitButtonState(inputCard, inputPlace);
 });
