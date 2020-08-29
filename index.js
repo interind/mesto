@@ -48,6 +48,7 @@ const inputCard = popupCardForm.elements.card;
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
 const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
+const buttonEdit = profileBlock.querySelector('.profile__edit-button');
 
 const popupZoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
 const popupPic = popupZoomCard.querySelector('.popup__pic');
@@ -161,6 +162,13 @@ const togglePopup = (item, formSubmit) => {
   }
 };
 
+const formProfileForm = () => {
+  inputName.value = profileName.textContent;
+  inputJob.value = profileJob.textContent;
+  togglePopup(popupProfileForm);
+  popupProfileForm.addEventListener('submit', formSubmitHandlerProfile);
+};
+
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
@@ -188,14 +196,10 @@ const formSubmitHandlerCards = (evt) => {
   }
 };
 
-profileBlock
-  .querySelector('.profile__edit-button')
-  .addEventListener('click', () => {
-    inputName.value = profileName.textContent;
-    inputJob.value = profileJob.textContent;
-    togglePopup(popupProfileForm);
-    popupProfileForm.addEventListener('submit', formSubmitHandlerProfile);
-  });
+
+
+
+  buttonEdit.addEventListener('click', formProfileForm);
 
 profileBlock
   .querySelector('.profile__add-button')
