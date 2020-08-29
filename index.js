@@ -58,15 +58,6 @@ buttonZoom.type = 'button';
 buttonZoom.title = 'закрыть';
 popupZoomCard.append(buttonZoom);
 
-const objValidation = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup__button-submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-};
-
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document.querySelector('#cards').content;
 const zoom = (evt) => {
@@ -126,11 +117,14 @@ initialCardsRevers.forEach((card) => addCard(card.link, card.name));
 const togglePopup = (item, formSubmit) => {
   // закрытие и открытие попапа и блока какой попадет
   if (item === popupZoomCard) {
+
     item.classList.toggle('popup__zoom_opened');
     item.parentNode.classList.toggle('popup_opened');
     item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .9)';
     item.parentNode.addEventListener('mousedown', (evt) => {
+
       if(evt.target.classList.contains('popup')){
+
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
       }
@@ -149,7 +143,9 @@ const togglePopup = (item, formSubmit) => {
     item.removeEventListener('submit', formSubmit);
     item.parentNode.classList.toggle('popup_opened');
     item.parentNode.addEventListener('mousedown', (evt) => {
+
       if(evt.target.classList.contains('popup')){
+
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
       }
@@ -168,12 +164,12 @@ const togglePopup = (item, formSubmit) => {
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
-
-  enableValidation(objValidation);
   if (inputName.value && inputJob.value) {
+
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     togglePopup(popupProfileForm);
+
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }
@@ -182,12 +178,11 @@ const formSubmitHandlerProfile = (evt) => {
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
-
-  enableValidation(objValidation);
   if (inputCard.value && inputPlace.value) {
-    addCard(inputCard.value, inputPlace.value);
 
+    addCard(inputCard.value, inputPlace.value);
     togglePopup(popupCardForm);
+
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }
@@ -205,12 +200,8 @@ profileBlock
 profileBlock
   .querySelector('.profile__add-button')
   .addEventListener('click', () => {
-    const buttonSubmit = popupCardForm.querySelector('.popup__button-submit');
-    if (!buttonSubmit.classList.contains('popup__submit-button_disabled')) {
-      buttonSubmit.classList.add('popup__button-submit_disabled');
-      inputCard.value = null;
-      inputPlace.value = null;
+      inputCard.value = '';
+      inputPlace.value = '';
       togglePopup(popupCardForm);
       popupCardForm.addEventListener('submit', formSubmitHandlerCards);
-    }
   });
