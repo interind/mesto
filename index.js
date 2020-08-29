@@ -142,14 +142,22 @@ const togglePopup = (item, formSubmit) => {
       
   } 
   else {
-    item.removeEventListener('submit', formSubmit);
     item.parentNode.classList.toggle('popup_opened');
+    enableValidation({
+      formSelector: '.popup__container',
+      inputSelector: '.popup__input',
+      submitButtonSelector: '.popup__button-submit',
+      inactiveButtonClass: 'popup__button-submit_disabled',
+      inputErrorClass: 'popup__input_type_error',
+      errorClass: 'popup__input-error_active',
+    });
     closePopup();
     item.parentNode.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')) {
 
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
+        item.removeEventListener('submit', formSubmit);
         clearError();
       }
     });
@@ -161,6 +169,7 @@ const togglePopup = (item, formSubmit) => {
 
         item.parentNode.classList.remove('popup_opened');
         item.removeEventListener('click', evt);
+        item.removeEventListener('submit', formSubmit);
         clearError();
       });
   

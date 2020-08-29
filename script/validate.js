@@ -49,6 +49,7 @@ const setEventListeners = (formElement, {inputSelector, submitButtonSelector, in
       checkInputValidity(formElement, inputElement, rest);
       toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     });
+    
   });
 };
 
@@ -64,12 +65,3 @@ const enableValidation = ({formSelector, ...rest}) => {
     setEventListeners(formElement, rest);
   });
 };
-
-enableValidation({
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup__button-submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-});
