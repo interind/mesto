@@ -35,11 +35,11 @@
         <h2 class="popup__title">
           Редактировать форму
         </h2>
-        <input class="popup__input popup__input_type_name" id="input-name" type="text" name="name" required minlength="2" maxlength="40">
+        <input class="popup__input" id="input-name" type="text" name="name" minlength="2" maxlength="40" required>
         <span class="popup__input-error" id="input-name-error"></span>
-        <input class="popup__input popup__input_type_job" id="input-job" type="text" name="job" required minlength="2" maxlength="200">
+        <input class="popup__input" id="input-job" type="text" name="job" minlength="2" maxlength="200" required>
         <span class="popup__input-error" id="input-job-error"></span>
-        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
+        <button class="popup__button-submit popup__button-submit_disabled" type="submit" title="сохранить" disabled>Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
     </div>
@@ -48,9 +48,9 @@
         <h2 class="popup__title">
           Новое место
         </h2>
-        <input class="popup__input popup__input_type_place" type="text" placeholder="Название" id="input-place" name="place" minlength="1" maxlength="30" required>
+        <input class="popup__input" type="text" placeholder="Название" id="input-place" name="place" minlength="1" maxlength="30" required>
         <span class="popup__input-error" id="input-place-error"></span>
-        <input class="popup__input popup__input_type_card" type="url" placeholder="Ссылка на картинку" id="input-card" name="card" required>
+        <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="input-card" name="card" required>
         <span class="popup__input-error" id="input-card-error"></span>
         <button class="popup__button-submit popup__button-submit_disabled" type="submit" title="сохранить"disabled>Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
