@@ -120,11 +120,11 @@ const togglePopup = (item, formSubmit) => {
   // закрытие и открытие попапа и блока какой попадет
   if (item === zoomCard) {
     item.parentNode.classList.toggle('popup_opened');
+    closePopup();
     item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .9)';
     item.parentNode.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')) {
         evt.target.classList.remove('popup_opened');
-        closePopup();
         evt.target.removeEventListener('mousedown', evt);
       }
     });
@@ -180,7 +180,7 @@ const closePopup = () =>{
   const popupAll = Array.from(document.querySelectorAll('.popup'));
   popupAll.forEach((popupElement) => {
 
-  popupElement.addEventListener('keydown', (evt) => {//закрытие клавишей esc
+  popupElement.addEventListener('keydown', evt => {//закрытие клавишей esc
     if (evt.key === 'Escape' && popupElement.classList.contains('popup_opened')) {
       popupElement.classList.remove('popup_opened');
       popupElement.removeEventListener('keydown', evt);
