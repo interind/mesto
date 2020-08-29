@@ -139,21 +139,26 @@ const togglePopup = (item, formSubmit) => {
 
         item.parentNode.classList.remove('popup_opened');
         item.removeEventListener('click', evt);
+      
       });
   } else {
     item.removeEventListener('submit', formSubmit);
     item.parentNode.classList.toggle('popup_opened');
     item.parentNode.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')) {
+
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
+        clearError();
       }
     });
 
     item.addEventListener('keydown', (evt) => {//закрытие клавишей esc
       if (evt.key === 'Escape') {
         item.parentNode.classList.remove('popup_opened');
+        
         evt.target.removeEventListener('keydown', evt);
+        clearError();
       }
     });
 
@@ -164,8 +169,25 @@ const togglePopup = (item, formSubmit) => {
 
         item.parentNode.classList.remove('popup_opened');
         item.removeEventListener('click', evt);
+        clearError();
       });
-    item.querySelector('.popup__title').focus();
+  }
+};
+
+const clearError = () =>{ // чистка старых данных и ошибочных аттрибутов 
+  const error = Array.from(document.querySelectorAll('.popup__input-error'));
+  error.forEach((errorItem) => {
+    errorItem.textContent = '';
+  });
+  const buttonSubmit = profileForm.querySelector('.popup__button-submit');
+  const buttonSubmitCard = cardForm.querySelector('.popup__button-submit');
+  if(buttonSubmit.classList.contains('popup__button-submit_disabled')){
+    buttonSubmit.classList.remove('popup__button-submit_disabled');
+    buttonSubmit.removeAttribute('disabled');
+  }
+  else if(!buttonSubmitCard.classList.contains('popup__button-submit_disabled')){
+    buttonSubmitCard.classList.add('popup__button-submit_disabled');
+    buttonSubmitCard.setAttribute('disabled', true);
   }
 };
 
@@ -174,7 +196,6 @@ const inProfileForm = () => { //получение данных формы пр�
   inputJob.value = profileJob.textContent;
   togglePopup(profileForm);
   profileForm.addEventListener('submit', formSubmitHandlerProfile);
-  inputName.focus();
 };
 
 const formSubmitHandlerProfile = (evt) => {
@@ -184,6 +205,7 @@ const formSubmitHandlerProfile = (evt) => {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
     togglePopup(profileForm);
+
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }
@@ -194,7 +216,6 @@ const inCardForm = () => {//получение данных формы новы�
   inputCard.value = '';
   togglePopup(cardForm);
   cardForm.addEventListener('submit', formSubmitHandlerCards);
-  inputPlace.focus();
 };
 
 const formSubmitHandlerCards = (evt) => {
@@ -203,6 +224,7 @@ const formSubmitHandlerCards = (evt) => {
   if (inputPlace.value && inputCard.value) {
     addCard(inputPlace.value, inputCard.value);
     togglePopup(cardForm);
+
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }

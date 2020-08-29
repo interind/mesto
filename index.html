@@ -36,10 +36,10 @@
           Редактировать форму
         </h2>
         <input class="popup__input" id="input-name" type="text" name="name" minlength="2" maxlength="40" required>
-        <span class="popup__input-error" id="input-name-error"></span>
+        <div class="popup__error"><span class="popup__input-error" id="input-name-error"></span></div>
         <input class="popup__input" id="input-job" type="text" name="job" minlength="2" maxlength="200" required>
-        <span class="popup__input-error" id="input-job-error"></span>
-        <button class="popup__button-submit popup__button-submit_disabled" type="submit" title="сохранить" disabled>Сохранить</button>
+        <div class="popup__error"><span class="popup__input-error" id="input-job-error"></span></div>
+        <button class="popup__button-submit" type="submit" title="сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
     </div>
@@ -49,9 +49,9 @@
           Новое место
         </h2>
         <input class="popup__input" type="text" placeholder="Название" id="input-place" name="place" minlength="1" maxlength="30" required>
-        <span class="popup__input-error" id="input-place-error"></span>
+        <div class="popup__error"><span class="popup__input-error" id="input-place-error"></span></div>
         <input class="popup__input" type="url" placeholder="Ссылка на картинку" id="input-card" name="card" required>
-        <span class="popup__input-error" id="input-card-error"></span>
+        <div class="popup__error"><span class="popup__input-error" id="input-card-error"></span></div>
         <button class="popup__button-submit popup__button-submit_disabled" type="submit" title="сохранить"disabled>Сохранить</button>
         <button class="popup__button-close" type="button" title="закрыть"></button>
       </form>
