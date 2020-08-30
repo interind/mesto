@@ -37,11 +37,10 @@ const popupProfile = document.querySelector('.popup_type_profile'); // попа�
 const popupCard = document.querySelector('.popup_type_card'); // попап
 const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
-const profileForm = document.forms.formProfile;//форма профиля
+const profileForm = document.forms.formProfile; //форма профиля
 const inputName = profileForm.elements.name;
 const inputJob = profileForm.elements.job;
 const buttonSubmit = formProfile.querySelector('.popup__button-submit');
-  
 
 const cardForm = document.forms.formCard; //форма новых картинок
 const inputPlace = cardForm.elements.place;
@@ -51,8 +50,8 @@ const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
 const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
-const buttonEdit = profileBlock.querySelector('.profile__edit-button');//кнопка редактировать
-const buttonAdd = profileBlock.querySelector('.profile__add-button');//кнопка добавить
+const buttonEdit = profileBlock.querySelector('.profile__edit-button'); //кнопка редактировать
+const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
 
 const zoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
 const zoomPic = zoomCard.querySelector('.popup__pic');
@@ -66,13 +65,14 @@ zoomCard.append(buttonZoom);
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document.querySelector('#cards').content;
 
-const zoom = (evt) => { // функция для открытия картинок
+const zoom = (evt) => {
+  // функция для открытия картинок
   const cardImage = evt.target;
   if (cardImage.classList.contains('element__pic')) {
     zoomPlacePic.textContent = zoomPic.alt;
     zoomPic.src = cardImage.src;
     zoomPlacePic.textContent = cardImage.alt;
-    togglePopup(zoomCard);
+    togglePopup(popupZoom);
   }
 };
 
@@ -116,33 +116,30 @@ const addCard = (name, link) => {
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.name, card.link));
 
-const togglePopup = (item, formSubmit) => {
+const togglePopup = (popupItem, formItem, formSubmit) => {
   // закрытие и открытие попапа и блока какой попадет
-  if (item === zoomCard) {
-    item.parentNode.classList.toggle('popup_opened');
-    closePopup();
-    item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .9)';
-    item.parentNode.addEventListener('mousedown', (evt) => {
+  if (popupItem === popupZoom) {
+    popupItem.classList.toggle('popup_opened');
+    closePopup(popupItem);
+    popupItem.style.backgroundColor = 'rgba(0, 0, 0, .9)';
+    popupItem.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')) {
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
       }
     });
 
-    item
+    popupItem
       .querySelector('.popup__button-close')
       .addEventListener('click', (evt) => {
         evt.target.parentNode.closest('.popup_opened');
-        item.parentNode.style.backgroundColor = 'rgba(0, 0, 0, .6)';
+        popupItem.style.backgroundColor = 'rgba(0, 0, 0, .6)';
 
-        item.parentNode.classList.remove('popup_opened');
-        item.removeEventListener('click', evt);
-      
+        popupItem.classList.remove('popup_opened');
+        popupItem.removeEventListener('click', evt);
       });
-      
-  } 
-  else {
-    item.parentNode.classList.toggle('popup_opened');
+  } else {
+    popupItem.classList.toggle('popup_opened');
     enableValidation({
       formSelector: '.popup__container',
       inputSelector: '.popup__input',
@@ -151,52 +148,50 @@ const togglePopup = (item, formSubmit) => {
       inputErrorClass: 'popup__input_type_error',
       errorClass: 'popup__input-error_active',
     });
-    closePopup();
-    item.parentNode.addEventListener('mousedown', (evt) => {
+    closePopup(popupItem);
+    popupItem.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup')) {
-
         evt.target.classList.remove('popup_opened');
         evt.target.removeEventListener('mousedown', evt);
-        item.removeEventListener('submit', formSubmit);
+        formItem.removeEventListener('submit', formSubmit);
         clearError();
       }
     });
 
-    item
+    popupItem
       .querySelector('.popup__button-close')
       .addEventListener('click', (evt) => {
         evt.target.parentNode.closest('.popup_opened');
 
-        item.parentNode.classList.remove('popup_opened');
-        item.removeEventListener('click', evt);
-        item.removeEventListener('submit', formSubmit);
+        popupItem.classList.remove('popup_opened');
+        popupItem.removeEventListener('click', evt);
+        formItem.removeEventListener('submit', formSubmit);
         clearError();
       });
-  
   }
 };
 
-const closePopup = () =>{
-  const popupAll = Array.from(document.querySelectorAll('.popup'));
-  popupAll.forEach((popupElement) => {
+const windowEsc = (popupItem) => (evt) => {
+  if (evt.key === 'Escape' && popupItem.classList.contains('popup_opened')) {
+    popupItem.classList.remove('popup_opened');
 
-  window.addEventListener('keydown', evt => {//закрытие клавишей esc
-    if (evt.key === 'Escape' && popupElement.classList.contains('popup_opened')) {
-      popupElement.classList.remove('popup_opened');
-      window.removeEventListener('keydown', evt);
-      clearError();
-    }
-  });
-});
+    window.removeEventListener('keydown', windowEsc);
+  }
+};
+const closePopup = (popupItem) => {
+  window.addEventListener('keydown', windowEsc(popupItem));
+  clearError();
 };
 
-const clearError = () =>{ // чистка старых данных и ошибочных аттрибутов 
-  
-  if(buttonSubmit.classList.contains('popup__button-submit_disabled')){
+const clearError = () => {
+  // чистка старых данных и ошибочных аттрибутов
+
+  if (buttonSubmit.classList.contains('popup__button-submit_disabled')) {
     buttonSubmit.classList.remove('popup__button-submit_disabled');
     buttonSubmit.removeAttribute('disabled');
-  }
-  else if(!buttonSubmitCard.classList.contains('popup__button-submit_disabled')){
+  } else if (
+    !buttonSubmitCard.classList.contains('popup__button-submit_disabled')
+  ) {
     buttonSubmitCard.classList.add('popup__button-submit_disabled');
     buttonSubmitCard.setAttribute('disabled', true);
   }
@@ -206,10 +201,12 @@ const clearError = () =>{ // чистка старых данных и ошиб�
   });
 };
 
-const inProfileForm = () => { //получение данных формы профиля
+const inProfileForm = () => {
+  //получение данных формы профиля
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
-  togglePopup(profileForm, formSubmitHandlerProfile);
+
+  togglePopup(popupProfile, formProfile, formSubmitHandlerProfile);
   profileForm.addEventListener('submit', formSubmitHandlerProfile);
 };
 
@@ -219,17 +216,17 @@ const formSubmitHandlerProfile = (evt) => {
   if (inputName.value && inputJob.value) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
-    togglePopup(profileForm, formSubmitHandlerProfile);
-
+    togglePopup(popupProfile, formProfile, formSubmitHandlerProfile);
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }
 };
 
-const inCardForm = () => {//получение данных формы новых картинок
+const inCardForm = () => {
+  //получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
-  togglePopup(cardForm, formSubmitHandlerCards);
+  togglePopup(popupCard, formCard, formSubmitHandlerCards);
   cardForm.addEventListener('submit', formSubmitHandlerCards);
 };
 
@@ -238,8 +235,7 @@ const formSubmitHandlerCards = (evt) => {
   evt.preventDefault();
   if (inputPlace.value && inputCard.value) {
     addCard(inputPlace.value, inputCard.value);
-    togglePopup(cardForm, formSubmitHandlerCards);
-
+    togglePopup(popupCard, formCard, formSubmitHandlerCards);
   } else {
     alert('Для сохрания нужно заполнить все поля');
   }

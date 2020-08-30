@@ -6,7 +6,6 @@
   font-family: inherit;
   font-size: inherit;
   padding: 10px 5px;
-  border-bottom: 1px solid #f00;
   margin-top: 13.11%;/*48*/
   margin-bottom: 5px;
 }
@@ -17,7 +16,11 @@
 
 .popup__input:valid {
   border-bottom: 1px solid rgba( 0, 0, 0, .2);
- }
+}
+
+.popup__input:invalid {
+  border-bottom: 1px solid #f00;
+}
 
 @media screen and (max-height: 414px) {
   .popup__input {
