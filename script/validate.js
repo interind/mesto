@@ -59,7 +59,7 @@ const enableValidation = ({formSelector, ...rest}) => {
   );
 
   formList.forEach((formElement) => {
-
+   
     setEventListeners(formElement, rest);
   });
 };
