@@ -209,7 +209,7 @@ const clearError = () =>{ // чистка старых данных и ошиб�
 const inProfileForm = () => { //получение данных формы профиля
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
-  togglePopup(profileForm);
+  togglePopup(profileForm, formSubmitHandlerProfile);
   profileForm.addEventListener('submit', formSubmitHandlerProfile);
 };
 
@@ -219,7 +219,7 @@ const formSubmitHandlerProfile = (evt) => {
   if (inputName.value && inputJob.value) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
-    togglePopup(profileForm);
+    togglePopup(profileForm, formSubmitHandlerProfile);
 
   } else {
     alert('Для сохрания нужно заполнить все поля');
@@ -229,7 +229,7 @@ const formSubmitHandlerProfile = (evt) => {
 const inCardForm = () => {//получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
-  togglePopup(cardForm);
+  togglePopup(cardForm, formSubmitHandlerCards);
   cardForm.addEventListener('submit', formSubmitHandlerCards);
 };
 
@@ -238,7 +238,7 @@ const formSubmitHandlerCards = (evt) => {
   evt.preventDefault();
   if (inputPlace.value && inputCard.value) {
     addCard(inputPlace.value, inputCard.value);
-    togglePopup(cardForm);
+    togglePopup(cardForm, formSubmitHandlerCards);
 
   } else {
     alert('Для сохрания нужно заполнить все поля');
