@@ -1,4 +1,5 @@
 .popup__container {
+  visibility: inherit;
   display: flex;
   box-sizing: border-box;
   position: relative;
