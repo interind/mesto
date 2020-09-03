@@ -1,16 +1,4 @@
-// const clearError = (form) => { 
 
-//   const button = form.querySelector('.popup__button-submit');
-// if (button.classList.contains('popup__button-submit_disabled')) { 
-//   button.classList.remove('popup__button-submit_disabled'); 
-//   button.removeAttribute('disabled'); 
-
-// const error = Array.from(form.querySelectorAll('.popup__input')); 
-// error.forEach((errorItem) => { 
-//   errorItem.textContent = ''; 
-// }); 
-// } 
-// };
 
 
 const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
@@ -24,7 +12,7 @@ const showInputError = (formElement, inputElement, errorMessage, inputErrorClass
 };
 
 const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
-  debugger;
+
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   
   inputElement.classList.remove(inputErrorClass);
