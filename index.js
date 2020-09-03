@@ -7,12 +7,14 @@ const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 const profileForm = document.forms.formProfile; //форма профиля
 const inputName = profileForm.elements.name;
 const inputJob = profileForm.elements.job;
-const buttonSubmit = formProfile.querySelector('.popup__button-submit');
+
+// const buttonSubmit = formProfile.querySelector('.popup__button-submit');
 
 const cardForm = document.forms.formCard; //форма новых картинок
 const inputPlace = cardForm.elements.place;
 const inputCard = cardForm.elements.card;
-const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
+
+// const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
@@ -35,14 +37,6 @@ enableValidation({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active',
 });
-
-const clearError = (popup) => {
-  const error = popup.querySelectorAll('.popup__input-error');
-  
-  error.forEach((errorItem) => {
-    errorItem.textContent = '';
-  });
-};
 
 const zoom = (evt) => {
   // функция для открытия картинок
@@ -96,20 +90,27 @@ const addCard = (name, link) => {
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
 initialCardsRevers.forEach((card) => addCard(card.name, card.link));
 
+const clearError = (popup) => {
+  const error = popup.querySelectorAll('.popup__input-error');
+
+  error.forEach((errorItem) => {
+    errorItem.textContent = '';
+  });
+};
 
 const inProfileForm = () => {
+  formProfile.reset();
   //получение данных формы профиля
-
   inputName.value = profileName.textContent;
   inputJob.value = profileJob.textContent;
 
   openPopup(popupProfile);
-  
 };
 
 const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
+
   if (inputName.value && inputJob.value) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
@@ -121,17 +122,18 @@ const formSubmitHandlerProfile = (evt) => {
 };
 
 const inCardForm = () => {
+  formCard.reset();
   //получение данных формы новых картинок
-
   inputPlace.value = '';
   inputCard.value = '';
+
   openPopup(popupCard);
-  
 };
 
 const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
+
   if (inputPlace.value && inputCard.value) {
     addCard(inputPlace.value, inputCard.value);
     closePopup(popupCard);
@@ -139,7 +141,6 @@ const formSubmitHandlerCards = (evt) => {
     alert('Для сохрания нужно заполнить все поля');
   }
 };
-
 
 function openPopup(popup) {
   if (popup.classList.contains('popup')) {
@@ -153,15 +154,23 @@ const closePopup = (popup) => (evt) => {
   if (
     evt.target.classList.contains('popup__button-close') ||
     evt.target === popup ||
-    (evt.key === 'Escape' && popup.classList.contains('popup_opened'))
-   || evt.target.classList.contains('popup__button-submit')) {
+    (evt.key === 'Escape' && popup.classList.contains('popup_opened')) ||
+    evt.target.classList.contains('popup__button-submit')
+  ) {
     popup.classList.remove('popup_opened');
     popup.removeEventListener('mousedown', closePopup(popup));
     window.removeEventListener('keydown', closePopup(popup));
+
+    const buttonElement = popup.querySelector('.popup__button-submit');
+    const inputList = Array.from(popup.querySelectorAll('.popup__input'));
+
+    const inactiveButtonClass = buttonElement.classList.add(
+      'popup__button-submit_disabled'
+    );
     clearError(popup);
+    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   }
 };
-
 
 buttonEdit.addEventListener('mousedown', inProfileForm);
 buttonAdd.addEventListener('mousedown', inCardForm);
