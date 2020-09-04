@@ -4,17 +4,18 @@ const popupProfile = document.querySelector('.popup_type_profile'); // попа�
 const popupCard = document.querySelector('.popup_type_card'); // попап
 const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
-const profileForm = document.forms.formProfile; //форма профиля
-const inputName = profileForm.elements.name;
-const inputJob = profileForm.elements.job;
+const formProfile = document.forms.formProfile; //форма профиля
+const inputName = formProfile.elements.name;
+const inputJob = formProfile.elements.job;
+const inputListProfile = Array.from(formProfile.querySelectorAll('.popup__input'));
 
-// const buttonSubmit = formProfile.querySelector('.popup__button-submit');
+const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
 
-const cardForm = document.forms.formCard; //форма новых картинок
-const inputPlace = cardForm.elements.place;
-const inputCard = cardForm.elements.card;
-
-// const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
+const formCard = document.forms.formCard; //форма новых картинок
+const inputPlace = formCard.elements.place;
+const inputCard = formCard.elements.card;
+const inputListCard = Array.from(formCard.querySelectorAll('.popup__input'));
+const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
 
 const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
 const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
@@ -98,11 +99,18 @@ const clearError = (popup) => {
   });
 };
 
-const inProfileForm = () => {
+const showProfileForm = () => {
   formProfile.reset();
+  const buttonElement = buttonSubmitProfile; 
+  const inputList = inputListProfile;
+  const inactiveButtonClass = buttonElement.classList.add(
+      'popup__button-submit_disabled'
+    );
+  clearError(popupProfile);
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   //получение данных формы профиля
-  inputName.value = profileName.textContent;
-  inputJob.value = profileJob.textContent;
+  inputName.placeholder = profileName.textContent;
+  inputJob.placeholder = profileJob.textContent;
 
   openPopup(popupProfile);
 };
@@ -111,7 +119,7 @@ const formSubmitHandlerProfile = (evt) => {
   // submit для формы имя и работа
   evt.preventDefault();
 
-  if (inputName.value && inputJob.value) {
+  if (inputName.checkValidity() && inputJob.checkValidity()) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
 
@@ -121,8 +129,16 @@ const formSubmitHandlerProfile = (evt) => {
   }
 };
 
-const inCardForm = () => {
+const showCardForm = () => {
   formCard.reset();
+  const buttonElement = buttonSubmitCard;
+    const inputList = inputListCard;
+
+    const inactiveButtonClass = buttonElement.classList.add(
+      'popup__button-submit_disabled'
+    );
+  clearError(popupCard);
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   //получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
@@ -134,7 +150,7 @@ const formSubmitHandlerCards = (evt) => {
   // submit для формы с новой карточкой
   evt.preventDefault();
 
-  if (inputPlace.value && inputCard.value) {
+  if (inputPlace.checkValidity() && inputCard.checkValidity()) {
     addCard(inputPlace.value, inputCard.value);
     closePopup(popupCard);
   } else {
@@ -143,11 +159,9 @@ const formSubmitHandlerCards = (evt) => {
 };
 
 function openPopup(popup) {
-  if (popup.classList.contains('popup')) {
     popup.classList.add('popup_opened');
     popup.addEventListener('mousedown', closePopup(popup));
     window.addEventListener('keydown', closePopup(popup));
-  }
 }
 
 const closePopup = (popup) => (evt) => {
@@ -160,19 +174,10 @@ const closePopup = (popup) => (evt) => {
     popup.classList.remove('popup_opened');
     popup.removeEventListener('mousedown', closePopup(popup));
     window.removeEventListener('keydown', closePopup(popup));
-
-    const buttonElement = popup.querySelector('.popup__button-submit');
-    const inputList = Array.from(popup.querySelectorAll('.popup__input'));
-
-    const inactiveButtonClass = buttonElement.classList.add(
-      'popup__button-submit_disabled'
-    );
-    clearError(popup);
-    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   }
 };
 
-buttonEdit.addEventListener('mousedown', inProfileForm);
-buttonAdd.addEventListener('mousedown', inCardForm);
+buttonEdit.addEventListener('mousedown', showProfileForm);
+buttonAdd.addEventListener('mousedown', showCardForm);
 formProfile.addEventListener('submit', formSubmitHandlerProfile);
 formCard.addEventListener('submit', formSubmitHandlerCards);
