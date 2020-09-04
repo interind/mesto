@@ -104,11 +104,9 @@ const clearError = (popup) => {
 const showProfileForm = () => {
   formProfile.reset();
 
-  const buttonElement = buttonSubmitProfile;
-  const inputList = inputListProfile;
   const inactiveButtonClass = 'popup__button-submit_disabled';
   clearError(popupProfile);
-  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+  toggleButtonState(inputListProfile, buttonSubmitProfile, inactiveButtonClass);
   //получение данных формы профиля
   inputName.placeholder = profileName.textContent;
   inputJob.placeholder = profileJob.textContent;
@@ -133,12 +131,10 @@ const formSubmitHandlerProfile = (evt) => {
 const showCardForm = () => {
   formCard.reset();
 
-  const buttonElement = buttonSubmitCard;
-  const inputList = inputListCard;
   const inactiveButtonClass = 'popup__button-submit_disabled';
 
   clearError(popupCard);
-  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+  toggleButtonState(inputListCard, buttonSubmitCard, inactiveButtonClass);
   //получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
@@ -175,6 +171,7 @@ const closeByPopupButton = (popup) => (evt) => {
     closePopup(popup);
   }
 };
+
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 
