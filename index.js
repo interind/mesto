@@ -7,9 +7,14 @@ const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 const formProfile = document.forms.formProfile; //форма профиля
 const inputName = formProfile.elements.name;
 const inputJob = formProfile.elements.job;
-const inputListProfile = Array.from(formProfile.querySelectorAll('.popup__input'));
+const inputListProfile = Array.from(
+  formProfile.querySelectorAll('.popup__input')
+);
 
 const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
+const inactiveButtonSubmitProfile = buttonSubmitProfile.classList.add(
+  'popup__button-submit_disabled'
+);
 
 const formCard = document.forms.formCard; //форма новых картинок
 const inputPlace = formCard.elements.place;
@@ -61,7 +66,7 @@ const createCard = (name, link) => {
   containerCard.querySelector('.element__title').textContent = name;
 
   containerCard
-    .querySelector('.element__button-like_color_white')
+    .querySelector('.element__button-like')
     .addEventListener('click', (evt) => {
       // ставим лайки
       const buttonLike = evt.target;
@@ -101,11 +106,10 @@ const clearError = (popup) => {
 
 const showProfileForm = () => {
   formProfile.reset();
-  const buttonElement = buttonSubmitProfile; 
+  
+  const buttonElement = buttonSubmitProfile;
   const inputList = inputListProfile;
-  const inactiveButtonClass = buttonElement.classList.add(
-      'popup__button-submit_disabled'
-    );
+  const inactiveButtonClass = 'popup__button-submit_disabled';
   clearError(popupProfile);
   toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   //получение данных формы профиля
@@ -131,12 +135,11 @@ const formSubmitHandlerProfile = (evt) => {
 
 const showCardForm = () => {
   formCard.reset();
-  const buttonElement = buttonSubmitCard;
-    const inputList = inputListCard;
 
-    const inactiveButtonClass = buttonElement.classList.add(
-      'popup__button-submit_disabled'
-    );
+  const buttonElement = buttonSubmitCard;
+  const inputList = inputListCard;
+  const inactiveButtonClass = 'popup__button-submit_disabled';
+
   clearError(popupCard);
   toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   //получение данных формы новых картинок
@@ -158,23 +161,37 @@ const formSubmitHandlerCards = (evt) => {
   }
 };
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    popup.addEventListener('mousedown', closePopup(popup));
-    window.addEventListener('keydown', closePopup(popup));
-}
-
-const closePopup = (popup) => (evt) => {
-  if (
-    evt.target.classList.contains('popup__button-close') ||
-    evt.target === popup ||
-    (evt.key === 'Escape' && popup.classList.contains('popup_opened')) ||
-    evt.target.classList.contains('popup__button-submit')
-  ) {
-    popup.classList.remove('popup_opened');
-    popup.removeEventListener('mousedown', closePopup(popup));
-    window.removeEventListener('keydown', closePopup(popup));
+const closeByOverlayEsc = (popup) => (evt) => {
+  if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+    closePopup(popup);
   }
+};
+
+const closeByOverlayClick = (popup) => (evt) => {
+  if (evt.target === popup) {
+    closePopup(popup);
+  }
+};
+
+const closeByPopupButton = (popup) => (evt) => {
+  if (evt.target.classList.contains('popup__button-close')) {
+    closePopup(popup);
+  }
+};
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+
+  popup.addEventListener('click', closeByPopupButton(popup));
+  popup.addEventListener('mousedown', closeByOverlayClick(popup));
+  window.addEventListener('keydown', closeByOverlayEsc(popup));
+};
+
+const closePopup = (popup) => {
+  popup.classList.remove('popup_opened');
+
+  popup.removeEventListener('click', closeByPopupButton(popup));
+  popup.removeEventListener('mousedown', closeByOverlayClick(popup));
+  window.removeEventListener('keydown', closeByOverlayEsc(popup));
 };
 
 buttonEdit.addEventListener('mousedown', showProfileForm);
