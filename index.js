@@ -12,7 +12,6 @@ const inputListProfile = Array.from(
 );
 const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
 
-
 const formCard = document.forms.formCard; //форма новых картинок
 const inputPlace = formCard.elements.place;
 const inputCard = formCard.elements.card;
