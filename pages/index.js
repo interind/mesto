@@ -30,7 +30,7 @@ const zoomPlacePic = zoomCard.querySelector('.popup__place-pic');
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
 const templateContainer = document.querySelector('#cards').content;
-
+debugger;
 enableValidation({
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
