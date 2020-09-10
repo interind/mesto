@@ -1,12 +1,11 @@
-export default class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-    this._link = data.link;
+export class Card {
+  constructor(text, image, cardSelector) {
+    this._text = text;
+    this._image = image;
     this._cardSelector = cardSelector;
   }
 
   _getTemplate() {
-    // возвращает какрту
     const cardElement = document
       .querySelector(this._cardSelector)
       .content.querySelector('.element')
@@ -14,8 +13,14 @@ export default class Card {
 
     return cardElement;
   }
-  _toggleLike() {
-    this._cardSelector
+  generateCard(zoom) {
+    this._element = this._getTemplate();
+    const imageCard = this._element.querySelector('.element__pic');
+    imageCard.src = this._image;
+    imageCard.atl = this._text;
+    this._element.querySelector('.element__title').textContent = this._text;
+
+    this._element
       .querySelector('.element__button-like')
       .addEventListener('click', (evt) => {
         // ставим лайки
@@ -23,9 +28,11 @@ export default class Card {
 
         buttonLike.classList.toggle('element__button-like_color_black');
       });
-  }
-  _removeCard() {
-    this._cardSelector
+
+    imageCard
+      .addEventListener('click', zoom);
+
+    this._element
       .querySelector('.element__button-trash')
       .addEventListener('click', (evt) => {
         // удаление карточек
@@ -33,5 +40,7 @@ export default class Card {
 
         blockCard.remove();
       });
+
+    return this._element;
   }
 }
