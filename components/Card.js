@@ -17,7 +17,7 @@ export class Card {
     this._element = this._getTemplate();
     const imageCard = this._element.querySelector('.element__pic');
     imageCard.src = this._image;
-    imageCard.atl = this._text;
+    imageCard.alt = this._text;
     this._element.querySelector('.element__title').textContent = this._text;
 
     this._element
