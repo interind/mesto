@@ -19,28 +19,31 @@ export class Card {
     imageCard.src = this._image;
     imageCard.alt = this._text;
     this._element.querySelector('.element__title').textContent = this._text;
-
+    imageCard.addEventListener('click', zoom);
+    this._setListener();
+    return this._element;
+  }
+  _setListener() {
     this._element
       .querySelector('.element__button-like')
       .addEventListener('click', (evt) => {
-        // ставим лайки
-        const buttonLike = evt.target;
-
-        buttonLike.classList.toggle('element__button-like_color_black');
+        this._like(evt);
       });
-
-    imageCard
-      .addEventListener('click', zoom);
-
     this._element
       .querySelector('.element__button-trash')
       .addEventListener('click', (evt) => {
-        // удаление карточек
-        const blockCard = evt.target.closest('.element');
-
-        blockCard.remove();
+        this._remove(evt);
       });
+  }
+  _like(evt) {
+    // ставим лайки
+    const buttonLike = evt.target;
+    buttonLike.classList.toggle('element__button-like_color_black');
+  }
 
-    return this._element;
+  _remove(evt) {
+    // удаление карточек
+    const blockCard = evt.target.closest('.element');
+    blockCard.remove();
   }
 }

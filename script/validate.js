@@ -1,3 +1,10 @@
+const clearError = (form) => { // очистка ошибок
+  const error = form.querySelectorAll('.popup__input-error');
+
+  error.forEach((errorItem) => {
+    errorItem.textContent = '';
+  });
+};
 
 const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
  
@@ -15,7 +22,7 @@ const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) 
   
   inputElement.classList.remove(inputErrorClass);
   errorElement.classList.remove(errorClass);
-  errorElement.textContent = '';
+  clearError(formElement);
   
 };
 
@@ -46,6 +53,7 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.removeAttribute('disabled');
+    
   }
 };
 
@@ -58,6 +66,7 @@ const setEventListeners = (formElement, {inputSelector, submitButtonSelector, in
   const buttonElement = formElement.querySelector(submitButtonSelector);
   
   toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+  
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, rest);
@@ -66,11 +75,12 @@ const setEventListeners = (formElement, {inputSelector, submitButtonSelector, in
     });
     inputElement.addEventListener('focus', function () {
       toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+      clearError(formElement);
     });
   });
 };
 
-export const enableValidation = ({formSelector, ...rest}) => {
+ const enableValidation = ({formSelector, ...rest}) => {
   
   const formList = Array.from(
     document.querySelectorAll(formSelector)

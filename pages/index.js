@@ -1,6 +1,7 @@
 'use strict';
 import {initialCards} from '../utils/array.js';
 import {Card} from '../components/Card.js';
+// import {FormValidator} from '../components/FormValidator.js';
 (function () {
 const popupProfile = document.querySelector('.popup_type_profile'); // попап
 const popupCard = document.querySelector('.popup_type_card'); // попап
@@ -31,8 +32,16 @@ const zoomPic = zoomCard.querySelector('.popup__pic');
 const zoomPlacePic = zoomCard.querySelector('.popup__place-pic');
 
 const containerCards = document.querySelector('.elements'); // контейнер для карточек
-// const templateContainer = document.querySelector('#card').content;
-
+// const objValidation = {
+//   formSelector: '.popup__container',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__button-submit',
+//   inactiveButtonClass: 'popup__button-submit_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__input-error_active',
+// };
+// const formValidator = new FormValidator(objValidation, formProfile);
+// formValidator.enableValidation();
 
 const zoom = (evt) => {
   // функция для открытия картинок
@@ -61,24 +70,23 @@ const initialCardsRevers = initialCards.reverse(); // для добавлени�
 initialCardsRevers.forEach((card) => addCard(card.name, card.link));
 
 
-const clearError = (popup) => {
-  const error = popup.querySelectorAll('.popup__input-error');
+// const clearError = (popup) => { // очистка ошибок
+//   const error = popup.querySelectorAll('.popup__input-error');
 
-  error.forEach((errorItem) => {
-    errorItem.textContent = '';
-  });
-};
+//   error.forEach((errorItem) => {
+//     errorItem.textContent = '';
+//   });
+// };
 
 const showProfileForm = () => {
   formProfile.reset();
-
-  // const inactiveButtonClass = 'popup__button-submit_disabled';
-  clearError(popupProfile);
-  // toggleButtonState(inputListProfile, buttonSubmitProfile, inactiveButtonClass);
+  // clearError(popupProfile);
   //получение данных формы профиля
   inputName.placeholder = profileName.textContent;
   inputJob.placeholder = profileJob.textContent;
-
+  setTimeout(() => {
+    inputName.focus();
+  }, 100);
   openPopup(popupProfile);
 };
 
@@ -98,14 +106,13 @@ const formSubmitHandlerProfile = (evt) => {
 
 const showCardForm = () => {
   formCard.reset();
-
-  // const inactiveButtonClass = 'popup__button-submit_disabled';
-
-  clearError(popupCard);
-  // toggleButtonState(inputListCard, buttonSubmitCard, inactiveButtonClass);
+  // clearError(popupCard);
   //получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
+  setTimeout(() => {
+    inputPlace.focus();
+  }, 100);
   openPopup(popupCard);
 };
 
