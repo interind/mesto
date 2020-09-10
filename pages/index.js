@@ -45,53 +45,20 @@ const zoom = (evt) => {
   }
 };
 
-// const createCard = (name, link) => {
-//   // создание новых карточек
 
-//   const containerCard = templateContainer.cloneNode(true);
-
-//   const imageCard = containerCard.querySelector('.element__pic');
-//   imageCard.src = link;
-//   imageCard.alt = name;
-//   containerCard.querySelector('.element__title').textContent = name;
-
-//   containerCard
-//     .querySelector('.element__button-like')
-//     .addEventListener('click', (evt) => {
-//       // ставим лайки
-//       evt.target.classList.toggle('element__button-like_color_black');
-//     });
-
-//   containerCard
-//     .querySelector('.element__button-trash')
-//     .addEventListener('click', (evt) => {
-//       // удаление карточек
-//       evt.target.closest('.element').remove();
-//     });
-
-//   containerCard.querySelector('.element__pic').addEventListener('click', zoom);
-
-//   return containerCard;
-// };
-
-// const addCard = (name, link) => {
-//   // добавление карточек
-//   containerCards.prepend(createCard(name, link));
-// };
+const addCard = (name, link) => {
+   // Создадим экземпляр карточки
+   const card = new Card(name, link, '#card');
+   // Создаём карточку и возвращаем наружу
+   const cardElement = card.generateCard(zoom);
+ 
+   // Добавляем в DOM
+   containerCards.prepend(cardElement);
+};
 
 const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
-// initialCardsRevers.forEach((card) => addCard(card.name, card.link));
 
-
-initialCardsRevers.forEach((item) => {
-  // Создадим экземпляр карточки
-  const card = new Card(item.name, item.link, '#card');
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard(zoom);
-
-  // Добавляем в DOM
-  containerCards.prepend(cardElement);
-});
+initialCardsRevers.forEach((card) => addCard(card.name, card.link));
 
 
 const clearError = (popup) => {
