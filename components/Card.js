@@ -26,25 +26,20 @@ export class Card {
   _setListener() {
     this._element
       .querySelector('.element__button-like')
-      .addEventListener('click', (evt) => {
-        this._like(evt);
-      });
+      .addEventListener('click', this._like);
     this._element
       .querySelector('.element__button-trash')
-      .addEventListener('click', (evt) => {
-        this._remove(evt);
-      });
+      .addEventListener('click', 
+        this._remove);
       this._element.addEventListener('click', this._popup);
   }
-  _like(evt) {
+  _like = (evt) => {
     // ставим лайки
-    const buttonLike = evt.target;
-    buttonLike.classList.toggle('element__button-like_color_black');
+    evt.target.classList.toggle('element__button-like_color_black');
   }
 
-  _remove(evt) {
+  _remove = () => {
     // удаление карточек
-    const blockCard = evt.target.closest('.element');
-    blockCard.remove();
+    this._element.remove();
   }
 }
