@@ -11,7 +11,7 @@
 }
 
 .popup__input:focus {
-  outline: 2px groove rgba(106, 151, 235, 0.657);
+  outline: 1px groove rgba(106, 151, 235, 0.657);
 }
 
 .popup__input:valid {
@@ -20,6 +20,7 @@
 
 .popup__input:invalid {
   border-bottom: 1px solid #f00;
+  transition: border-bottom .8s linear;
 }
 
 @media screen and (max-height: 414px) {

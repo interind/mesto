@@ -1,8 +1,9 @@
 export class Card {
-  constructor(text, image, cardSelector) {
+  constructor(text, image, cardSelector, popup) {
     this._text = text;
     this._image = image;
     this._cardSelector = cardSelector;
+    this._popup = popup;
   }
 
   _getTemplate() {
@@ -13,13 +14,12 @@ export class Card {
 
     return cardElement;
   }
-  generateCard(zoom) {
+  generateCard() {
     this._element = this._getTemplate();
     const imageCard = this._element.querySelector('.element__pic');
     imageCard.src = this._image;
     imageCard.alt = this._text;
     this._element.querySelector('.element__title').textContent = this._text;
-    imageCard.addEventListener('click', zoom);
     this._setListener();
     return this._element;
   }
@@ -34,6 +34,7 @@ export class Card {
       .addEventListener('click', (evt) => {
         this._remove(evt);
       });
+      this._element.addEventListener('click', this._popup);
   }
   _like(evt) {
     // ставим лайки
