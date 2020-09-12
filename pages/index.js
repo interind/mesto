@@ -3,7 +3,7 @@ import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import {templateFormSelector} from '../utils/templateFormSelector.js';
-(function () {
+
 
   const popupProfile = document.querySelector('.popup_type_profile'); // попап
   const popupCard = document.querySelector('.popup_type_card'); // попап
@@ -116,7 +116,7 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
     }
   };
 
-  const openPopup = (popup) => {
+  export const openPopup = (popup) => {
     popup.classList.add('popup_opened');
 
     popup.addEventListener('click', closeByPopupButton(popup));
@@ -124,7 +124,7 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
     window.addEventListener('keydown', closeByOverlayEsc(popup));
   };
 
-  const closePopup = (popup) => {
+  export const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
 
     popup.removeEventListener('click', closeByPopupButton(popup));
@@ -137,4 +137,3 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
   buttonAdd.addEventListener('mousedown', showCardForm);
   buttonSubmitProfile.addEventListener('click', formRenderProfile);
   buttonSubmitCard.addEventListener('click', formRenderCards);
-})();

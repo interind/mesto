@@ -12,7 +12,7 @@ export class FormValidator {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    
+
     this._inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
@@ -24,18 +24,7 @@ export class FormValidator {
     this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._errorElement = this._form.querySelector(
-          `#${inputElement.id}-error`
-        );
-        if (!inputElement.validity.valid) {
-          inputElement.classList.add(this._inputErrorClass);
-          this._errorElement.textContent = inputElement.validationMessage;
-          this._errorElement.classList.add(this._errorClass);
-        } else {
-          inputElement.classList.remove(this._inputErrorClass);
-          this._errorElement.classList.remove(this._errorClass);
-          this._errorElement.textContent = '';
-        }
+        this._checkInputValidity(inputElement);
       });
       inputElement.addEventListener('input', this._toggleButtonState);
 
@@ -59,30 +48,27 @@ export class FormValidator {
       return !inputElement.validity.valid;
     });
   };
+
   _checkInputValidity = (inputElement) => {
-    if (inputElement.validity.valid) {
-      this._showInputError(inputElement);
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
       this._hideInputError(inputElement);
     }
   };
 
-  _showInputError = () => {
-    const errorElement = this._form.querySelector(
-      `#${this._inputElement.id}-error`
-    );
+  _showInputError = (inputElement, errorMessage) => {
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
 
-    this._inputElement.classList.add(this._inputErrorClass);
+    inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
   };
 
-  _hideInputError = () => {
-    const errorElement = this._form.querySelector(
-      `#${this._inputElement.id}-error`
-    );
+  _hideInputError = (inputElement) => {
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
 
-    this._inputElement.classList.remove(this._inputErrorClass);
+    inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     this._clearError();
   };

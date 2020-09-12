@@ -1,3 +1,4 @@
+import {openPopup} from '../pages/index.js';
 export class Card {
   constructor(text, image, cardSelector, popup) {
     this._text = text;
@@ -39,13 +40,6 @@ export class Card {
       like.classList.toggle('element__button-like_color_black');
     }
   };
-  _openZoom = () => {
-    this._popup.classList.add('popup_opened');
-  };
-
-  _closeZoom = () => {
-    this._popup.classList.remove('popup_opened');
-  };
 
   _zoom = (evt) => {
     const imageZoomCard = this._element.querySelector('.element__pic');
@@ -53,10 +47,7 @@ export class Card {
       this._popup.querySelector('.popup__pic').src = imageZoomCard.src;
       this._popup.querySelector('.popup__place-pic').textContent =
         imageZoomCard.alt;
-      this._popup
-        .querySelector('.popup__button-close')
-        .addEventListener('click', this._closeZoom);
-      this._openZoom();
+      openPopup(this._popup);
     }
   };
 
