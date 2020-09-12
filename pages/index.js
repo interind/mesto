@@ -12,10 +12,12 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
   const formProfile = document.forms.formProfile; //форма профиля
   const inputName = formProfile.elements.name;
   const inputJob = formProfile.elements.job;
+  const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
 
   const formCard = document.forms.formCard; //форма новых картинок
   const inputPlace = formCard.elements.place;
   const inputCard = formCard.elements.card;
+  const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
 
   const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
   const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
@@ -23,42 +25,37 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
   const buttonEdit = profileBlock.querySelector('.profile__edit-button'); //кнопка редактировать
   const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
 
-  const zoomCard = popupZoom.querySelector('.popup__zoom'); // блок показа картинки
-  const zoomPic = zoomCard.querySelector('.popup__pic');
-  const zoomPlacePic = zoomCard.querySelector('.popup__place-pic');
 
   const containerCards = document.querySelector('.elements'); // контейнер для карточек
 
-  const formProfileValidation = new FormValidator(templateFormSelector);
-  formProfileValidation.enableValidation(formProfile);
+  const formProfileValidation = new FormValidator(templateFormSelector, formProfile);
+  formProfileValidation.enableValidation();
   
-  const formCardValidation = new FormValidator(templateFormSelector);
-  formCardValidation.enableValidation(formCard);
-
-  const zoom = (evt) => { // нужно перенести 
-    // функция для открытия картинок
-    const cardImage = evt.target;
-    if (cardImage.classList.contains('element__pic')) {
-      zoomPlacePic.textContent = zoomPic.alt;
-      zoomPic.src = cardImage.src;
-      zoomPlacePic.textContent = cardImage.alt;
-      openPopup(popupZoom);
-    }
-  };
+  const formCardValidation = new FormValidator(templateFormSelector,formCard);
+  formCardValidation.enableValidation();
 
   const addCard = (name, link) => {
     // Создадим экземпляр карточки
-    const card = new Card(name, link, '#card', zoom);
+    const card = new Card(name, link, '#card', popupZoom);
     // Создаём карточку и возвращаем наружу
     const cardElement = card.generateCard();
-
+  
     // Добавляем в DOM
-    containerCards.prepend(cardElement);
+    containerCards.append(cardElement);
+
   };
 
-  const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
+  const addNewCard = (name, link) => {
+    const newCard = new Card(name, link, '#card', popupZoom);
+    const cardNewElement = newCard.generateCard();
+    
+    // Добавляем в DOM
+    containerCards.prepend(cardNewElement);
+  }
 
-  initialCardsRevers.forEach((card) => addCard(card.name, card.link));
+  // const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
+
+  initialCards.forEach((card) => addCard(card.name, card.link));
 
   const showProfileForm = () => {
     formProfile.reset();
@@ -72,18 +69,13 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
     openPopup(popupProfile);
   };
 
-  const formSubmitHandlerProfile = (evt) => {
-    // submit для формы имя и работа
-    evt.preventDefault();
+  const formRenderProfile = () => {
 
-    if (inputName.checkValidity() && inputJob.checkValidity()) {
       profileName.textContent = inputName.value;
       profileJob.textContent = inputJob.value;
 
       closePopup(popupProfile);
-    } else {
-      alert('Для сохрания нужно заполнить все поля');
-    }
+ 
   };
 
   const showCardForm = () => {
@@ -98,16 +90,12 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
     openPopup(popupCard);
   };
 
-  const formSubmitHandlerCards = (evt) => {
-    // submit для формы с новой карточкой
-    evt.preventDefault();
+  const formRenderCards = () => {
 
-    if (inputPlace.checkValidity() && inputCard.checkValidity()) {
-      addCard(inputPlace.value, inputCard.value);
+ 
+      addNewCard(inputPlace.value, inputCard.value);
       closePopup(popupCard);
-    } else {
-      alert('Для сохрания нужно заполнить все поля');
-    }
+
   };
 
   const closeByOverlayEsc = (popup) => (evt) => {
@@ -147,6 +135,6 @@ import {templateFormSelector} from '../utils/templateFormSelector.js';
 
   buttonEdit.addEventListener('mousedown', showProfileForm);
   buttonAdd.addEventListener('mousedown', showCardForm);
-  formProfile.addEventListener('submit', formSubmitHandlerProfile);
-  formCard.addEventListener('submit', formSubmitHandlerCards);
+  buttonSubmitProfile.addEventListener('click', formRenderProfile);
+  buttonSubmitCard.addEventListener('click', formRenderCards);
 })();

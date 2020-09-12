@@ -29,20 +29,39 @@ export class Card {
       .addEventListener('click', this._like);
     this._element
       .querySelector('.element__button-trash')
-      .addEventListener('click', 
-        this._remove);
-      this._element.addEventListener('click', this._popup);
+      .addEventListener('click', this._remove);
+    this._element.addEventListener('click', this._zoom);
   }
   _like = (evt) => {
     // ставим лайки
     const like = evt.target;
-    if(like.classList.contains('element__button-like')) {
-    like.classList.toggle('element__button-like_color_black');
+    if (like.classList.contains('element__button-like')) {
+      like.classList.toggle('element__button-like_color_black');
     }
-  }
+  };
+  _openZoom = () => {
+    this._popup.classList.add('popup_opened');
+  };
+
+  _closeZoom = () => {
+    this._popup.classList.remove('popup_opened');
+  };
+
+  _zoom = (evt) => {
+    const imageZoomCard = this._element.querySelector('.element__pic');
+    if (evt.target === imageZoomCard) {
+      this._popup.querySelector('.popup__pic').src = imageZoomCard.src;
+      this._popup.querySelector('.popup__place-pic').textContent =
+        imageZoomCard.alt;
+      this._popup
+        .querySelector('.popup__button-close')
+        .addEventListener('click', this._closeZoom);
+      this._openZoom();
+    }
+  };
 
   _remove = () => {
     // удаление карточек
     this._element.remove();
-  }
+  };
 }
