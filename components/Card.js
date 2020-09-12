@@ -20,10 +20,10 @@ export class Card {
     imageCard.src = this._image;
     imageCard.alt = this._text;
     this._element.querySelector('.element__title').textContent = this._text;
-    this._setListener();
+    this._setEventListeners();
     return this._element;
   }
-  _setListener() {
+  _setEventListeners() {
     this._element
       .querySelector('.element__button-like')
       .addEventListener('click', this._like);
@@ -35,7 +35,10 @@ export class Card {
   }
   _like = (evt) => {
     // ставим лайки
-    evt.target.classList.toggle('element__button-like_color_black');
+    const like = evt.target;
+    if(like.classList.contains('element__button-like')) {
+    like.classList.toggle('element__button-like_color_black');
+    }
   }
 
   _remove = () => {

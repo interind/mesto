@@ -21,21 +21,17 @@ export class FormValidator {
     this._inputList.forEach((inputElement) => {
 
     inputElement.addEventListener('input', () => {
+      this._errorElement = this._form.querySelector(
+        `#${inputElement.id}-error`
+      );
         if (!inputElement.validity.valid) {
     
-          this._errorElement = this._form.querySelector(
-            `#${inputElement.id}-error`
-          );
-
           inputElement.classList.add(this._inputErrorClass);
           this._errorElement.textContent = inputElement.validationMessage;
           this._errorElement.classList.add(this._errorClass);
         } 
         else {
-          this._errorElement = this._form.querySelector(
-            `#${inputElement.id}-error`
-          );
-
+         
           inputElement.classList.remove(this._inputErrorClass);
           this._errorElement.classList.remove(this._errorClass);
           this._errorElement.textContent = '';
@@ -44,6 +40,8 @@ export class FormValidator {
       inputElement.addEventListener('input', this._toggleButtonState);
 
       inputElement.addEventListener('focus', this._toggleButtonState);
+
+      inputElement.addEventListener('focus', this._clearError);
       
     });
   }
@@ -88,5 +86,13 @@ export class FormValidator {
     this._inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     this._clearError();
+  }
+  _clearError = () => {
+    // очистка ошибок
+    const error = this._form.querySelectorAll('.popup__input-error');
+
+    error.forEach((errorItem) => {
+      errorItem.textContent = '';
+    });
   }
 }

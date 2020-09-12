@@ -2,6 +2,7 @@
 import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
+import {templateFormSelector} from '../utils/templateFormSelector.js';
 (function () {
 
   const popupProfile = document.querySelector('.popup_type_profile'); // попап
@@ -27,13 +28,6 @@ import { FormValidator } from '../components/FormValidator.js';
   const zoomPlacePic = zoomCard.querySelector('.popup__place-pic');
 
   const containerCards = document.querySelector('.elements'); // контейнер для карточек
-  const templateFormSelector = {
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button-submit',
-    inactiveButtonClass: 'popup__button-submit_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active',
-  };
 
   const formProfileValidation = new FormValidator(templateFormSelector);
   formProfileValidation.enableValidation(formProfile);
@@ -41,7 +35,7 @@ import { FormValidator } from '../components/FormValidator.js';
   const formCardValidation = new FormValidator(templateFormSelector);
   formCardValidation.enableValidation(formCard);
 
-  const zoom = (evt) => {
+  const zoom = (evt) => { // нужно перенести 
     // функция для открытия картинок
     const cardImage = evt.target;
     if (cardImage.classList.contains('element__pic')) {
@@ -68,7 +62,7 @@ import { FormValidator } from '../components/FormValidator.js';
 
   const showProfileForm = () => {
     formProfile.reset();
-    clearError(formProfile);
+
     //получение данных формы профиля
     inputName.placeholder = profileName.textContent;
     inputJob.placeholder = profileJob.textContent;
@@ -94,7 +88,7 @@ import { FormValidator } from '../components/FormValidator.js';
 
   const showCardForm = () => {
     formCard.reset();
-    clearError(formCard);
+ 
     //получение данных формы новых картинок
     inputPlace.value = '';
     inputCard.value = '';
@@ -149,14 +143,7 @@ import { FormValidator } from '../components/FormValidator.js';
     popup.removeEventListener('mousedown', closeByOverlayClick(popup));
     window.removeEventListener('keydown', closeByOverlayEsc(popup));
   };
-  const clearError = (form) => {
-    // очистка ошибок
-    const error = form.querySelectorAll('.popup__input-error');
-
-    error.forEach((errorItem) => {
-      errorItem.textContent = '';
-    });
-  };
+ 
 
   buttonEdit.addEventListener('mousedown', showProfileForm);
   buttonAdd.addEventListener('mousedown', showCardForm);
