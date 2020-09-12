@@ -1,4 +1,4 @@
-import {openPopup} from '../pages/index.js';
+import { openPopup } from '../pages/index.js';
 export class Card {
   constructor(text, image, cardSelector, popup) {
     this._text = text;
@@ -42,8 +42,8 @@ export class Card {
   };
 
   _zoom = (evt) => {
-    const imageZoomCard = this._element.querySelector('.element__pic');
-    if (evt.target === imageZoomCard) {
+    const imageZoomCard = evt.target;
+    if (imageZoomCard.classList.contains('element__pic')) {
       this._popup.querySelector('.popup__pic').src = imageZoomCard.src;
       this._popup.querySelector('.popup__place-pic').textContent =
         imageZoomCard.alt;
@@ -54,5 +54,6 @@ export class Card {
   _remove = () => {
     // удаление карточек
     this._element.remove();
+    this._element = null;
   };
 }
