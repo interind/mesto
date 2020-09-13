@@ -85,9 +85,9 @@ export class FormValidator {
   }
   _clearError = () => {
     // очистка ошибок
-    const error = this._form.querySelectorAll('.popup__input-error');
+    this._error = this._form.querySelectorAll('.popup__input-error');
 
-    error.forEach((errorItem) => {
+    this._error.forEach((errorItem) => {
       errorItem.textContent = '';
     });
   }

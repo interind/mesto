@@ -1,10 +1,9 @@
 import { openPopup } from '../pages/index.js';
 export class Card {
-  constructor(text, image, cardSelector, popup) {
+  constructor(text, image, cardSelector) {
     this._text = text;
     this._image = image;
     this._cardSelector = cardSelector;
-    this._popup = popup;
   }
 
   _getTemplate() {
@@ -17,9 +16,10 @@ export class Card {
   }
   generateCard() {
     this._element = this._getTemplate();
-    const imageCard = this._element.querySelector('.element__pic');
-    imageCard.src = this._image;
-    imageCard.alt = this._text;
+    this._imageCard = this._element.querySelector('.element__pic');
+    this._imageCard.src = this._image;
+    this._imageCard.alt = this._text;
+
     this._element.querySelector('.element__title').textContent = this._text;
     this._setEventListeners();
     return this._element;
@@ -33,28 +33,28 @@ export class Card {
       .addEventListener('click', this._remove);
     this._element.addEventListener('click', this._zoom);
   }
-  _like = (evt) => {
+  _like = () => {
     // ставим лайки
-    const like = evt.target;
-    if (like.classList.contains('element__button-like')) {
-      like.classList.toggle('element__button-like_color_black');
-    }
-  };
+    this._element
+      .querySelector('.element__button-like')
+      .classList.toggle('element__button-like_color_black');
+  }
 
   _zoom = (evt) => {
-    const imageZoomCard = evt.target;
-    if (imageZoomCard.classList.contains('element__pic')) {
-      this._popup.querySelector('.popup__pic').src = imageZoomCard.src;
-      this._popup.querySelector('.popup__place-pic').textContent =
-        imageZoomCard.alt;
-        
-      openPopup(this._popup);
+    if(evt.target === this._imageCard) {
+    this._renderZoomCard = document.querySelector('.popup_type_zoom');
+    this._renderZoomCard.querySelector('.popup__pic').src = this._imageCard.src;
+    this._renderZoomCard.querySelector(
+      '.popup__place-pic'
+    ).textContent = this._imageCard.alt;
+
+    openPopup(this._renderZoomCard);
     }
-  };
+  }
 
   _remove = () => {
     // удаление карточек
     this._element.remove();
     this._element = null;
-  };
+  }
 }
