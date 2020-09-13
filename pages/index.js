@@ -40,12 +40,17 @@ const addCard = (name, link) => {
   const card = new Card(name, link, '#card', popupZoom);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
-
   // Добавляем в DOM
   containerCards.append(cardElement);
 };
 
-const addNewCard = (name, link) => {
+initialCards.forEach((card) => addCard(card.name, card.link));
+
+const addNewCard = (
+  // для новых карточек.
+  name,
+  link
+) => {
   // для новых карточек
   const newCard = new Card(name, link, '#card', popupZoom);
   const cardNewElement = newCard.generateCard();
@@ -54,23 +59,22 @@ const addNewCard = (name, link) => {
   containerCards.prepend(cardNewElement);
 };
 
-// const initialCardsRevers = initialCards.reverse(); // для добавления карточек по порядку
-
-initialCards.forEach((card) => addCard(card.name, card.link));
-
 const showProfileForm = () => {
+  // открытие формы
   formProfile.reset();
-
   //получение данных формы профиля
   inputName.placeholder = profileName.textContent;
   inputJob.placeholder = profileJob.textContent;
+
   setTimeout(() => {
     inputName.focus();
   }, 100); // фокус для проверки инпута
+
   openPopup(popupProfile);
 };
 
 const formRenderProfile = () => {
+  // добавление данных
   profileName.textContent = inputName.value;
   profileJob.textContent = inputJob.value;
 
@@ -78,14 +82,16 @@ const formRenderProfile = () => {
 };
 
 const showCardForm = () => {
+  // открытие формы
   formCard.reset();
-
   //получение данных формы новых картинок
   inputPlace.value = '';
   inputCard.value = '';
+
   setTimeout(() => {
     inputPlace.focus();
   }, 100);
+
   openPopup(popupCard);
 };
 

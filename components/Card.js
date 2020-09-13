@@ -47,6 +47,7 @@ export class Card {
       this._popup.querySelector('.popup__pic').src = imageZoomCard.src;
       this._popup.querySelector('.popup__place-pic').textContent =
         imageZoomCard.alt;
+        
       openPopup(this._popup);
     }
   };
