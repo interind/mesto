@@ -35,30 +35,6 @@ formProfileValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
 
-const addCard = (name, link) => {
-  // Создадим экземпляр карточки
-  const card = new Card(name, link, '#card');
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-  // Добавляем в DOM
-  containerCards.append(cardElement);
-};
-
-initialCards.forEach((card) => addCard(card.name, card.link));
-
-const addNewCard = (
-  // для новых карточек.
-  name,
-  link
-) => {
-  // для новых карточек
-  const newCard = new Card(name, link, '#card');
-  const cardNewElement = newCard.generateCard();
-
-  // Добавляем в DOM
-  containerCards.prepend(cardNewElement);
-};
-
 const showProfileForm = () => {
   // открытие формы
   formProfile.reset();
@@ -118,7 +94,7 @@ const closeByPopupButton = (popup) => (evt) => {
   }
 };
 
-export const openPopup = (popup) => {
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 
   popup.addEventListener('click', closeByPopupButton(popup));
@@ -126,12 +102,37 @@ export const openPopup = (popup) => {
   window.addEventListener('keydown', closeByOverlayEsc(popup));
 };
 
-export const closePopup = (popup) => {
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
 
   popup.removeEventListener('click', closeByPopupButton(popup));
   popup.removeEventListener('mousedown', closeByOverlayClick(popup));
   window.removeEventListener('keydown', closeByOverlayEsc(popup));
+};
+
+const addCard = (name, link) => {
+  // Создадим экземпляр карточки
+
+  const card = new Card(name, link, '#card', openPopup);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+  // Добавляем в DOM
+  containerCards.append(cardElement);
+};
+
+initialCards.forEach((card) => addCard(card.name, card.link));
+
+const addNewCard = (
+  // для новых карточек.
+  name,
+  link,
+) => {
+  // для новых карточек
+  const newCard = new Card(name, link, '#card', openPopup);
+  const cardNewElement = newCard.generateCard();
+
+  // Добавляем в DOM
+  containerCards.prepend(cardNewElement);
 };
 
 buttonEdit.addEventListener('mousedown', showProfileForm);

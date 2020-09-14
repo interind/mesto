@@ -1,9 +1,10 @@
-import { openPopup } from '../pages/index.js';
 export class Card {
-  constructor(text, image, cardSelector) {
+  constructor(text, image, cardSelector, popupFunction) {
+    
     this._text = text;
     this._image = image;
     this._cardSelector = cardSelector;
+    this._popupFunction = popupFunction;
   }
 
   _getTemplate() {
@@ -48,7 +49,7 @@ export class Card {
       '.popup__place-pic'
     ).textContent = this._imageCard.alt;
 
-    openPopup(this._renderZoomCard);
+    this._popupFunction(this._renderZoomCard);
     }
   }
 
