@@ -23,7 +23,7 @@ import {
 
 
 
-
+(function () {
 const formProfileValidation = new FormValidator(
   templateFormSelector,
   formProfile
@@ -137,3 +137,4 @@ buttonEdit.addEventListener('mousedown', showProfileForm);
 buttonAdd.addEventListener('mousedown', showCardForm);
 buttonSubmitProfile.addEventListener('click', formRenderProfile);
 buttonSubmitCard.addEventListener('click', formRenderCards);
+})();
