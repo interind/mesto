@@ -28,21 +28,26 @@ export class Card {
   _setEventListeners() {
     this._element
       .querySelector('.element__button-like')
-      .addEventListener('click', this._like);
+      .addEventListener('click', () => {
+      this._like();
+    });
     this._element
       .querySelector('.element__button-trash')
-      .addEventListener('click', this._remove);
-    this._element.addEventListener('click', this._zoom);
+      .addEventListener('click', () => {
+        this._remove();
+      });
+    this._element.addEventListener('click', () => {
+       this._zoom();
+    });
   }
-  _like = () => {
+  _like () {
     // ставим лайки
     this._element
       .querySelector('.element__button-like')
       .classList.toggle('element__button-like_color_black');
   }
 
-  _zoom = (evt) => {
-    if(evt.target === this._imageCard) {
+  _zoom  () {
     this._renderZoomCard = document.querySelector('.popup_type_zoom');
     this._renderZoomCard.querySelector('.popup__pic').src = this._imageCard.src;
     this._renderZoomCard.querySelector(
@@ -50,10 +55,9 @@ export class Card {
     ).textContent = this._imageCard.alt;
 
     this._popupFunction(this._renderZoomCard);
-    }
   }
 
-  _remove = () => {
+  _remove () {
     // удаление карточек
     this._element.remove();
     this._element = null;

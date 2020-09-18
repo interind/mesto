@@ -18,12 +18,9 @@ import {
   profileJob,
   buttonEdit,
   buttonAdd,
-  containerCards
+  containerCards,
 } from '../utils/constants.js';
 
-
-
-(function () {
 const formProfileValidation = new FormValidator(
   templateFormSelector,
   formProfile
@@ -110,7 +107,6 @@ const closePopup = (popup) => {
 
 const addCard = (name, link) => {
   // Создадим экземпляр карточки
-
   const card = new Card(name, link, '#card', openPopup);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -123,7 +119,7 @@ initialCards.forEach((card) => addCard(card.name, card.link));
 const addNewCard = (
   // для новых карточек.
   name,
-  link,
+  link
 ) => {
   // для новых карточек
   const newCard = new Card(name, link, '#card', openPopup);
@@ -137,4 +133,3 @@ buttonEdit.addEventListener('mousedown', showProfileForm);
 buttonAdd.addEventListener('mousedown', showCardForm);
 buttonSubmitProfile.addEventListener('click', formRenderProfile);
 buttonSubmitCard.addEventListener('click', formRenderCards);
-})();
