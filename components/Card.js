@@ -36,8 +36,8 @@ export class Card {
       .addEventListener('click', () => {
         this._remove();
       });
-    this._element.addEventListener('click', () => {
-       this._zoom();
+    this._element.addEventListener('click', (evt) => {
+       this._zoom(evt);
     });
   }
   _like () {
@@ -47,7 +47,8 @@ export class Card {
       .classList.toggle('element__button-like_color_black');
   }
 
-  _zoom  () {
+  _zoom  (evt) {
+    if(evt.target === this._imageCard) {
     this._renderZoomCard = document.querySelector('.popup_type_zoom');
     this._renderZoomCard.querySelector('.popup__pic').src = this._imageCard.src;
     this._renderZoomCard.querySelector(
@@ -55,6 +56,7 @@ export class Card {
     ).textContent = this._imageCard.alt;
 
     this._popupFunction(this._renderZoomCard);
+    }
   }
 
   _remove () {
