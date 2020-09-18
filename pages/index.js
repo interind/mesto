@@ -30,29 +30,29 @@ formProfileValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
 
-const showProfileForm = () => {
+function showProfileForm() {
   // открытие формы
   formProfile.reset();
   //получение данных формы профиля
   inputName.placeholder = profileName.textContent;
   inputJob.placeholder = profileJob.textContent;
-
+ 
   setTimeout(() => {
     inputName.focus();
   }, 100); // фокус для проверки инпута
 
   openPopup(popupProfile);
-};
+}
 
-const formRenderProfile = () => {
+function formRenderProfile() {
   // добавление данных
   profileName.textContent = inputName.value;
   profileJob.textContent = inputJob.value;
 
   closePopup(popupProfile);
-};
+}
 
-const showCardForm = () => {
+function showCardForm() {
   // открытие формы
   formCard.reset();
   //получение данных формы новых картинок
@@ -64,12 +64,12 @@ const showCardForm = () => {
   }, 100);
 
   openPopup(popupCard);
-};
+}
 
-const formRenderCards = () => {
+function formRenderCards() {
   addNewCard(inputPlace.value, inputCard.value);
   closePopup(popupCard);
-};
+}
 
 const closeByOverlayEsc = (popup) => (evt) => {
   if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
@@ -89,21 +89,21 @@ const closeByPopupButton = (popup) => (evt) => {
   }
 };
 
-const openPopup = (popup) => {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 
   popup.addEventListener('click', closeByPopupButton(popup));
   popup.addEventListener('mousedown', closeByOverlayClick(popup));
   window.addEventListener('keydown', closeByOverlayEsc(popup));
-};
+}
 
-const closePopup = (popup) => {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 
   popup.removeEventListener('click', closeByPopupButton(popup));
   popup.removeEventListener('mousedown', closeByOverlayClick(popup));
   window.removeEventListener('keydown', closeByOverlayEsc(popup));
-};
+}
 
 const addCard = (name, link) => {
   // Создадим экземпляр карточки
