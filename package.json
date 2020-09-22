@@ -1,0 +1,25 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "[ссылка на мою страницу](https://interind.github.io/mesto/index.html) автор: Банных А.С.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rd /s /q dist && webpack",
+    "dev": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interind/mesto.git"
+  },
+  "author": "Bannykh Aleksandr",
+  "license": "ISC",
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/interind/mesto/issues"
+  },
+  "homepage": "https://github.com/interind/mesto#readme",
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  }
+}

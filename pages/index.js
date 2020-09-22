@@ -94,7 +94,7 @@ function openPopup(popup) {
 
   popup.addEventListener('click', closeByPopupButton(popup));
   popup.addEventListener('mousedown', closeByOverlayClick(popup));
-  popup.addEventListener('keydown', closeByOverlayEsc(popup));
+  window.addEventListener('keydown', closeByOverlayEsc(popup));
 }
 
 function closePopup(popup) {
@@ -102,7 +102,7 @@ function closePopup(popup) {
 
   popup.removeEventListener('click', closeByPopupButton(popup));
   popup.removeEventListener('mousedown', closeByOverlayClick(popup));
-  popup.removeEventListener('keydown', closeByOverlayEsc(popup));
+  window.removeEventListener('keydown', closeByOverlayEsc(popup));
 }
 
 const addCard = (name, link) => {
