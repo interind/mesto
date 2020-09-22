@@ -3,23 +3,28 @@ import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
-import {
-  popupProfile,
-  popupCard,
-  formProfile,
-  inputName,
-  inputJob,
-  buttonSubmitProfile,
-  formCard,
-  inputPlace,
-  inputCard,
-  buttonSubmitCard,
-  profileName,
-  profileJob,
-  buttonEdit,
-  buttonAdd,
-  containerCards,
-} from '../utils/constants.js';
+
+const popupProfile = document.querySelector('.popup_type_profile'); // попап
+const popupCard = document.querySelector('.popup_type_card'); // попап
+const popupZoom = document.querySelector('.popup_type_zoom'); // попап
+
+const formProfile = document.forms.formProfile; //форма профиля
+const inputName = formProfile.elements.name;
+const inputJob = formProfile.elements.job;
+const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
+
+const formCard = document.forms.formCard; //форма новых картинок
+const inputPlace = formCard.elements.place;
+const inputCard = formCard.elements.card;
+const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
+
+const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
+const profileName = profileBlock.querySelector('.profile__title'); // имя в профиле
+const profileJob = profileBlock.querySelector('.profile__subtitle'); // данные профиля
+const buttonEdit = profileBlock.querySelector('.profile__edit-button'); //кнопка редактировать
+const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
+
+const containerCards = document.querySelector('.elements'); // контейнер для карточек
 
 const formProfileValidation = new FormValidator(
   templateFormSelector,
@@ -30,29 +35,29 @@ formProfileValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
 
-function showProfileForm() {
+const showProfileForm = () => {
   // открытие формы
   formProfile.reset();
   //получение данных формы профиля
   inputName.placeholder = profileName.textContent;
   inputJob.placeholder = profileJob.textContent;
- 
+
   setTimeout(() => {
     inputName.focus();
   }, 100); // фокус для проверки инпута
 
   openPopup(popupProfile);
-}
+};
 
-function formRenderProfile() {
+const formRenderProfile = () => {
   // добавление данных
   profileName.textContent = inputName.value;
   profileJob.textContent = inputJob.value;
 
   closePopup(popupProfile);
-}
+};
 
-function showCardForm() {
+const showCardForm = () => {
   // открытие формы
   formCard.reset();
   //получение данных формы новых картинок
@@ -64,12 +69,12 @@ function showCardForm() {
   }, 100);
 
   openPopup(popupCard);
-}
+};
 
-function formRenderCards() {
+const formRenderCards = () => {
   addNewCard(inputPlace.value, inputCard.value);
   closePopup(popupCard);
-}
+};
 
 const closeByOverlayEsc = (popup) => (evt) => {
   if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
@@ -89,24 +94,25 @@ const closeByPopupButton = (popup) => (evt) => {
   }
 };
 
-function openPopup(popup) {
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 
   popup.addEventListener('click', closeByPopupButton(popup));
   popup.addEventListener('mousedown', closeByOverlayClick(popup));
   window.addEventListener('keydown', closeByOverlayEsc(popup));
-}
+};
 
-function closePopup(popup) {
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
 
   popup.removeEventListener('click', closeByPopupButton(popup));
   popup.removeEventListener('mousedown', closeByOverlayClick(popup));
   window.removeEventListener('keydown', closeByOverlayEsc(popup));
-}
+};
 
 const addCard = (name, link) => {
   // Создадим экземпляр карточки
+
   const card = new Card(name, link, '#card', openPopup);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
@@ -119,7 +125,7 @@ initialCards.forEach((card) => addCard(card.name, card.link));
 const addNewCard = (
   // для новых карточек.
   name,
-  link
+  link,
 ) => {
   // для новых карточек
   const newCard = new Card(name, link, '#card', openPopup);
