@@ -1,6 +1,7 @@
 'use strict';
 import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
+import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
@@ -31,27 +32,46 @@ formProfileValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
 
-const showProfileForm = () => {
-  // открытие формы
-  formProfile.reset();
-  //получение данных формы профиля
-  inputName.placeholder = profileName.textContent;
-  inputJob.placeholder = profileJob.textContent;
+const userInfo = new UserInfo(profileName, profileJob);
 
-  setTimeout(() => {
-    inputName.focus();
-  }, 100); // фокус для проверки инпута
+// const showProfileForm = () => {// работает не так
+//   // открытие формы
+//   formProfile.reset();
+//   //получение данных формы профиля
+//   userInfo.getUserInfo(inputName, inputJob);
 
-  openPopup(popupProfile);
-};
 
-const formRenderProfile = () => {
-  // добавление данных
-  profileName.textContent = inputName.value;
-  profileJob.textContent = inputJob.value;
+//   openPopup(popupProfile);
+// };
 
-  closePopup(popupProfile);
-};
+// const formRenderProfile = () => {// данные сохраняются но не видны на странице только в инпуте
+//   // добавление данных
+//   userInfo.setUserInfo(inputName, inputJob);
+
+//   closePopup(popupProfile);
+// };
+
+// const showProfileForm = () => {
+//   // открытие формы
+//   formProfile.reset();
+//   //получение данных формы профиля
+//   inputName.placeholder = profileName.textContent;
+//   inputJob.placeholder = profileJob.textContent;
+
+//   setTimeout(() => {
+//     inputName.focus();
+//   }, 100); // фокус для проверки инпута
+
+//   openPopup(popupProfile);
+// };
+
+// const formRenderProfile = () => {
+//   // добавление данных
+//   profileName.textContent = inputName.value;
+//   profileJob.textContent = inputJob.value;
+
+//   closePopup(popupProfile);
+// };
 
 const showCardForm = () => {
   // открытие формы

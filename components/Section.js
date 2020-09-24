@@ -1,13 +1,21 @@
 class Section {
- constructor({item, renderer}, containerSelector) {
-  this._item = item;
-  this._renderer = renderer;
-  this._containerSelector = containerSelector;
- }
- renderer() {
+  constructor({ data, renderer }, containerSelector) {
+    this._renderedItems = data;
+    this._renderer = renderer;
+    this._container = document.querySelector(containerSelector);
+  }
 
- }
- addItem() {
-  
- }
+  setItem(element) {
+    this._container.append(element);
+  }
+  // clear() {
+  //   this._container.innerHTML = '';
+  // }
+  renderItems() {
+    // this.clear();
+
+    this._renderedItems.forEach(item => {
+      this._renderer(item);
+    });
+  }
 }
