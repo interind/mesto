@@ -1,10 +1,10 @@
 export class Card {
-  constructor(text, image, cardSelector, popupFunction) {
+  constructor(text, image, cardSelector, popup) {
     
     this._text = text;
     this._image = image;
     this._cardSelector = cardSelector;
-    this._popupFunction = popupFunction;
+    this._popupFunction = popup;
   }
 
   _getTemplate() {

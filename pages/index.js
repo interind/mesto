@@ -1,7 +1,7 @@
 'use strict';
 import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
-import { UserInfo } from '../components/UserInfo.js';
+// import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
@@ -21,6 +21,9 @@ import {
   buttonAdd,
   containerCards
  } from '../utils/constants.js';
+//  import Popup from '../components/Popup.js';
+
+//  const popupProfile = new Popup('.popup_type_profile');
 
 
 const formProfileValidation = new FormValidator(
@@ -31,66 +34,6 @@ formProfileValidation.enableValidation();
 
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
-
-const userInfo = new UserInfo(profileName, profileJob);
-
-// const showProfileForm = () => {// работает не так
-//   // открытие формы
-//   formProfile.reset();
-//   //получение данных формы профиля
-//   userInfo.getUserInfo(inputName, inputJob);
-
-
-//   openPopup(popupProfile);
-// };
-
-// const formRenderProfile = () => {// данные сохраняются но не видны на странице только в инпуте
-//   // добавление данных
-//   userInfo.setUserInfo(inputName, inputJob);
-
-//   closePopup(popupProfile);
-// };
-
-// const showProfileForm = () => {
-//   // открытие формы
-//   formProfile.reset();
-//   //получение данных формы профиля
-//   inputName.placeholder = profileName.textContent;
-//   inputJob.placeholder = profileJob.textContent;
-
-//   setTimeout(() => {
-//     inputName.focus();
-//   }, 100); // фокус для проверки инпута
-
-//   openPopup(popupProfile);
-// };
-
-// const formRenderProfile = () => {
-//   // добавление данных
-//   profileName.textContent = inputName.value;
-//   profileJob.textContent = inputJob.value;
-
-//   closePopup(popupProfile);
-// };
-
-const showCardForm = () => {
-  // открытие формы
-  formCard.reset();
-  //получение данных формы новых картинок
-  inputPlace.value = '';
-  inputCard.value = '';
-
-  setTimeout(() => {
-    inputPlace.focus();
-  }, 100);
-
-  openPopup(popupCard);
-};
-
-const formRenderCards = () => {
-  addNewCard(inputPlace.value, inputCard.value);
-  closePopup(popupCard);
-};
 
 const closeByOverlayEsc = (popup) => (evt) => {
   if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
@@ -126,6 +69,42 @@ const closePopup = (popup) => {
   window.removeEventListener('keydown', closeByOverlayEsc(popup));
 };
 
+const showProfileForm = () => {
+  // открытие формы
+  formProfile.reset();
+  //получение данных формы профиля
+  inputName.placeholder = profileName.textContent;
+  inputJob.placeholder = profileJob.textContent;
+
+  setTimeout(() => {
+    inputName.focus();
+  }, 100); // фокус для проверки инпута
+
+  openPopup(popupProfile);
+};
+
+const formRenderProfile = () => {
+  // добавление данных
+  profileName.textContent = inputName.value;
+  profileJob.textContent = inputJob.value;
+
+  closePopup(popupProfile);
+};
+
+const showCardForm = () => {
+  // открытие формы
+  formCard.reset();
+  //получение данных формы новых картинок
+  inputPlace.value = '';
+  inputCard.value = '';
+
+  setTimeout(() => {
+    inputPlace.focus();
+  }, 100);
+
+  openPopup(popupCard);
+};
+
 const addCard = (name, link) => {
   // Создадим экземпляр карточки
 
@@ -149,6 +128,11 @@ const addNewCard = (
 
   // Добавляем в DOM
   containerCards.prepend(cardNewElement);
+};
+
+const formRenderCards = () => {
+  addNewCard(inputPlace.value, inputCard.value);
+  closePopup(popupCard);
 };
 
 buttonEdit.addEventListener('mousedown', showProfileForm);

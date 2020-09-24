@@ -4,6 +4,6 @@ class PopupWithImage extends Popup {
  this._src = data.src;
  }
  open() {
-
+ 
+   }
  }
-}
