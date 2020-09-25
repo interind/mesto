@@ -29,3 +29,29 @@ export default class Popup {
   });
   }
 }
+
+class PopupWithForm extends Popup {
+  constructor(popupSelector, callbackSubmit) {
+   this._popupSelector = popupSelector;
+   this._callbackSubmit = callbackSubmit;
+  }
+  _getInputValues() {
+ 
+  }
+  _setEventListeners() {
+ 
+  }
+  close() {
+ 
+  }
+ }
+
+ class PopupWithImage extends Popup {
+  constructor({data}) {
+  this._image = data.image;
+  this._src = data.src;
+  }
+  open() {
+  
+    }
+  }

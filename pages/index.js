@@ -21,7 +21,6 @@ import {
   buttonAdd,
   containerCards
  } from '../utils/constants.js';
-//  import Popup from '../components/Popup.js';
 
 //  const popupProfile = new Popup('.popup_type_profile');
 
@@ -105,17 +104,25 @@ const showCardForm = () => {
   openPopup(popupCard);
 };
 
-const addCard = (name, link) => {
-  // Создадим экземпляр карточки
 
-  const card = new Card(name, link, '#card', openPopup);
+
+const addCard = (item) => {
+  // Создадим экземпляр карточки
+  
+  const card = new Card(item, '#card', openPopup);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // Добавляем в DOM
   containerCards.append(cardElement);
 };
 
-initialCards.forEach((card) => addCard(card.name, card.link));
+initialCards.forEach((item) => addCard(item));
+
+
+
+
+
+
 
 const addNewCard = (
   // для новых карточек.
