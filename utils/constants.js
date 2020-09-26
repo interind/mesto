@@ -1,6 +1,6 @@
 export const popupProfile = document.querySelector('.popup_type_profile'); // попап
 export const popupCard = document.querySelector('.popup_type_card'); // попап
-const popupZoom = document.querySelector('.popup_type_zoom'); // попап
+export const popupZoom = document.querySelector('.popup_type_zoom'); // попап
 
 export const formProfile = document.forms.formProfile; //форма профиля
 export const inputName = formProfile.elements.name;

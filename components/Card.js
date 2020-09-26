@@ -1,10 +1,10 @@
 export class Card {
-  constructor(data, cardSelector, popup) {
+  constructor(data, cardSelector, handleCardClick) {
     
     this._text = data.name;
     this._image = data.link;
     this._cardSelector = cardSelector;
-    this._popupFunction = popup;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -48,15 +48,8 @@ export class Card {
   }
 
   _zoom  (evt) {
-    if(evt.target === this._imageCard) {
-    this._renderZoomCard = document.querySelector('.popup_type_zoom');
-    this._renderZoomCard.querySelector('.popup__pic').src = this._imageCard.src;
-    this._renderZoomCard.querySelector(
-      '.popup__place-pic'
-    ).textContent = this._imageCard.alt;
-
-    this._popupFunction(this._renderZoomCard);
-    }
+  
+    this._handleCardClick.open(evt);
   }
 
   _remove () {

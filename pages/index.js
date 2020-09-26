@@ -5,8 +5,6 @@ import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
-  popupProfile,
-  popupCard,
   formProfile,
   inputName,
   inputJob,
@@ -15,15 +13,17 @@ import {
   inputPlace,
   inputCard,
   buttonSubmitCard,
-  profileName,
-  profileJob,
   buttonEdit,
   buttonAdd,
   containerCards
  } from '../utils/constants.js';
+import Section from '../components/Section.js';
+import { PopupWithImage, PopupWithFormProfile, PopupWithFormCard } from '../components/Popup.js';
+import { UserInfo } from '../components/UserInfo.js';
 
-//  const popupProfile = new Popup('.popup_type_profile');
-
+ const popupProfile  = new PopupWithFormProfile('.popup_type_profile', formRenderProfile);
+ const popupCard = new PopupWithFormCard('.popup_type_card', formRenderCards);
+ const userInfo = new UserInfo('.profile__title', '.profile__subtitle');
 
 const formProfileValidation = new FormValidator(
   templateFormSelector,
@@ -34,61 +34,29 @@ formProfileValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation();
 
-const closeByOverlayEsc = (popup) => (evt) => {
-  if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
-    closePopup(popup);
-  }
-};
 
-const closeByOverlayClick = (popup) => (evt) => {
-  if (evt.target === popup) {
-    closePopup(popup);
-  }
-};
-
-const closeByPopupButton = (popup) => (evt) => {
-  if (evt.target.classList.contains('popup__button-close')) {
-    closePopup(popup);
-  }
-};
-
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
-
-  popup.addEventListener('click', closeByPopupButton(popup));
-  popup.addEventListener('mousedown', closeByOverlayClick(popup));
-  window.addEventListener('keydown', closeByOverlayEsc(popup));
-};
-
-const closePopup = (popup) => {
-  popup.classList.remove('popup_opened');
-
-  popup.removeEventListener('click', closeByPopupButton(popup));
-  popup.removeEventListener('mousedown', closeByOverlayClick(popup));
-  window.removeEventListener('keydown', closeByOverlayEsc(popup));
-};
-
-const showProfileForm = () => {
+const showProfileForm = (evt) => {
+  evt.preventDefault();
   // открытие формы
-  formProfile.reset();
   //получение данных формы профиля
-  inputName.placeholder = profileName.textContent;
-  inputJob.placeholder = profileJob.textContent;
+  userInfo.getUserInfo(inputName, inputJob);
 
   setTimeout(() => {
     inputName.focus();
   }, 100); // фокус для проверки инпута
 
-  openPopup(popupProfile);
+  popupProfile.open();
 };
 
-const formRenderProfile = () => {
+function formRenderProfile () {
   // добавление данных
-  profileName.textContent = inputName.value;
-  profileJob.textContent = inputJob.value;
+  userInfo.setUserInfo(inputName, inputJob);
 
-  closePopup(popupProfile);
-};
+  popupProfile.close();
+}
+
+
+
 
 const showCardForm = () => {
   // открытие формы
@@ -101,48 +69,96 @@ const showCardForm = () => {
     inputPlace.focus();
   }, 100);
 
-  openPopup(popupCard);
+  popupCard.open();
 };
 
-
-
-const addCard = (item) => {
-  // Создадим экземпляр карточки
-  
-  const card = new Card(item, '#card', openPopup);
-  // Создаём карточку и возвращаем наружу
+const section = new Section({data: initialCards, renderer: item => {
+  const popupWithImage = new PopupWithImage('.popup_type_zoom');
+  const card = new Card(item, '#card', popupWithImage);
   const cardElement = card.generateCard();
-  // Добавляем в DOM
-  containerCards.append(cardElement);
-};
+  section.addItems(cardElement);
+}}, containerCards);
 
-initialCards.forEach((item) => addCard(item));
-
+section.renderItems();
 
 
+// const addNewCard = (
+//   // для новых карточек.
+//   name,
+//   link,
+// ) => {
+//   // для новых карточек
+//   const newCard = new Card({}, '#card', popupWithImage);
+//   const cardNewElement = newCard.generateCard();
 
+//   // Добавляем в DOM
+//   containerCards.prepend(cardNewElement);
+// };
 
+function formRenderCards () {
 
-
-const addNewCard = (
-  // для новых карточек.
-  name,
-  link,
-) => {
-  // для новых карточек
-  const newCard = new Card(name, link, '#card', openPopup);
-  const cardNewElement = newCard.generateCard();
-
-  // Добавляем в DOM
-  containerCards.prepend(cardNewElement);
-};
-
-const formRenderCards = () => {
-  addNewCard(inputPlace.value, inputCard.value);
-  closePopup(popupCard);
-};
+section.addNewCard(inputPlace.value, inputCard.value);
+  
+  popupCard.close();
+}
 
 buttonEdit.addEventListener('mousedown', showProfileForm);
 buttonAdd.addEventListener('mousedown', showCardForm);
-buttonSubmitProfile.addEventListener('click', formRenderProfile);
-buttonSubmitCard.addEventListener('click', formRenderCards);
+// buttonSubmitProfile.addEventListener('click', formRenderProfile);
+// buttonSubmitCard.addEventListener('click', formRenderCards);
+
+
+// const showProfileForm = () => {
+//   // открытие формы
+//   formProfile.reset();
+//   //получение данных формы профиля
+//   inputName.placeholder = profileName.textContent;
+//   inputJob.placeholder = profileJob.textContent;
+
+//   setTimeout(() => {
+//     inputName.focus();
+//   }, 100); // фокус для проверки инпута
+
+//   openPopup(popupProfile);
+// };
+
+// const formRenderProfile = () => {
+//   // добавление данных
+//   profileName.textContent = inputName.value;
+//   profileJob.textContent = inputJob.value;
+
+//   closePopup(popupProfile);
+// };
+// const closeByOverlayEsc = (popup) => (evt) => {
+  //   if (evt.key === 'Escape' && popup.classList.contains('popup_opened')) {
+  //     closePopup(popup);
+  //   }
+  // };
+  
+  // const closeByOverlayClick = (popup) => (evt) => {
+  //   if (evt.target === popup) {
+  //     closePopup(popup);
+  //   }
+  // };
+  
+  // const closeByPopupButton = (popup) => (evt) => {
+  //   if (evt.target.classList.contains('popup__button-close')) {
+  //     closePopup(popup);
+  //   }
+  // };
+  
+  // const openPopup = (popup) => {
+  //   popup.classList.add('popup_opened');
+  
+  //   popup.addEventListener('click', closeByPopupButton(popup));
+  //   popup.addEventListener('mousedown', closeByOverlayClick(popup));
+  //   window.addEventListener('keydown', closeByOverlayEsc(popup));
+  // };
+  
+  // const closePopup = (popup) => {
+  //   popup.classList.remove('popup_opened');
+  
+  //   popup.removeEventListener('click', closeByPopupButton(popup));
+  //   popup.removeEventListener('mousedown', closeByOverlayClick(popup));
+  //   window.removeEventListener('keydown', closeByOverlayEsc(popup));
+  // };
