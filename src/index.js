@@ -21,9 +21,13 @@ import {
 import Section from './components/Section.js';
 import {
   PopupWithImage,
-  PopupWithFormProfile,
+} from './components/PopupWithImage.js';
+import {
   PopupWithFormCard,
-} from './components/Popup.js';
+} from './components/PopupWithFormCard.js';
+import {
+  PopupWithFormProfile,
+} from './components/PopupWithFormProfile.js';
 import { UserInfo } from './components/UserInfo.js';
 
 const section = new Section(
