@@ -1,8 +1,9 @@
 'use strict';
-import { initialCards } from '../utils/array.js';
-import { Card } from '../components/Card.js';
-import { FormValidator } from '../components/FormValidator.js';
-import { templateFormSelector } from '../utils/templateFormSelector.js';
+import './pages/index.css';
+import { initialCards } from './utils/array.js';
+import { Card } from './components/Card.js';
+import { FormValidator } from './components/FormValidator.js';
+import { templateFormSelector } from './utils/templateFormSelector.js';
 import {
   popupProfile,
   popupCard,
@@ -16,14 +17,14 @@ import {
   buttonEdit,
   buttonAdd,
   containerCards,
-} from '../utils/constants.js';
-import Section from '../components/Section.js';
+} from './utils/constants.js';
+import Section from './components/Section.js';
 import {
   PopupWithImage,
   PopupWithFormProfile,
   PopupWithFormCard,
-} from '../components/Popup.js';
-import { UserInfo } from '../components/UserInfo.js';
+} from './components/Popup.js';
+import { UserInfo } from './components/UserInfo.js';
 
 const section = new Section(
   {
