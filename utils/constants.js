@@ -18,4 +18,4 @@ export const profileJob = profileBlock.querySelector('.profile__subtitle'); // �
 export const buttonEdit = profileBlock.querySelector('.profile__edit-button'); //кнопка редактировать
 export const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
 
-export const containerCards = document.querySelector('.elements'); // контейнер для карточек
+export const containerCards = document.querySelector('.elements'); // контейнер для карточек // данные инпутов для новых карточек
