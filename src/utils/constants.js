@@ -19,3 +19,5 @@ export const buttonEdit = profileBlock.querySelector('.profile__edit-button'); /
 export const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
 
 export const containerCards = document.querySelector('.elements'); // контейнер для карточек // данные инпутов для новых карточек
+
+export const infoUser = {name: '.profile__title', job: '.profile__subtitle'};

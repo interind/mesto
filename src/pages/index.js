@@ -17,6 +17,7 @@ import {
   buttonEdit,
   buttonAdd,
   containerCards,
+  infoUser
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -48,7 +49,7 @@ const popupClassCard = new PopupWithForm(
   showCardForm,
   formRenderCards
 );
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle');
+const userInfo = new UserInfo(infoUser);
 
 const formProfileValidation = new FormValidator(
   templateFormSelector,
@@ -62,7 +63,7 @@ formCardValidation.enableValidation();
 function showProfileForm() {
   // открытие формы
   //получение данных формы профиля
-  userInfo.getUserInfo(inputName, inputJob);
+  userInfo.getUserInfo();
 
   setTimeout(() => {
     inputName.focus();
