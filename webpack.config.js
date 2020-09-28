@@ -22,9 +22,15 @@ module: {
    },
    {
     // регулярное выражение, которое ищет все файлы с такими расширениями
-    test: /\.(png|svg|jpg|gif|woff2|woff)$/,
+    test: /\.(png|svg|jpg|ico|gif)$/,
     // при обработке этих файлов нужно использовать file-loader
-    loader: 'file-loader'
+    loader: 'file-loader?name=./images/[name].[ext]'
+  },
+  {
+    // регулярное выражение, которое ищет все файлы с такими расширениями
+    test: /\.(eot|ttf|woff2|woff)$/,
+    // при обработке этих файлов нужно использовать file-loader
+    loader: 'file-loader?name=./vendor/[name].[ext]'
   },
   // аналогично добавьте правило для работы с html
   {
