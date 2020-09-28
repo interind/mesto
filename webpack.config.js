@@ -22,7 +22,7 @@ module: {
    },
    {
     // регулярное выражение, которое ищет все файлы с такими расширениями
-    test: /\.(png|svg|jpg|ico|gif)$/,
+    test: /\.(png|svg|jpg|icon|gif)$/,
     // при обработке этих файлов нужно использовать file-loader
     loader: 'file-loader?name=./images/[name].[ext]'
   },
