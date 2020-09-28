@@ -22,7 +22,7 @@ module: {
    },
    {
     // регулярное выражение, которое ищет все файлы с такими расширениями
-    test: /\.(png|svg|jpg|icon|gif)$/,
+    test: /\.(png|svg|jpg|gif)$/,
     // при обработке этих файлов нужно использовать file-loader
     loader: 'file-loader?name=./images/[name].[ext]'
   },
@@ -51,7 +51,7 @@ module: {
    ]
 },
 plugins: [new HtmlWebpackPlugin({
-template: './src/index.html' // путь к файлу index.html
+template: './src/index.html'// путь к файлу index.html
 }),
 new MiniCssExtractPlugin() // подключение плагина для объединения файлов
 ] // добавьте массив
