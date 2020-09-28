@@ -63,7 +63,7 @@ formCardValidation.enableValidation();
 function showProfileForm() {
   // открытие формы
   //получение данных формы профиля
-  userInfo.getUserInfo();
+  userInfo.getUserInfo(inputName, inputJob);
 
   setTimeout(() => {
     inputName.focus();

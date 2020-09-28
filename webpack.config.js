@@ -1,6 +1,6 @@
 const path = require('path'); // подключаем path к конфигу вебпак
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -51,8 +51,9 @@ module: {
    ]
 },
 plugins: [new HtmlWebpackPlugin({
-template: './src/index.html'// путь к файлу index.html
+template: './src/index.html',
+favicon: './src/images/russia.png'// путь к файлу index.html
 }),
-new MiniCssExtractPlugin() // подключение плагина для объединения файлов
+new MiniCssExtractPlugin(),// подключение плагина для объединения файлов
 ] // добавьте массив
 };
