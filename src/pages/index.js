@@ -1,9 +1,9 @@
 'use strict';
-import './pages/index.css';
-import { initialCards } from './utils/array.js';
-import { Card } from './components/Card.js';
-import { FormValidator } from './components/FormValidator.js';
-import { templateFormSelector } from './utils/templateFormSelector.js';
+import './index.css';
+import { initialCards } from '../utils/array.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
   popupProfile,
   popupCard,
@@ -17,18 +17,11 @@ import {
   buttonEdit,
   buttonAdd,
   containerCards,
-} from './utils/constants.js';
-import Section from './components/Section.js';
-import {
-  PopupWithImage,
-} from './components/PopupWithImage.js';
-import {
-  PopupWithFormCard,
-} from './components/PopupWithFormCard.js';
-import {
-  PopupWithFormProfile,
-} from './components/PopupWithFormProfile.js';
-import { UserInfo } from './components/UserInfo.js';
+} from '../utils/constants.js';
+import Section from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 
 const section = new Section(
   {
@@ -43,14 +36,14 @@ const section = new Section(
   containerCards
 );
 
-section.renderItems(); // отображение массива карточек 
+section.renderItems(); // отображение массива карточек
 
-const popupClassProfile = new PopupWithFormProfile(
+const popupClassProfile = new PopupWithForm(
   popupProfile,
   showProfileForm,
   formRenderProfile
 );
-const popupClassCard = new PopupWithFormCard(
+const popupClassCard = new PopupWithForm(
   popupCard,
   showCardForm,
   formRenderCards
@@ -81,7 +74,8 @@ function formRenderProfile() {
   userInfo.setUserInfo(inputName, inputJob);
 }
 
-function formRenderCards() { // Добавление новых карточек
+function formRenderCards() {
+  // Добавление новых карточек
   const newCardValues = [
     {
       name: `${inputPlace.value}`,
@@ -91,7 +85,7 @@ function formRenderCards() { // Добавление новых карточек
   const section = new Section(
     {
       data: newCardValues,
-      renderer: item => {
+      renderer: (item) => {
         const popupWithImage = new PopupWithImage(popupZoom);
         const card = new Card(item, '#card', popupWithImage);
         const cardElement = card.generateCard();
@@ -114,8 +108,6 @@ function showCardForm() {
     inputPlace.focus();
   }, 100);
 }
-
-
 
 buttonEdit.addEventListener('mousedown', () => {
   popupClassProfile.open();

@@ -1,6 +1,5 @@
 export class Card {
   constructor(data, cardSelector, handleCardClick) {
-    
     this._text = data.name;
     this._image = data.link;
     this._cardSelector = cardSelector;
@@ -29,30 +28,29 @@ export class Card {
     this._element
       .querySelector('.element__button-like')
       .addEventListener('click', () => {
-      this._like();
-    });
+        this._like();
+      });
     this._element
       .querySelector('.element__button-trash')
       .addEventListener('click', () => {
         this._remove();
       });
     this._element.addEventListener('click', (evt) => {
-       this._zoom(evt);
+      this._zoom(evt);
     });
   }
-  _like () {
+  _like() {
     // ставим лайки
     this._element
       .querySelector('.element__button-like')
       .classList.toggle('element__button-like_color_black');
   }
 
-  _zoom  (evt) {
-  
+  _zoom(evt) {
     this._handleCardClick.open(evt);
   }
 
-  _remove () {
+  _remove() {
     // удаление карточек
     this._element.remove();
     this._element = null;
