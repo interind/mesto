@@ -47,7 +47,9 @@ export class Card {
   }
 
   _zoom(evt) {
-    this._handleCardClick.open(evt);
+    if (evt.currentTarget === this._element) {
+      this._handleCardClick.open(this._text, this._image);
+    }
   }
 
   _remove() {

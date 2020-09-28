@@ -22,14 +22,14 @@ import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+const popupWithImage = new PopupWithImage(popupZoom);
+const card = (...arg) => new Card(...arg);
 
 const section = new Section(
   {
     data: initialCards,
     renderer: (item) => {
-      const popupWithImage = new PopupWithImage(popupZoom);
-      const card = new Card(item, '#card', popupWithImage);
-      const cardElement = card.generateCard();
+      const cardElement = card(item, '#card', popupWithImage).generateCard();
       section.addItems(cardElement);
     },
   },
@@ -86,9 +86,7 @@ function formRenderCards() {
     {
       data: newCardValues,
       renderer: (item) => {
-        const popupWithImage = new PopupWithImage(popupZoom);
-        const card = new Card(item, '#card', popupWithImage);
-        const cardElement = card.generateCard();
+        const cardElement = card(item, '#card', popupWithImage).generateCard();
         section.addNewItems(cardElement);
       },
     },

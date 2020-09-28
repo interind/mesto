@@ -14,6 +14,11 @@ export default class Popup {
       this.close();
     }
   }
+  _handlePopupClose(evt) {
+    if (evt.target === evt.currentTarget) {
+      this.close();
+    }
+  }
   _setEventListeners() {
     this._popupSelector
       .querySelector('.popup__button-close')
@@ -21,12 +26,7 @@ export default class Popup {
         this.close();
       });
     this._popupSelector.addEventListener('mousedown', (evt) => {
-      if (
-        evt.target === evt.currentTarget ||
-        evt.target.classList.contains('popup__button-close')
-      ) {
-        this.close();
-      }
+      this._handlePopupClose(evt);
     });
     window.addEventListener('keydown', (evt) => {
       this._handleEscClose(evt);
