@@ -47,7 +47,7 @@ export class Card {
   }
 
   _zoom(evt) {
-    if (evt.currentTarget === this._element) {
+    if (evt.target.classList.contains('element__pic')) {
       this._handleCardClick.open(this._text, this._image);
     }
   }

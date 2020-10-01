@@ -46,14 +46,14 @@ section.renderItems(); // отображение массива карточек
 
 const userInfo = new UserInfo(infoUser);
 
-const showProfileForm = userInfo.getUserInfo();
+const showProfileForm = userInfo.getUserInfo();// получение данных профиля со страницы
 
-const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg);
+const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg); // получение данных профиля на страницу
 
 const showCardForm = {
   name: inputPlace,
   link: inputCard,
-};
+}; // начальный объект для новых карточек
 
 const popupClassProfile = new PopupWithForm(
   '.popup_type_profile',
@@ -66,7 +66,7 @@ const popupClassCard = new PopupWithForm(
   formRenderCards
 );
 
-function formRenderCards(newCardValues) {
+function formRenderCards(newCardValues) { // функция для новых карточек
   // Добавление новых карточек
   const section = new Section(
     {

@@ -13,8 +13,6 @@ export class PopupWithForm extends Popup {
     this._inputJob = this.form.elements.job;
     this._inputPlace = this.form.elements.place;
     this._inputCard = this.form.elements.card;
-    this.buttonClose = this.form.querySelector('.popup__button-close');
-    this.close = this.close.bind(this);
   }
   _setEventListeners() {
     super._setEventListeners();
@@ -22,8 +20,6 @@ export class PopupWithForm extends Popup {
       this._callbackSubmit(this._getInputValues());
       this.close();
     });
-
-    this.buttonClose.addEventListener('click', this.close);
   }
   open() {
     super.open();
@@ -31,11 +27,10 @@ export class PopupWithForm extends Popup {
   }
   close() {
     super.close();
-    this.form.reset();
-    this.buttonClose.removeEventListener('click', this.close);
+    this.form.reset(); // сброс формы
   }
 
-  _getInputValues() {
+  _getInputValues() { // получение значений инпутов в объект
     if (this.form.classList.contains('popup__container_type_profile')) {
       return {
         user: this._inputUser.value,
@@ -51,7 +46,7 @@ export class PopupWithForm extends Popup {
     }
   }
 
-  render() {
+  render() { // функция для отображения данных при открытии формы
     setTimeout(() => (this._inputUser || this._inputPlace).focus(), 100);
     if (this.form.classList.contains('popup__container_type_profile')) {
       this._inputUser.value = this._infoUser.textContent;
@@ -60,9 +55,5 @@ export class PopupWithForm extends Popup {
       this._inputPlace.value = this._infoPlace.textContent;
       this._inputCard.value = this._infoName.textContent;
     }
-  }
-
-  _handleEscClose(evt) {
-    super._handleEscClose(evt);
   }
 }
