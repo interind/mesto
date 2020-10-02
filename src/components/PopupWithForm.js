@@ -13,13 +13,11 @@ export class PopupWithForm extends Popup {
     this._inputJob = this.form.elements.job;
     this._inputPlace = this.form.elements.place;
     this._inputCard = this.form.elements.card;
+    this._submit = this._submit.bind(this);
   }
   _setEventListeners() {
     super._setEventListeners();
-    this.form.addEventListener('submit', () => {
-      this._callbackSubmit(this._getInputValues());
-      this.close();
-    });
+    this.form.addEventListener('submit', this._submit);
   }
   open() {
     super.open();
@@ -27,7 +25,15 @@ export class PopupWithForm extends Popup {
   }
   close() {
     super.close();
+    this.form.removeEventListener('submit', this._submit);
     this.form.reset(); // сброс формы
+    
+  }
+
+  _submit(evt) {
+    evt.preventDefault();
+    this._callbackSubmit(this._getInputValues());
+    this.close();
   }
 
   _getInputValues() { // получение значений инпутов в объект
@@ -57,3 +63,4 @@ export class PopupWithForm extends Popup {
     }
   }
 }
+
