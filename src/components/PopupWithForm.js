@@ -2,17 +2,11 @@ import Popup from './Popup.js';
 export class PopupWithForm extends Popup {
   constructor(popupSelector, infoUser, callbackSubmit) {
     super(popupSelector);
-    this._infoUser = infoUser.user;
-    this._infoJob = infoUser.job;
-    this._infoPlace = infoUser.link;
-    this._infoName = infoUser.name;
     this._callbackSubmit = callbackSubmit;
     this._popup = document.querySelector(this._popupSelector);
     this.form = this._popup.querySelector('.popup__container');
-    this._inputUser = this.form.elements.name;
-    this._inputJob = this.form.elements.job;
-    this._inputPlace = this.form.elements.place;
-    this._inputCard = this.form.elements.card;
+    this._inputList= Array.from(this.form.querySelectorAll('.popup__input'));
+    this._infoList = Object.values(infoUser);
     this._submit = this._submit.bind(this);
   }
   _setEventListeners() {
@@ -37,30 +31,13 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues() { // получение значений инпутов в объект
-    if (this.form.classList.contains('popup__container_type_profile')) {
-      return {
-        user: this._inputUser.value,
-        job: this._inputJob.value,
-      };
-    } else if (this.form.classList.contains('popup__container_type_card')) {
-      return [
-        {
-          name: this._inputPlace.value,
-          link: this._inputCard.value,
-        },
-      ];
-    }
+    const inputValues = Object.values(this._inputList);
+    return [{0: inputValues[0].value, 1: inputValues[1].value}];
   }
 
   render() { // функция для отображения данных при открытии формы
-    setTimeout(() => (this._inputUser || this._inputPlace).focus(), 100);
-    if (this.form.classList.contains('popup__container_type_profile')) {
-      this._inputUser.value = this._infoUser.textContent;
-      this._inputJob.value = this._infoJob.textContent;
-    } else if (this.form.classList.contains('popup__container_type_card')) {
-      this._inputPlace.value = this._infoPlace.textContent;
-      this._inputCard.value = this._infoName.textContent;
-    }
+      this._inputList[0].value = this._infoList[0].textContent;
+      this._inputList[1].value = this._infoList[1].textContent;
+      setTimeout(() => this._inputList[0].focus(), 100);
   }
 }
-
