@@ -11,6 +11,3 @@ export const containerCards = document.querySelector('.elements'); // конте
 export const infoUser = { user: '.profile__title', job: '.profile__subtitle' };
 
 export const formProfile = document.forms.formProfile; //форма профиля
-const inputName = formProfile.elements.name;
-const inputJob = formProfile.elements.job;
-const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');

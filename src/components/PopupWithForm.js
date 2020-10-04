@@ -36,8 +36,9 @@ export class PopupWithForm extends Popup {
   }
 
   render() { // функция для отображения данных при открытии формы
-      this._inputList[0].value = this._infoList[0].textContent;
-      this._inputList[1].value = this._infoList[1].textContent;
-      setTimeout(() => this._inputList[0].focus(), 100);
+    for(let key in this._inputList && this._infoList) {
+      this._inputList[key].value = this._infoList[key].textContent;
+    }
+    setTimeout(() => this._inputList[0].focus(), 100);
   }
 }
