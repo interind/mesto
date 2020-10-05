@@ -31,8 +31,8 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues() { // получение значений инпутов в объект
-    const inputValues = Object.values(this._inputList);
-    return [{0: inputValues[0].value, 1: inputValues[1].value}];
+    const inputValues = this._inputList;
+    return [inputValues[0].value, inputValues[1].value];
   }
 
   render() { // функция для отображения данных при открытии формы

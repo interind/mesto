@@ -1,5 +1,5 @@
 'use strict';
-import './index.css';
+// import './index.css';
 import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -70,7 +70,7 @@ function formRenderCards(newCardValues) { // функция для новых к
   // Добавление новых карточек
   const section = new Section(
     {
-      data: newCardValues,
+      data: [newCardValues],
       renderer: (item) => {
         const cardElement = card(item, '#card', popupWithImage).generateCard();
         section.addNewItems(cardElement);
