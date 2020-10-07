@@ -13,6 +13,10 @@
   margin: 0 16px 0 0;
 }
 
+.profile__title:hover {
+  cursor: default;
+}
+
 @media screen and (max-width: 870px) {
   .profile__title {
     width: 68.13%;

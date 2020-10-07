@@ -18,6 +18,14 @@ import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
+
+const url = 'https://mesto.nomoreparties.co/v1/cohort-16/';
+const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
+const userMe = 'users/me';
+const newCards = 'cards';
+
+const api = new Api(url, token);
 
 const formProfileValidation = new FormValidator(
   templateFormSelector,
@@ -31,24 +39,24 @@ formCardValidation.enableValidation();
 const popupWithImage = new PopupWithImage('.popup_type_zoom');
 const card = (...arg) => new Card(...arg);
 
-const section = new Section(
-  {
-    data: initialCards,
-    renderer: (item) => {
-      const cardElement = card(item, '#card', popupWithImage).generateCard();
-      section.addItems(cardElement);
-    },
-  },
-  containerCards
-);
 
-section.renderItems(); // отображение массива карточек
 
 const userInfo = new UserInfo(infoUser);
 
-const showProfileForm = userInfo.getUserInfo();// получение данных профиля со страницы
+const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg);
 
-const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg); // получение данных профиля на страницу
+function setInf(items, renderer) {
+  api.getParse(items).then((res) => {
+    renderer(res);
+  });
+}
+setInf(userMe, formRenderProfile); // проблема прихода массива
+
+// setInf(newCards, formRenderCards);
+
+const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
+
+// получение данных профиля на страницу
 
 const showCardForm = {
   name: inputPlace,
@@ -66,11 +74,25 @@ const popupClassCard = new PopupWithForm(
   formRenderCards
 );
 
-function formRenderCards(newCardValues) { // функция для новых карточек
+const section = new Section(
+  {
+    data: initialCards,
+    renderer: (item) => {
+      const cardElement = card(item, '#card', popupWithImage).generateCard();
+      section.addItems(cardElement);
+    },
+  },
+  containerCards
+);
+
+section.renderItems(); // отображение массива карточек
+
+function formRenderCards(newCardValues) {
+  // функция для новых карточек
   // Добавление новых карточек
   const section = new Section(
     {
-      data: [newCardValues],
+      data: newCardValues,
       renderer: (item) => {
         const cardElement = card(item, '#card', popupWithImage).generateCard();
         section.addNewItems(cardElement);
@@ -88,3 +110,5 @@ buttonEdit.addEventListener('mousedown', () => {
 buttonAdd.addEventListener('mousedown', () => {
   popupClassCard.open();
 });
+
+console.log(initialCards);

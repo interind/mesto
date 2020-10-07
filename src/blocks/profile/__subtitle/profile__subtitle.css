@@ -12,6 +12,10 @@
   overflow: hidden;
 }
 
+.profile__subtitle:hover {
+  cursor: default;
+}
+
 @media screen and (max-width: 870px) {
   .profile__subtitle {
     text-align: center;
