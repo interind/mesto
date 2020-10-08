@@ -1,6 +1,5 @@
 'use strict';
 // import './index.css';
-import { initialCards } from '../utils/array.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
@@ -39,20 +38,25 @@ formCardValidation.enableValidation();
 const popupWithImage = new PopupWithImage('.popup_type_zoom');
 const card = (...arg) => new Card(...arg);
 
-
-
 const userInfo = new UserInfo(infoUser);
 
 const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg);
 
-function setInf(items, renderer) {
+function setInfoCards(items, renderer) {
+  api.getParse(items).then((res) => {
+    renderer(res[0]);
+  });
+}
+
+function setInfoUser(items, renderer) {
   api.getParse(items).then((res) => {
     renderer(res);
   });
 }
-setInf(userMe, formRenderProfile); // проблема прихода массива
+setInfoUser(userMe, formRenderProfile); // проблема прихода массива
 
-// setInf(newCards, formRenderCards);
+
+setInfoCards(newCards, formRenderCards);
 
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
@@ -74,20 +78,24 @@ const popupClassCard = new PopupWithForm(
   formRenderCards
 );
 
-const section = new Section(
-  {
-    data: initialCards,
-    renderer: (item) => {
-      const cardElement = card(item, '#card', popupWithImage).generateCard();
-      section.addItems(cardElement);
+function formRenderCards(initialCardValues) {
+  // функция для новых карточек
+  // Добавление новых карточек
+  const section = new Section(
+    {
+      data: initialCardValues,
+      renderer: (item) => {
+        const cardElement = card(item, '#card', popupWithImage).generateCard();
+        section.addItems(cardElement);
+      },
     },
-  },
-  containerCards
-);
+    containerCards
+  );
 
-section.renderItems(); // отображение массива карточек
+  section.renderItems();
+}
 
-function formRenderCards(newCardValues) {
+function formRenderNewCards(newCardValues) {
   // функция для новых карточек
   // Добавление новых карточек
   const section = new Section(
@@ -110,5 +118,3 @@ buttonEdit.addEventListener('mousedown', () => {
 buttonAdd.addEventListener('mousedown', () => {
   popupClassCard.open();
 });
-
-console.log(initialCards);

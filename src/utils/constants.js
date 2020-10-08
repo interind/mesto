@@ -8,6 +8,6 @@ export const buttonAdd = profileBlock.querySelector('.profile__add-button'); //�
 
 export const containerCards = document.querySelector('.elements'); // контейнер для карточек // данные инпутов для новых карточек
 
-export const infoUser = { user: '.profile__title', job: '.profile__subtitle' };
+export const infoUser = { user: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar'};
 
 export const formProfile = document.forms.formProfile; //форма профиля

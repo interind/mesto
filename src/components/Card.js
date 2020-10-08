@@ -2,6 +2,8 @@ export class Card {
   constructor(data, cardSelector, handleCardClick) {
     this._text = data[0] || data.name;
     this._image = data[1] || data.link;
+    this.likes = data.likes;
+    this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -20,7 +22,9 @@ export class Card {
     this._imageCard.src = this._image;
     this._imageCard.alt = this._text;
 
-    this._element.querySelector('.element__title').textContent = this._text;
+    this._title = this._element.querySelector('.element__title')
+    this._title.textContent = this._text;
+    this._title.title = this._title.textContent;
     this._setEventListeners();
     return this._element;
   }
@@ -29,6 +33,7 @@ export class Card {
       .querySelector('.element__button-like')
       .addEventListener('click', () => {
         this._like();
+        this._counterLike();
       });
     this._element
       .querySelector('.element__button-trash')
@@ -44,6 +49,18 @@ export class Card {
     this._element
       .querySelector('.element__button-like')
       .classList.toggle('element__button-like_color_black');
+      if(this.likes.includes(this._id)) {
+      this.likes.pop(this._id);
+      }
+      else {
+      this.likes.push(this._id);
+      }
+
+  }
+
+  _counterLike() {
+    this._element.querySelector('.element__counter-like')
+    .textContent = this.likes.length - 1;
   }
 
   _zoom(evt) {
