@@ -26,6 +26,7 @@ export class Card {
     this._title.textContent = this._text;
     this._title.title = this._title.textContent;
     this._setEventListeners();
+    this._counterLike();
     return this._element;
   }
   _setEventListeners() {
