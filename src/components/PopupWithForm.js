@@ -21,7 +21,6 @@ export class PopupWithForm extends Popup {
     super.close();
     this.form.removeEventListener('submit', this._submit);
     this.form.reset(); // сброс формы
-    
   }
 
   _submit(evt) {
@@ -31,8 +30,9 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues() { // получение значений инпутов в объект
-    const inputValues = this._inputList;
-    return [inputValues[0].value, inputValues[1].value];
+    let inputValues = {};
+     this._inputList.forEach(input => inputValues[input.name] = input.value);
+    return inputValues;
   }
 
   render() { // функция для отображения данных при открытии формы

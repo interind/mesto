@@ -1,11 +1,12 @@
 export class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, trashFunction) { 
     this._text = data[0] || data.name;
     this._image = data[1] || data.link;
     this.likes = data.likes;
     this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._trashFunction = trashFunction;
   }
 
   _getTemplate() {
@@ -22,11 +23,12 @@ export class Card {
     this._imageCard.src = this._image;
     this._imageCard.alt = this._text;
 
-    this._title = this._element.querySelector('.element__title')
+    this._title = this._element.querySelector('.element__title');
     this._title.textContent = this._text;
     this._title.title = this._title.textContent;
     this._setEventListeners();
     this._counterLike();
+
     return this._element;
   }
   _setEventListeners() {
@@ -50,18 +52,16 @@ export class Card {
     this._element
       .querySelector('.element__button-like')
       .classList.toggle('element__button-like_color_black');
-      if(this.likes.includes(this._id)) {
+    if (this.likes.includes(this._id)) {
       this.likes.pop(this._id);
-      }
-      else {
+    } else {
       this.likes.push(this._id);
-      }
-
+    }
   }
 
   _counterLike() {
-    this._element.querySelector('.element__counter-like')
-    .textContent = this.likes.length - 1;
+    this._element.querySelector('.element__counter-like').textContent =
+      this.likes.length;
   }
 
   _zoom(evt) {
@@ -72,6 +72,7 @@ export class Card {
 
   _remove() {
     // удаление карточек
+    this._trashFunction(this._id);
     this._element.remove();
     this._element = null;
   }

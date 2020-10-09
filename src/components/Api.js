@@ -1,13 +1,14 @@
 export class Api {
-  constructor(url, token) {
-    this.url = url;
-    this.token = token;
+  constructor(url, token, info) {
+    this._url = url;
+    this._token = token;
+    this._info = info;
   }
 
-  getParse(info) {
-    return fetch(`${this.url}${info}`, {
+  getInfoServer() {
+    return fetch(`${this._url}${this._info}`, {
       headers: {
-        authorization: `${this.token}`,
+        authorization: `${this._token}`,
       },
     })
       .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
@@ -18,5 +19,75 @@ export class Api {
       });
   }
 
-  setParse() {}
+  pathProfileServer(userInfo) {
+    return fetch(`${this._url}${this._info}`, {
+    method: 'PATCH',
+    headers: {
+      authorization: `${this._token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: userInfo.name,
+      about: userInfo.job
+    })
+    })
+    .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => response.json())
+      .then((res) => JSON.stringify([res]))
+      .then((result) => {
+      return JSON.parse(result);
+      });
+  }
+
+  pathAvatarServer(userInfo) {
+    return fetch(`${this._url}${this._info}/avatar`, {
+    method: 'PATCH',
+    headers: {
+      authorization: `${this._token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      avatar: userInfo.avatar
+    })
+    })
+    .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => response.json())
+      .then((res) => JSON.stringify([res]))
+      .then((result) => {
+      return JSON.parse(result);
+      });
+  }
+
+  postNewCardServer(cardInfo) {
+    debugger;
+    return fetch(`${this._url}${this._info}`, {
+    method: 'POST',
+    headers: {
+      authorization: `${this._token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: cardInfo.place,
+      link: cardInfo.card
+    })
+    })
+    .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => response.json())
+      .then((res) => JSON.stringify([res]))
+      .then((result) => {
+      return JSON.parse(result);
+      });
+  }
+
+  deleteCardServer(id) {
+    return fetch(`${this.url}${this._info}`, {
+    method: 'DELETE',
+    headers: {
+    authorization: `${this.token}`,
+    },
+    body: JSON.stringify({
+    _id: `${id}`
+    })
+    });
+  }
 }

@@ -4,6 +4,8 @@ import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
+  profileBlock,
+  inputAvatar,
   formProfile,
   formCard,
   inputPlace,
@@ -24,39 +26,51 @@ const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
 const userMe = 'users/me';
 const newCards = 'cards';
 
-const api = new Api(url, token);
+const apiCards = new Api(url, token, newCards);
 
-const formProfileValidation = new FormValidator(
-  templateFormSelector,
-  formProfile
-);
-formProfileValidation.enableValidation();
-
-const formCardValidation = new FormValidator(templateFormSelector, formCard);
-formCardValidation.enableValidation();
+const apiProfile = new Api(url, token, userMe)
 
 const popupWithImage = new PopupWithImage('.popup_type_zoom');
 const card = (...arg) => new Card(...arg);
 
 const userInfo = new UserInfo(infoUser);
 
-const formRenderProfile = (...arg) => userInfo.setUserInfo(...arg);
+const profileServer = (...arg) => userInfo.setUserInfo(...arg);
 
-function setInfoCards(items, renderer) {
-  api.getParse(items).then((res) => {
+const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
+
+const  formRenderProfile = (...arg) => apiProfile.pathProfileServer(...arg);
+
+const  formRenderAvatar = (...arg) => apiProfile.pathAvatarServer(...arg);
+
+const formRenderNewCards = (...arg) => apiCards.postNewCardServer(...arg);
+
+async function setCards(renderer) {
+  await apiCards.getInfoServer().then((res) => {
     renderer(res[0]);
   });
 }
 
-function setInfoUser(items, renderer) {
-  api.getParse(items).then((res) => {
-    renderer(res);
+function setUser(renderer) {
+  apiProfile.getInfoServer().then((res) => {
+    renderer(res.map((item) => ({name: item.name, about: item.about})));
   });
 }
-setInfoUser(userMe, formRenderProfile); // проблема прихода массива
+function setAvatar(renderer) {
+  apiProfile.getInfoServer()
+  .then((info) => {
+    renderer(info[0].avatar);
+  });
+}
+
+setUser(profileServer);
+
+setAvatar(avatarServer);
+
+setCards(formRenderCards);
 
 
-setInfoCards(newCards, formRenderCards);
+
 
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
@@ -67,18 +81,21 @@ const showCardForm = {
   link: inputCard,
 }; // начальный объект для новых карточек
 
-const popupClassProfile = new PopupWithForm(
+const popupClassFormProfile = new PopupWithForm(
   '.popup_type_profile',
   showProfileForm,
   formRenderProfile
 );
-const popupClassCard = new PopupWithForm(
+const popupClassFormCard = new PopupWithForm(
   '.popup_type_card',
   showCardForm,
-  formRenderCards
+  formRenderNewCards
 );
 
+const popupClassFormAvatar = new PopupWithForm('.popup_type_avatar', inputAvatar, formRenderAvatar);
+
 function formRenderCards(initialCardValues) {
+  // функция получает данные с сервера
   // функция для новых карточек
   // Добавление новых карточек
   const section = new Section(
@@ -95,26 +112,21 @@ function formRenderCards(initialCardValues) {
   section.renderItems();
 }
 
-function formRenderNewCards(newCardValues) {
-  // функция для новых карточек
-  // Добавление новых карточек
-  const section = new Section(
-    {
-      data: newCardValues,
-      renderer: (item) => {
-        const cardElement = card(item, '#card', popupWithImage).generateCard();
-        section.addNewItems(cardElement);
-      },
-    },
-    containerCards
-  );
+const formProfileValidation = new FormValidator(
+  templateFormSelector,
+  formProfile
+);
+formProfileValidation.enableValidation(); // включение валидации для профиля
 
-  section.renderItems();
-}
+const formCardValidation = new FormValidator(templateFormSelector, formCard);
+formCardValidation.enableValidation(); // включение валидации для карточек
 
 buttonEdit.addEventListener('mousedown', () => {
-  popupClassProfile.open();
+  popupClassFormProfile.open();
 });
 buttonAdd.addEventListener('mousedown', () => {
-  popupClassCard.open();
+  popupClassFormCard.open();
+});
+profileBlock.querySelector('.profile__avatar').addEventListener('click', () => {
+  popupClassFormAvatar.open();
 });
