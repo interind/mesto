@@ -1,5 +1,6 @@
 .element__button-trash {
  position: absolute;
+ visibility: hidden;
  right: 15px;
  top: 18px;
  background-color: transparent;

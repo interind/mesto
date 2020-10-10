@@ -1,12 +1,22 @@
 export class Card {
-  constructor(data, cardSelector, handleCardClick, trashFunction) { 
+  constructor(
+    data,
+    cardSelector,
+    handleCardClick,
+    trashFunction,
+    likeFunction,
+    idMy
+  ) {
     this._text = data[0] || data.name;
     this._image = data[1] || data.link;
     this.likes = data.likes;
     this._id = data._id;
+    this._ownerID = data.owner._id;
+    this._myId = idMy;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._trashFunction = trashFunction;
+    this._likeFunction = likeFunction;
   }
 
   _getTemplate() {
@@ -36,13 +46,15 @@ export class Card {
       .querySelector('.element__button-like')
       .addEventListener('click', () => {
         this._like();
-        this._counterLike();
+        this._likeFunction(this._id);
       });
-    this._element
-      .querySelector('.element__button-trash')
-      .addEventListener('click', () => {
+    if (this._myId === this._ownerID) {
+      this._buttonTrash = this._element.querySelector('.element__button-trash');
+      this._buttonTrash.classList.toggle('element__button-trash_hidden');
+      this._buttonTrash.addEventListener('click', () => {
         this._remove();
       });
+    }
     this._element.addEventListener('click', (evt) => {
       this._zoom(evt);
     });
@@ -52,16 +64,12 @@ export class Card {
     this._element
       .querySelector('.element__button-like')
       .classList.toggle('element__button-like_color_black');
-    if (this.likes.includes(this._id)) {
-      this.likes.pop(this._id);
-    } else {
-      this.likes.push(this._id);
-    }
   }
 
   _counterLike() {
-    this._element.querySelector('.element__counter-like').textContent =
-      this.likes.length;
+    this._element.querySelector(
+      '.element__counter-like'
+    ).textContent = this.likes.length;
   }
 
   _zoom(evt) {
@@ -71,9 +79,10 @@ export class Card {
   }
 
   _remove() {
+    if(this._trashFunction(this._id)) {
     // удаление карточек
-    this._trashFunction(this._id);
     this._element.remove();
     this._element = null;
+    }
   }
 }

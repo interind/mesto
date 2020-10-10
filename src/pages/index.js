@@ -14,6 +14,7 @@ import {
   buttonAdd,
   containerCards,
   infoUser,
+  inputId
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -25,10 +26,11 @@ const url = 'https://mesto.nomoreparties.co/v1/cohort-16/';
 const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
 const userMe = 'users/me';
 const newCards = 'cards';
+const myID = '066c34d31720ba2fb9acb601';
 
 const apiCards = new Api(url, token, newCards);
 
-const apiProfile = new Api(url, token, userMe)
+const apiProfile = new Api(url, token, userMe);
 
 const popupWithImage = new PopupWithImage('.popup_type_zoom');
 const card = (...arg) => new Card(...arg);
@@ -44,6 +46,10 @@ const  formRenderProfile = (...arg) => apiProfile.pathProfileServer(...arg);
 const  formRenderAvatar = (...arg) => apiProfile.pathAvatarServer(...arg);
 
 const formRenderNewCards = (...arg) => apiCards.postNewCardServer(...arg);
+
+const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
+
+
 
 async function setCards(renderer) {
   await apiCards.getInfoServer().then((res) => {
@@ -69,9 +75,6 @@ setAvatar(avatarServer);
 
 setCards(formRenderCards);
 
-
-
-
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
 // получение данных профиля на страницу
@@ -94,6 +97,15 @@ const popupClassFormCard = new PopupWithForm(
 
 const popupClassFormAvatar = new PopupWithForm('.popup_type_avatar', inputAvatar, formRenderAvatar);
 
+const popupTrashCard = new PopupWithForm('.popup_type_trash', inputId, trashCard)
+
+function trashCard(id) {
+  if(popupTrashCard) {
+    apiCards.deleteCardServer(id);
+  }
+  popupTrashCard.open();
+}
+
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
   // функция для новых карточек
@@ -102,7 +114,7 @@ function formRenderCards(initialCardValues) {
     {
       data: initialCardValues,
       renderer: (item) => {
-        const cardElement = card(item, '#card', popupWithImage).generateCard();
+        const cardElement = card(item, '#card', popupWithImage, trashCard, cardLikeServer, myID).generateCard();
         section.addItems(cardElement);
       },
     },

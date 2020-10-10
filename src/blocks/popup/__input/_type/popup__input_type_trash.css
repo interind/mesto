@@ -1,0 +1,16 @@
+.popup__input_type_trash {
+border: hidden;
+}
+
+
+.popup__input_type_trash:focus {
+ outline: none;
+}
+
+.popup__input_type_trash:valid {
+ border: none;
+}
+
+.popup__input_type_trash:invalid {
+ border: none;
+}

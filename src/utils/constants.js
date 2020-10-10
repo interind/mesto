@@ -14,3 +14,6 @@ export const formProfile = document.forms.formProfile; //форма профил
 
 const formAvatar = document.forms.formAvatar;
 export const inputAvatar = formAvatar.elements.avatar;
+
+const formTrash = document.forms.formTrash;
+export const inputId = formTrash.elements.trash;
