@@ -5,6 +5,7 @@ export class Card {
     handleCardClick,
     trashFunction,
     likeFunction,
+    disLikesFunction,
     idMy
   ) {
     this._text = data[0] || data.name;
@@ -17,6 +18,7 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._trashFunction = trashFunction;
     this._likeFunction = likeFunction;
+    this._disLikesFunction = disLikesFunction;
   }
 
   _getTemplate() {
@@ -38,7 +40,6 @@ export class Card {
     this._title.title = this._title.textContent;
     this._setEventListeners();
     this._counterLike();
-
     return this._element;
   }
   _setEventListeners() {
@@ -46,7 +47,6 @@ export class Card {
       .querySelector('.element__button-like')
       .addEventListener('click', () => {
         this._like();
-        this._likeFunction(this._id);
       });
     if (this._myId === this._ownerID) {
       this._buttonTrash = this._element.querySelector('.element__button-trash');
@@ -61,9 +61,18 @@ export class Card {
   }
   _like() {
     // ставим лайки
+    if(!this.likes[0]._id === this._myId) {
     this._element
       .querySelector('.element__button-like')
-      .classList.toggle('element__button-like_color_black');
+      .classList.add('element__button-like_color_black');
+      this._likeFunction(this._id);
+    }
+    else if(this.likes[0]._id === this._myId) {
+      this._element
+      .querySelector('.element__button-like')
+      .classList.remove('element__button-like_color_black');
+      this._disLikesFunction(this._id);
+    }
   }
 
   _counterLike() {
@@ -79,10 +88,6 @@ export class Card {
   }
 
   _remove() {
-    if(this._trashFunction(this._id)) {
-    // удаление карточек
-    this._element.remove();
-    this._element = null;
-    }
+    this._trashFunction(this._id);
   }
 }

@@ -99,9 +99,25 @@ export class Api {
       .catch((err) => console.log('PUT', err));
   }
 
+  deleteLikeServer(infoId) {
+    return fetch(`${this._url}${this._info}/likes/${infoId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: `${this._token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => response.json())
+      .then((res) => JSON.stringify([res]))
+      .then((result) => {
+        return JSON.parse(result);
+      })
+      .catch((err) => console.log('PUT', err));
+  }
+
   deleteCardServer(id) {
-    debugger;
-    return fetch(`${this._url}${this._info}/${id}`, {
+    return fetch(`${this._url}${this._info}/${id.trash}`, {
       method: 'DELETE',
       headers: {
         authorization: `${this._token}`,

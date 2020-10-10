@@ -1,16 +1,18 @@
 .popup__input_type_trash {
-border: hidden;
+  border: hidden;
+  height: 0;
+  visibility: hidden;
 }
 
-
 .popup__input_type_trash:focus {
- outline: none;
+  outline: none;
+  border: none;
 }
 
 .popup__input_type_trash:valid {
- border: none;
+  border: none;
 }
 
 .popup__input_type_trash:invalid {
- border: none;
+  border: none;
 }

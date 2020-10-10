@@ -49,6 +49,11 @@ const formRenderNewCards = (...arg) => apiCards.postNewCardServer(...arg);
 
 const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
 
+const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
+
+const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
+
+
 
 
 async function setCards(renderer) {
@@ -97,13 +102,11 @@ const popupClassFormCard = new PopupWithForm(
 
 const popupClassFormAvatar = new PopupWithForm('.popup_type_avatar', inputAvatar, formRenderAvatar);
 
-const popupTrashCard = new PopupWithForm('.popup_type_trash', inputId, trashCard)
+const popupTrashCard = new PopupWithForm('.popup_type_trash', inputId, connectDeleteServer);
 
 function trashCard(id) {
-  if(popupTrashCard) {
-    apiCards.deleteCardServer(id);
-  }
   popupTrashCard.open();
+  inputId.value = id;
 }
 
 function formRenderCards(initialCardValues) {
@@ -114,7 +117,7 @@ function formRenderCards(initialCardValues) {
     {
       data: initialCardValues,
       renderer: (item) => {
-        const cardElement = card(item, '#card', popupWithImage, trashCard, cardLikeServer, myID).generateCard();
+        const cardElement = card(item, '#card', popupWithImage, trashCard, cardLikeServer, cardDeleteLikeServer, myID).generateCard();
         section.addItems(cardElement);
       },
     },
