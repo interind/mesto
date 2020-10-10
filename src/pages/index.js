@@ -14,7 +14,7 @@ import {
   buttonAdd,
   containerCards,
   infoUser,
-  inputId
+  inputId,
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -41,20 +41,20 @@ const profileServer = (...arg) => userInfo.setUserInfo(...arg);
 
 const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
 
-const  formRenderProfile = (...arg) => apiProfile.pathProfileServer(...arg);
+const formRenderProfile = (...arg) => apiProfile.pathProfileServer(...arg);
 
-const  formRenderAvatar = (...arg) => apiProfile.pathAvatarServer(...arg);
-
-const formRenderNewCards = (...arg) => apiCards.postNewCardServer(...arg);
+async function formRenderAvatar(item) {
+  await apiProfile.pathAvatarServer(item)
+  .then((info) => {
+    userInfo.setUserAvatar(info[0].avatar);
+  });
+}
 
 const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
 
 const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
 
 const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
-
-
-
 
 async function setCards(renderer) {
   await apiCards.getInfoServer().then((res) => {
@@ -64,12 +64,11 @@ async function setCards(renderer) {
 
 function setUser(renderer) {
   apiProfile.getInfoServer().then((res) => {
-    renderer(res.map((item) => ({name: item.name, about: item.about})));
+    renderer(res.map((item) => ({ name: item.name, about: item.about })));
   });
 }
 function setAvatar(renderer) {
-  apiProfile.getInfoServer()
-  .then((info) => {
+  apiProfile.getInfoServer().then((info) => {
     renderer(info[0].avatar);
   });
 }
@@ -100,9 +99,17 @@ const popupClassFormCard = new PopupWithForm(
   formRenderNewCards
 );
 
-const popupClassFormAvatar = new PopupWithForm('.popup_type_avatar', inputAvatar, formRenderAvatar);
+const popupClassFormAvatar = new PopupWithForm(
+  '.popup_type_avatar',
+  inputAvatar,
+  formRenderAvatar
+);
 
-const popupTrashCard = new PopupWithForm('.popup_type_trash', inputId, connectDeleteServer);
+const popupTrashCard = new PopupWithForm(
+  '.popup_type_trash',
+  inputId,
+  connectDeleteServer
+);
 
 function trashCard(id) {
   popupTrashCard.open();
@@ -117,7 +124,15 @@ function formRenderCards(initialCardValues) {
     {
       data: initialCardValues,
       renderer: (item) => {
-        const cardElement = card(item, '#card', popupWithImage, trashCard, cardLikeServer, cardDeleteLikeServer, myID).generateCard();
+        const cardElement = card(
+          item,
+          '#card',
+          popupWithImage,
+          trashCard,
+          cardLikeServer,
+          cardDeleteLikeServer,
+          myID
+        ).generateCard();
         section.addItems(cardElement);
       },
     },
@@ -125,6 +140,34 @@ function formRenderCards(initialCardValues) {
   );
 
   section.renderItems();
+}
+
+function formRenderNewCards(initialCard) {
+  // новые картинки не встают из за id
+  // функция получает данные с сервера
+  // функция для новых карточек
+  // Добавление новых карточек
+  initialCard = new Array(initialCard);
+  const section = new Section(
+    {
+      data: initialCard,
+      renderer: (item) => {
+        const cardElement = card(
+          item,
+          '#card',
+          popupWithImage,
+          trashCard,
+          cardLikeServer,
+          cardDeleteLikeServer,
+          myID
+        ).generateCard();
+        section.addNewItems(cardElement);
+      },
+    },
+    containerCards
+  );
+  section.renderItems();
+  apiCards.postNewCardServer(initialCard);
 }
 
 const formProfileValidation = new FormValidator(

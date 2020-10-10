@@ -69,8 +69,8 @@ export class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: cardInfo.place,
-        link: cardInfo.card,
+        name: cardInfo[0].place,
+        link: cardInfo[0].card
       }),
     })
       .then((responce) => (responce.ok ? responce : Promise.reject(responce)))

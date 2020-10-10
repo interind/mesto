@@ -8,8 +8,8 @@ export class Card {
     disLikesFunction,
     idMy
   ) {
-    this._text = data[0] || data.name;
-    this._image = data[1] || data.link;
+    this._text = data.place || data.name;
+    this._image = data.card || data.link;
     this.likes = data.likes;
     this._id = data._id;
     this._ownerID = data.owner._id;
@@ -38,18 +38,22 @@ export class Card {
     this._title = this._element.querySelector('.element__title');
     this._title.textContent = this._text;
     this._title.title = this._title.textContent;
+    this._searchElement(this._element);
     this._setEventListeners();
     this._counterLike();
     return this._element;
   }
+
+  _searchElement() {
+    this._buttonTrash = this._element.querySelector('.element__button-trash');
+    this._buttonLike = this._element.querySelector('.element__button-like');
+  }
+
   _setEventListeners() {
-    this._element
-      .querySelector('.element__button-like')
-      .addEventListener('click', () => {
-        this._like();
-      });
+    this._buttonLike.addEventListener('click', () => {
+      this._like();
+    });
     if (this._myId === this._ownerID) {
-      this._buttonTrash = this._element.querySelector('.element__button-trash');
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
       this._buttonTrash.addEventListener('click', () => {
         this._remove();
@@ -61,17 +65,16 @@ export class Card {
   }
   _like() {
     // ставим лайки
-    if(!this.likes[0]._id === this._myId) {
-    this._element
-      .querySelector('.element__button-like')
-      .classList.add('element__button-like_color_black');
-      this._likeFunction(this._id);
-    }
-    else if(this.likes[0]._id === this._myId) {
-      this._element
-      .querySelector('.element__button-like')
-      .classList.remove('element__button-like_color_black');
+    if (this.likes.find((key) => key._id === this._myId)) {
+      this._buttonLike.classList.remove('element__button-like_color_black');
+      this.likes.pop(this._myId);
       this._disLikesFunction(this._id);
+      this._counterLike();
+    } else {
+      this._buttonLike.classList.add('element__button-like_color_black');
+      this.likes.push(this._myId);
+      this._likeFunction(this._id);
+      this._counterLike();
     }
   }
 
@@ -79,6 +82,9 @@ export class Card {
     this._element.querySelector(
       '.element__counter-like'
     ).textContent = this.likes.length;
+    if (this.likes.find((key) => key._id === this._myId)) {
+      this._buttonLike.classList.add('element__button-like_color_black');
+    }
   }
 
   _zoom(evt) {
