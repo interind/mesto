@@ -69,8 +69,8 @@ export class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: cardInfo[0].place,
-        link: cardInfo[0].card
+        name: cardInfo.place,
+        link: cardInfo.card
       }),
     })
       .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
@@ -128,7 +128,7 @@ export class Api {
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
-        return console.log(JSON.parse(result));
+        return JSON.parse(result);
       })
       .catch((err) => console.log('DELETE', err));
   }

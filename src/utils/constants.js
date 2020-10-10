@@ -17,3 +17,5 @@ export const inputAvatar = formAvatar.elements.avatar;
 
 const formTrash = document.forms.formTrash;
 export const inputId = formTrash.elements.trash;
+
+export const cardsBlock = document.querySelector('.elements');

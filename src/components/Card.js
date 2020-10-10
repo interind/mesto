@@ -12,13 +12,14 @@ export class Card {
     this._image = data.card || data.link;
     this.likes = data.likes;
     this._id = data._id;
-    this._ownerID = data.owner._id;
+    this._ownerID = data.owner;
     this._myId = idMy;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._trashFunction = trashFunction;
     this._likeFunction = likeFunction;
     this._disLikesFunction = disLikesFunction;
+    this.removeCard = this.removeCard.bind(this);
   }
 
   _getTemplate() {
@@ -53,10 +54,10 @@ export class Card {
     this._buttonLike.addEventListener('click', () => {
       this._like();
     });
-    if (this._myId === this._ownerID) {
+    if (this._myId === this._ownerID._id) {
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
       this._buttonTrash.addEventListener('click', () => {
-        this._remove();
+        this.removeCard();
       });
     }
     this._element.addEventListener('click', (evt) => {
@@ -93,7 +94,8 @@ export class Card {
     }
   }
 
-  _remove() {
+  removeCard() {    
     this._trashFunction(this._id);
+    this._element.remove();
   }
 }

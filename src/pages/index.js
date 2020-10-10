@@ -41,8 +41,6 @@ const profileServer = (...arg) => userInfo.setUserInfo(...arg);
 
 const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
 
-const formRenderProfile = (...arg) => apiProfile.pathProfileServer(...arg);
-
 async function formRenderAvatar(item) {
   await apiProfile.pathAvatarServer(item)
   .then((info) => {
@@ -50,15 +48,34 @@ async function formRenderAvatar(item) {
   });
 }
 
+async function formRenderProfile(item) {
+  await apiProfile.pathProfileServer(item)
+  .then((res) => {
+    userInfo.setUserInfo(res);
+  });
+}
+
 const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
 
 const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
 
-const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
+async function connectDeleteServer(item){ // ответ про удаление
+  await apiCards.deleteCardServer(item)
+    .then((res) => {
+    trashCard(res[0].message);
+    });
+}
 
 async function setCards(renderer) {
   await apiCards.getInfoServer().then((res) => {
     renderer(res[0]);
+  });
+}
+
+async function renderCards(item) {
+  await apiCards.postNewCardServer(item)
+  .then((res) => {
+    formRenderNewCards(res[0]);
   });
 }
 
@@ -96,7 +113,7 @@ const popupClassFormProfile = new PopupWithForm(
 const popupClassFormCard = new PopupWithForm(
   '.popup_type_card',
   showCardForm,
-  formRenderNewCards
+  renderCards
 );
 
 const popupClassFormAvatar = new PopupWithForm(
@@ -112,8 +129,13 @@ const popupTrashCard = new PopupWithForm(
 );
 
 function trashCard(id) {
+  if(id !== 'Пост удалён'){
   popupTrashCard.open();
   inputId.value = id;
+  }
+  else{
+  window.location.reload();
+  }
 }
 
 function formRenderCards(initialCardValues) {
@@ -143,10 +165,7 @@ function formRenderCards(initialCardValues) {
 }
 
 function formRenderNewCards(initialCard) {
-  // новые картинки не встают из за id
-  // функция получает данные с сервера
-  // функция для новых карточек
-  // Добавление новых карточек
+  
   initialCard = new Array(initialCard);
   const section = new Section(
     {
@@ -167,7 +186,6 @@ function formRenderNewCards(initialCard) {
     containerCards
   );
   section.renderItems();
-  apiCards.postNewCardServer(initialCard);
 }
 
 const formProfileValidation = new FormValidator(
