@@ -1,5 +1,5 @@
 'use strict';
-// import './index.css';
+import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
@@ -14,7 +14,7 @@ import {
   buttonAdd,
   containerCards,
   infoUser,
-  inputId
+  inputId,
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -43,14 +43,16 @@ const profileServer = (...arg) => userInfo.setUserInfo(...arg);
 
 const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
 
-async function formRenderAvatar(item) { // запрос на изменение аватара
-  await apiProfile.pathAvatarServer(item).then((info) => {
+function formRenderAvatar(item) {
+  // запрос на изменение аватара
+  apiProfile.pathAvatarServer(item).then((info) => {
     userInfo.setUserAvatar({ avatar: info[0].avatar });
   });
 }
 
-async function formRenderProfile(item) { // запрос на изменение профиля
-  await apiProfile.pathProfileServer(item).then((res) => {
+function formRenderProfile(item) {
+  // запрос на изменение профиля
+  apiProfile.pathProfileServer(item).then((res) => {
     userInfo.setUserInfo(res);
   });
 }
@@ -61,19 +63,23 @@ const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
 
 const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
 
-async function setCards(renderer) { // запрос на все карточки
-  await apiCards.getInfoServer().then((res) => {
+function setCards(renderer) {
+  // запрос на все карточки
+  apiCards.getInfoServer()
+  .then((res) => {
     renderer(res[0]);
   });
 }
 
-async function renderCards(item) { // запрос на новую карточку
-  await apiCards.postNewCardServer(item).then((res) => {
+function renderCards(item) {
+  // запрос на новую карточку
+  apiCards.postNewCardServer(item).then((res) => {
     formRenderNewCards(res[0]);
   });
 }
 
-function setProfile(rendererInfo, renderAvatar) {// получает ответ с сервера
+function setProfile(rendererInfo, renderAvatar) {
+  // получает ответ с сервера
   apiProfile
     .getInfoServer()
     .then((info) => {
@@ -89,7 +95,7 @@ function setProfile(rendererInfo, renderAvatar) {// получает ответ 
     .catch((err) => console.log('Информация о Аватаре', err));
 }
 
-setProfile(profileServer, avatarServer);// получает ответ с сервера
+setProfile(profileServer, avatarServer); // получает ответ с сервера
 
 setCards(formRenderCards); // получает ответ с сервера
 
@@ -117,7 +123,8 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   formRenderAvatar
 );
 
-function trashCard(id, functionRemove) { // удаление карточки
+function trashCard(id, functionRemove) {
+  // удаление карточки
   inputId.value = id;
   const popupTrashCard = new PopupSubmit(
     '.popup_type_trash',
@@ -130,7 +137,7 @@ function trashCard(id, functionRemove) { // удаление карточки
 
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
- 
+
   const section = new Section(
     {
       data: initialCardValues,
@@ -153,7 +160,8 @@ function formRenderCards(initialCardValues) {
   section.renderItems();
 }
 
-function formRenderNewCards(initialCard) { // добавление новых карточек
+function formRenderNewCards(initialCard) {
+  // добавление новых карточек
   initialCard = new Array(initialCard);
   const section = new Section(
     {
@@ -191,6 +199,7 @@ buttonEdit.addEventListener('mousedown', () => {
 buttonAdd.addEventListener('mousedown', () => {
   popupClassFormCard.open();
 });
-profileBlock.querySelector('.profile__avatar').addEventListener('click', () => { // открытие попапа с аватаром
+profileBlock.querySelector('.profile__avatar').addEventListener('click', () => {
+  // открытие попапа с аватаром
   popupClassFormAvatar.open();
 });
