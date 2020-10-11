@@ -19,7 +19,7 @@ export class Card {
     this._trashFunction = trashFunction;
     this._likeFunction = likeFunction;
     this._disLikesFunction = disLikesFunction;
-    this.removeCard = this.removeCard.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   _getTemplate() {
@@ -45,7 +45,7 @@ export class Card {
     return this._element;
   }
 
-  _searchElement() {
+  _searchElement() { // поиск нескольких элементов.
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
   }
@@ -54,10 +54,10 @@ export class Card {
     this._buttonLike.addEventListener('click', () => {
       this._like();
     });
-    if (this._myId === this._ownerID._id) {
+    if (this._myId === this._ownerID._id) { // проверка есть ли мои лайки
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
       this._buttonTrash.addEventListener('click', () => {
-        this.removeCard();
+        this._trashFunction(this._id, this._element);
       });
     }
     this._element.addEventListener('click', (evt) => {
@@ -66,7 +66,10 @@ export class Card {
   }
   _like() {
     // ставим лайки
-    if (this.likes.find((key) => key._id === this._myId)) {
+    if (
+      this.likes.find((key) => key._id === this._myId) ||
+      this._buttonLike.classList.contains('element__button-like_color_black')
+    ) {
       this._buttonLike.classList.remove('element__button-like_color_black');
       this.likes.pop(this._myId);
       this._disLikesFunction(this._id);
@@ -79,7 +82,7 @@ export class Card {
     }
   }
 
-  _counterLike() {
+  _counterLike() {// собирает информацию по лайкам
     this._element.querySelector(
       '.element__counter-like'
     ).textContent = this.likes.length;
@@ -94,8 +97,8 @@ export class Card {
     }
   }
 
-  removeCard() {    
-    this._trashFunction(this._id);
+  remove() { 
     this._element.remove();
+    this._element = null;
   }
 }

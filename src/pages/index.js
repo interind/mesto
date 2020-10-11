@@ -14,11 +14,12 @@ import {
   buttonAdd,
   containerCards,
   infoUser,
-  inputId,
+  inputId
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupSubmit } from '../components/PopupSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
@@ -33,6 +34,7 @@ const apiCards = new Api(url, token, newCards);
 const apiProfile = new Api(url, token, userMe);
 
 const popupWithImage = new PopupWithImage('.popup_type_zoom');
+
 const card = (...arg) => new Card(...arg);
 
 const userInfo = new UserInfo(infoUser);
@@ -41,16 +43,14 @@ const profileServer = (...arg) => userInfo.setUserInfo(...arg);
 
 const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
 
-async function formRenderAvatar(item) {
-  await apiProfile.pathAvatarServer(item)
-  .then((info) => {
-    userInfo.setUserAvatar(info[0].avatar);
+async function formRenderAvatar(item) { // запрос на изменение аватара
+  await apiProfile.pathAvatarServer(item).then((info) => {
+    userInfo.setUserAvatar({ avatar: info[0].avatar });
   });
 }
 
-async function formRenderProfile(item) {
-  await apiProfile.pathProfileServer(item)
-  .then((res) => {
+async function formRenderProfile(item) { // запрос на изменение профиля
+  await apiProfile.pathProfileServer(item).then((res) => {
     userInfo.setUserInfo(res);
   });
 }
@@ -59,89 +59,78 @@ const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
 
 const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
 
-async function connectDeleteServer(item){ // ответ про удаление
-  await apiCards.deleteCardServer(item)
-    .then((res) => {
-    trashCard(res[0].message);
-    });
-}
+const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
 
-async function setCards(renderer) {
+async function setCards(renderer) { // запрос на все карточки
   await apiCards.getInfoServer().then((res) => {
     renderer(res[0]);
   });
 }
 
-async function renderCards(item) {
-  await apiCards.postNewCardServer(item)
-  .then((res) => {
+async function renderCards(item) { // запрос на новую карточку
+  await apiCards.postNewCardServer(item).then((res) => {
     formRenderNewCards(res[0]);
   });
 }
 
-function setUser(renderer) {
-  apiProfile.getInfoServer().then((res) => {
-    renderer(res.map((item) => ({ name: item.name, about: item.about })));
-  });
+function setProfile(rendererInfo, renderAvatar) {// получает ответ с сервера
+  apiProfile
+    .getInfoServer()
+    .then((info) => {
+      rendererInfo(
+        info.map((item) => ({ name: item.name, about: item.about }))
+      );
+      return info;
+    })
+    .catch((err) => console.log('Информация о Профиле', err))
+    .then((info) => {
+      renderAvatar({ avatar: info[0].avatar });
+    })
+    .catch((err) => console.log('Информация о Аватаре', err));
 }
-function setAvatar(renderer) {
-  apiProfile.getInfoServer().then((info) => {
-    renderer(info[0].avatar);
-  });
-}
 
-setUser(profileServer);
+setProfile(profileServer, avatarServer);// получает ответ с сервера
 
-setAvatar(avatarServer);
-
-setCards(formRenderCards);
+setCards(formRenderCards); // получает ответ с сервера
 
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
-
-// получение данных профиля на страницу
 
 const showCardForm = {
   name: inputPlace,
   link: inputCard,
 }; // начальный объект для новых карточек
 
-const popupClassFormProfile = new PopupWithForm(
+const popupClassFormProfile = new PopupWithForm( // форма новых данных
   '.popup_type_profile',
   showProfileForm,
   formRenderProfile
 );
-const popupClassFormCard = new PopupWithForm(
+const popupClassFormCard = new PopupWithForm( // форма новой карточки
   '.popup_type_card',
   showCardForm,
   renderCards
 );
 
-const popupClassFormAvatar = new PopupWithForm(
+const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   '.popup_type_avatar',
   inputAvatar,
   formRenderAvatar
 );
 
-const popupTrashCard = new PopupWithForm(
-  '.popup_type_trash',
-  inputId,
-  connectDeleteServer
-);
-
-function trashCard(id) {
-  if(id !== 'Пост удалён'){
-  popupTrashCard.open();
+function trashCard(id, functionRemove) { // удаление карточки
   inputId.value = id;
-  }
-  else{
-  window.location.reload();
-  }
+  const popupTrashCard = new PopupSubmit(
+    '.popup_type_trash',
+    inputId,
+    connectDeleteServer,
+    functionRemove
+  );
+  popupTrashCard.open();
 }
 
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
-  // функция для новых карточек
-  // Добавление новых карточек
+ 
   const section = new Section(
     {
       data: initialCardValues,
@@ -164,8 +153,7 @@ function formRenderCards(initialCardValues) {
   section.renderItems();
 }
 
-function formRenderNewCards(initialCard) {
-  
+function formRenderNewCards(initialCard) { // добавление новых карточек
   initialCard = new Array(initialCard);
   const section = new Section(
     {
@@ -203,6 +191,6 @@ buttonEdit.addEventListener('mousedown', () => {
 buttonAdd.addEventListener('mousedown', () => {
   popupClassFormCard.open();
 });
-profileBlock.querySelector('.profile__avatar').addEventListener('click', () => {
+profileBlock.querySelector('.profile__avatar').addEventListener('click', () => { // открытие попапа с аватаром
   popupClassFormAvatar.open();
 });

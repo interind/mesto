@@ -1,6 +1,8 @@
 .popup__input_type_trash {
   border: hidden;
   height: 0;
+  margin-top: 0;
+  margin-bottom: -30px;
   visibility: hidden;
 }
 

@@ -11,7 +11,7 @@ export class Api {
         authorization: `${this._token}`,
       },
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((responce) => (responce.ok ? responce :  Promise.reject(responce)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -70,7 +70,7 @@ export class Api {
       },
       body: JSON.stringify({
         name: cardInfo.place,
-        link: cardInfo.card
+        link: cardInfo.card,
       }),
     })
       .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
@@ -117,7 +117,7 @@ export class Api {
   }
 
   deleteCardServer(id) {
-    return fetch(`${this._url}${this._info}/${id.trash}`, {
+    return fetch(`${this._url}${this._info}/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: `${this._token}`,

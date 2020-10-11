@@ -8,6 +8,7 @@ export class PopupWithForm extends Popup {
     this._inputList= Array.from(this.form.querySelectorAll('.popup__input'));
     this._infoList = Object.values(infoUser);
     this._submit = this._submit.bind(this);
+    this.buttonSubmit = this.form.querySelector('.popup__button-submit');
   }
   _setEventListeners() {
     super._setEventListeners();
@@ -25,7 +26,9 @@ export class PopupWithForm extends Popup {
 
   _submit(evt) {
     evt.preventDefault();
+    this._visualSubmit(); // меняет надпись на кнопке 
     this._callbackSubmit(this._getInputValues());
+    this._visualSubmit();
     this.close();
   }
 
@@ -40,5 +43,14 @@ export class PopupWithForm extends Popup {
       this._inputList[key].value = this._infoList[key].textContent;
     }
     setTimeout(() => this._inputList[0].focus(), 100);
+  }
+
+  _visualSubmit() {
+    if(this.buttonSubmit.textContent === 'Сохранить') {
+      this.buttonSubmit.textContent = 'Сохранение...';
+    }
+    else{
+      this.buttonSubmit.textContent = 'Сохранить'
+    }
   }
 }
