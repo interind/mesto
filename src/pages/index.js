@@ -96,8 +96,8 @@ function setProfile(rendererInfo, renderAvatar) {
       rendererInfo(
         info.map((item) => ({ name: item.name, about: item.about }))
       );
-      inputName.value = info[0].name;
-      inputJob.value = info[0].about; 
+      inputName.placeholder = info[0].name;
+      inputJob.placeholder = info[0].about; 
       return info;
     })
     .catch((err) => console.log('Информация о Профиле', err));
@@ -191,13 +191,16 @@ formCardValidation.enableValidation(); // включение валидации 
 
 buttonEdit.addEventListener('mousedown', () => {
   popupClassFormProfile.open();
+  setTimeout( () => inputName.focus(), 100)
 });
 buttonAdd.addEventListener('mousedown', () => {
   popupClassFormCard.open();
+  setTimeout( () => inputPlace.focus(), 100)
 });
 profileBlock
   .querySelector(selectorUser.avatar)
   .addEventListener('click', () => {
     // открытие попапа с аватаром
     popupClassFormAvatar.open();
+    setTimeout( () => inputAvatar.focus(), 100);
   });
