@@ -12,7 +12,7 @@ export class Api {
         authorization: `${this._token}`,
       },
     })
-      .then((responce) => (responce.ok ? responce :  Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -27,7 +27,7 @@ export class Api {
         authorization: `${this._token}`,
       },
     })
-      .then((responce) => (responce.ok ? responce :  Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -36,7 +36,7 @@ export class Api {
       .catch((err) => console.log('GET', err));
   }
 
-  pathProfileServer(userInfo) {
+  updateUserInfo(userInfo) {
     return fetch(`${this._url}${this._user}`, {
       method: 'PATCH',
       headers: {
@@ -48,7 +48,7 @@ export class Api {
         about: userInfo.job,
       }),
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -57,7 +57,7 @@ export class Api {
       .catch((err) => console.log('PATCH USER', err));
   }
 
-  pathAvatarServer(userInfo) {
+  updateUserAvatar(userInfo) {
     return fetch(`${this._url}${this._user}/avatar`, {
       method: 'PATCH',
       headers: {
@@ -68,7 +68,7 @@ export class Api {
         avatar: userInfo.avatar,
       }),
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -77,7 +77,7 @@ export class Api {
       .catch((err) => console.log('PATCH AVATAR', err));
   }
 
-  postNewCardServer(cardInfo) {
+  addCard(cardInfo) {
     return fetch(`${this._url}${this._cards}`, {
       method: 'POST',
       headers: {
@@ -89,7 +89,7 @@ export class Api {
         link: cardInfo.card,
       }),
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -98,7 +98,7 @@ export class Api {
       .catch((err) => console.log('POST', err));
   }
 
-  putLikeServer(infoId) {
+  addLike(infoId) {
     return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
       method: 'PUT',
       headers: {
@@ -106,7 +106,7 @@ export class Api {
         'Content-Type': 'application/json',
       },
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -115,7 +115,7 @@ export class Api {
       .catch((err) => console.log('PUT', err));
   }
 
-  deleteLikeServer(infoId) {
+  deleteLike(infoId) {
     return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
       method: 'DELETE',
       headers: {
@@ -123,7 +123,7 @@ export class Api {
         'Content-Type': 'application/json',
       },
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {
@@ -132,7 +132,7 @@ export class Api {
       .catch((err) => console.log('PUT', err));
   }
 
-  deleteCardServer(id) {
+  deleteCard(id) {
     return fetch(`${this._url}${this._cards}/${id}`, {
       method: 'DELETE',
       headers: {
@@ -140,7 +140,7 @@ export class Api {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-      .then((responce) => (responce.ok ? responce : Promise.reject(responce)))
+      .then((response) => (response.ok ? response : Promise.reject(response)))
       .then((response) => response.json())
       .then((res) => JSON.stringify([res]))
       .then((result) => {

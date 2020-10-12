@@ -14,43 +14,22 @@ export class PopupWithForm extends Popup {
     super._setEventListeners();
     this.form.addEventListener('submit', this._submit);
   }
-  open() {
-    super.open();
-    this.render();
-  }
+
   close() {
     super.close();
     this.form.removeEventListener('submit', this._submit);
-    this.form.reset(); // сброс формы
   }
 
   _submit(evt) {
     evt.preventDefault();
-    this._visualSubmit(); // меняет надпись на кнопке 
     this._callbackSubmit(this._getInputValues());
-    this._visualSubmit();
     this.close();
+    this.form.reset();
   }
 
   _getInputValues() { // получение значений инпутов в объект
     let inputValues = {};
      this._inputList.forEach(input => inputValues[input.name] = input.value);
     return inputValues;
-  }
-
-  render() { // функция для отображения данных при открытии формы
-    for(let key in this._inputList && this._infoList) {
-      this._inputList[key].value = this._infoList[key].textContent;
-    }
-    setTimeout(() => this._inputList[0].focus(), 100);
-  }
-
-  _visualSubmit() {
-    if(this.buttonSubmit.textContent === 'Сохранить') {
-      this.buttonSubmit.textContent = 'Сохранение...';
-    }
-    else{
-      this.buttonSubmit.textContent = 'Сохранить'
-    }
   }
 }

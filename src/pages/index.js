@@ -3,6 +3,7 @@
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
+import { visualSubmit } from '../utils/utils.js';
 import {
   configApi,
   idTemplateCard,
@@ -17,8 +18,13 @@ import {
   buttonEdit,
   buttonAdd,
   containerCards,
-  infoUser,
+  selectorUser,
   inputId,
+  buttonSubmitProfile,
+  buttonSubmitCard,
+  buttonSubmitAvatar,
+  inputName,
+  inputJob,
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -27,58 +33,58 @@ import { PopupSubmit } from '../components/PopupSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
-// const url = 'https://mesto.nomoreparties.co/v1/cohort-16/';
-// const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
-// const userMe = 'users/me';
-// const newCards = 'cards';
-// const myID = '066c34d31720ba2fb9acb601';
-
 const apiCards = new Api(configApi);
 
 const apiProfile = new Api(configApi);
 
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
 
-const card = (...arg) => new Card(...arg);
+const createCard = (...arg) => new Card(...arg);
 
-const userInfo = new UserInfo(infoUser);
+const userInfo = new UserInfo(selectorUser);
 
-const profileServer = (...arg) => userInfo.setUserInfo(...arg);
+const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 
-const avatarServer = (...arg) => userInfo.setUserAvatar(...arg);
+const setUserAvatar = (...arg) => userInfo.setUserAvatar(...arg);
 
 function formRenderAvatar(item) {
   // запрос на изменение аватара
-  apiProfile.pathAvatarServer(item).then((info) => {
+  visualSubmit(buttonSubmitAvatar);
+  apiProfile.updateUserAvatar(item).then((info) => {
     userInfo.setUserAvatar({ avatar: info[0].avatar });
+    visualSubmit(buttonSubmitAvatar);
   });
 }
 
 function formRenderProfile(item) {
   // запрос на изменение профиля
-  apiProfile.pathProfileServer(item).then((res) => {
+  visualSubmit(buttonSubmitProfile);
+  apiProfile.updateUserInfo(item).then((res) => {
     userInfo.setUserInfo(res);
+    visualSubmit(buttonSubmitProfile);
   });
 }
 
-const cardLikeServer = (...arg) => apiCards.putLikeServer(...arg);
+const addCardLike = (...arg) => apiCards.addLike(...arg);
 
-const cardDeleteLikeServer = (...arg) => apiCards.deleteLikeServer(...arg);
+const cardDeleteLike = (...arg) => apiCards.deleteLike(...arg);
 
-const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
+const deleteCard = (...arg) => apiCards.deleteCard(...arg);
 
 function setCards(renderer) {
   // запрос на все карточки
-  apiCards.getInfoCards()
-  .then((res) => {
+  apiCards.getInfoCards().then((res) => {
     renderer(res[0]);
+    console.log(res[0]);
   });
 }
 
 function renderCards(item) {
   // запрос на новую карточку
-  apiCards.postNewCardServer(item).then((res) => {
-    formRenderNewCards(res[0]);
+  visualSubmit(buttonSubmitCard);
+  apiCards.addCard(item).then((res) => {
+    formRenderCards(res);
+    visualSubmit(buttonSubmitCard);
   });
 }
 
@@ -90,16 +96,21 @@ function setProfile(rendererInfo, renderAvatar) {
       rendererInfo(
         info.map((item) => ({ name: item.name, about: item.about }))
       );
+      inputName.value = info[0].name;
+      inputJob.value = info[0].about; 
       return info;
     })
-    .catch((err) => console.log('Информация о Профиле', err))
+    .catch((err) => console.log('Информация о Профиле', err));
+  // нужно перенести
+  apiProfile
+    .getInfoUser()
     .then((info) => {
       renderAvatar({ avatar: info[0].avatar });
     })
     .catch((err) => console.log('Информация о Аватаре', err));
 }
 
-setProfile(profileServer, avatarServer); // получает ответ с сервера
+setProfile(setUserInfo, setUserAvatar); // получает ответ с сервера
 
 setCards(formRenderCards); // получает ответ с сервера
 
@@ -127,14 +138,14 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   formRenderAvatar
 );
 
-function trashCard(id, functionRemove) {
+function trashCard(id, elementRemove) {
   // удаление карточки
   inputId.value = id;
   const popupTrashCard = new PopupSubmit(
     selectorPopupForm.trash,
     inputId,
-    connectDeleteServer,
-    functionRemove
+    deleteCard,
+    elementRemove
   );
   popupTrashCard.open();
 }
@@ -144,15 +155,14 @@ function formRenderCards(initialCardValues) {
 
   const section = new Section(
     {
-      data: initialCardValues,
       renderer: (item) => {
-        const cardElement = card(
+        const cardElement = createCard(
           item,
           idTemplateCard,
           popupWithImage,
           trashCard,
-          cardLikeServer,
-          cardDeleteLikeServer,
+          addCardLike,
+          cardDeleteLike,
           configApi.myID
         ).generateCard();
         section.addItems(cardElement);
@@ -161,31 +171,7 @@ function formRenderCards(initialCardValues) {
     containerCards
   );
 
-  section.renderItems();
-}
-
-function formRenderNewCards(initialCard) {
-  // добавление новых карточек
-  initialCard = new Array(initialCard);
-  const section = new Section(
-    {
-      data: initialCard,
-      renderer: (item) => {
-        const cardElement = card(
-          item,
-          idTemplateCard,
-          popupWithImage,
-          trashCard,
-          cardLikeServer,
-          cardDeleteLikeServer,
-          configApi.myID
-        ).generateCard();
-        section.addNewItems(cardElement);
-      },
-    },
-    containerCards
-  );
-  section.renderItems();
+  section.renderItems(initialCardValues);
 }
 
 const formProfileValidation = new FormValidator(
@@ -209,7 +195,9 @@ buttonEdit.addEventListener('mousedown', () => {
 buttonAdd.addEventListener('mousedown', () => {
   popupClassFormCard.open();
 });
-profileBlock.querySelector('.profile__avatar').addEventListener('click', () => {
-  // открытие попапа с аватаром
-  popupClassFormAvatar.open();
-});
+profileBlock
+  .querySelector(selectorUser.avatar)
+  .addEventListener('click', () => {
+    // открытие попапа с аватаром
+    popupClassFormAvatar.open();
+  });

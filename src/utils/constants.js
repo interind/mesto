@@ -1,20 +1,29 @@
+
+export const selectorUser = {
+  user: '.profile__title',
+  job: '.profile__subtitle',
+  avatar: '.profile__avatar',
+};
 export const formCard = document.forms.formCard; //форма новых картинок
 export const inputPlace = formCard.elements.place;
 export const inputCard = formCard.elements.card;
+export const buttonSubmitCard = formCard.querySelector('.popup__button-submit');
 
 export const profileBlock = document.querySelector('.profile'); //блок с кнопками открытия форм.
+export const profileName = document.querySelector(selectorUser.user);
+export const profileJob = document.querySelector(selectorUser.job);
+
 export const buttonEdit = profileBlock.querySelector('.profile__edit-button'); //кнопка редактировать
 export const buttonAdd = profileBlock.querySelector('.profile__add-button'); //кнопка добавить
 
 export const containerCards = document.querySelector('.elements'); // контейнер для карточек // данные инпутов для новых карточек
 
-export const infoUser = {
-  user: '.profile__title',
-  job: '.profile__subtitle',
-  avatar: '.profile__avatar',
-};
+
 
 export const formProfile = document.forms.formProfile; //форма профиля
+export const inputName = formProfile.elements.name;
+export const inputJob = formProfile.elements.job;
+export const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
 
 export const formAvatar = document.forms.formAvatar;
 export const inputAvatar = formAvatar.elements.avatar;
@@ -22,6 +31,9 @@ export const inputAvatar = formAvatar.elements.avatar;
 const formTrash = document.forms.formTrash;
 export const inputId = formTrash.elements.trash;
 const buttonSubmitTrash = formTrash.querySelector('.popup__button-submit');
+
+
+export const buttonSubmitAvatar = formAvatar.querySelector('.popup__button-submit');
 
 const cardsBlock = document.querySelector('.elements');
 
