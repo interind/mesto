@@ -1,5 +1,5 @@
 'use strict';
-// import './index.css';
+import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
@@ -45,7 +45,6 @@ const userInfo = new UserInfo(selectorUser);
 
 const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 
-
 function formRenderAvatar(item) {
   // запрос на изменение аватара
   visualSubmit(buttonSubmitAvatar);
@@ -54,7 +53,7 @@ function formRenderAvatar(item) {
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify(res)))
     .then((info) => {
-      userInfo.setUserAvatar(info.avatar);
+      userInfo.setUserInfo(info);
     })
     .finally(() => visualSubmit(buttonSubmitAvatar))
     .catch((err) => console.log('Ошибка в данных профиля', err));

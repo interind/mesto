@@ -5,7 +5,7 @@ export class PopupWithForm extends Popup {
     this._callbackSubmit = callbackSubmit;
     this._popup = document.querySelector(this._popupSelector);
     this.form = this._popup.querySelector('.popup__container');
-    this._inputList= Array.from(this.form.querySelectorAll('.popup__input'));
+    this._inputList = Array.from(this.form.querySelectorAll('.popup__input'));
     this._infoList = Object.values(infoUser);
     this._submit = this._submit.bind(this);
     this.buttonSubmit = this.form.querySelector('.popup__button-submit');
@@ -27,9 +27,10 @@ export class PopupWithForm extends Popup {
     this.form.reset();
   }
 
-  _getInputValues() { // получение значений инпутов в объект
+  _getInputValues() {
+    // получение значений инпутов в объект
     let inputValues = {};
-     this._inputList.forEach(input => inputValues[input.name] = input.value);
+    this._inputList.forEach((input) => (inputValues[input.name] = input.value));
     return inputValues;
   }
 }

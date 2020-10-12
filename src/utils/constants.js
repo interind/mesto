@@ -1,4 +1,3 @@
-
 export const selectorUser = {
   user: '.profile__title',
   job: '.profile__subtitle',
@@ -18,12 +17,12 @@ export const buttonAdd = profileBlock.querySelector('.profile__add-button'); //�
 
 export const containerCards = document.querySelector('.elements'); // контейнер для карточек // данные инпутов для новых карточек
 
-
-
 export const formProfile = document.forms.formProfile; //форма профиля
 export const inputName = formProfile.elements.name;
 export const inputJob = formProfile.elements.job;
-export const buttonSubmitProfile = formProfile.querySelector('.popup__button-submit');
+export const buttonSubmitProfile = formProfile.querySelector(
+  '.popup__button-submit'
+);
 
 export const formAvatar = document.forms.formAvatar;
 export const inputAvatar = formAvatar.elements.avatar;
@@ -32,8 +31,9 @@ const formTrash = document.forms.formTrash;
 export const inputId = formTrash.elements.trash;
 const buttonSubmitTrash = formTrash.querySelector('.popup__button-submit');
 
-
-export const buttonSubmitAvatar = formAvatar.querySelector('.popup__button-submit');
+export const buttonSubmitAvatar = formAvatar.querySelector(
+  '.popup__button-submit'
+);
 
 const cardsBlock = document.querySelector('.elements');
 

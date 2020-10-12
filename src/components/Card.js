@@ -45,7 +45,8 @@ export class Card {
     return this._element;
   }
 
-  _searchElement() { // поиск нескольких элементов.
+  _searchElement() {
+    // поиск нескольких элементов.
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
   }
@@ -54,7 +55,8 @@ export class Card {
     this._buttonLike.addEventListener('click', () => {
       this._setLike();
     });
-    if (this._myId === this._ownerID._id) { // проверка есть ли мои лайки
+    if (this._myId === this._ownerID._id) {
+      // проверка есть ли мои лайки
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
       this._buttonTrash.addEventListener('click', () => {
         this._trashRequest(this._id, this._element);
@@ -82,7 +84,8 @@ export class Card {
     }
   }
 
-  _counterLike() {// собирает информацию по лайкам
+  _counterLike() {
+    // собирает информацию по лайкам
     this._element.querySelector(
       '.element__counter-like'
     ).textContent = this.likes.length;
@@ -97,7 +100,7 @@ export class Card {
     }
   }
 
-  remove() { 
+  remove() {
     this._element.remove();
     this._element = null;
   }
