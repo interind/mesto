@@ -1,10 +1,14 @@
 'use strict';
-import './index.css';
+// import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
+  configApi,
+  idTemplateCard,
+  selectorPopupForm,
   profileBlock,
+  formAvatar,
   inputAvatar,
   formProfile,
   formCard,
@@ -23,17 +27,17 @@ import { PopupSubmit } from '../components/PopupSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
-const url = 'https://mesto.nomoreparties.co/v1/cohort-16/';
-const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
-const userMe = 'users/me';
-const newCards = 'cards';
-const myID = '066c34d31720ba2fb9acb601';
+// const url = 'https://mesto.nomoreparties.co/v1/cohort-16/';
+// const token = 'bba27b67-a97d-4fd9-b42d-01c5b1258337';
+// const userMe = 'users/me';
+// const newCards = 'cards';
+// const myID = '066c34d31720ba2fb9acb601';
 
-const apiCards = new Api(url, token, newCards);
+const apiCards = new Api(configApi);
 
-const apiProfile = new Api(url, token, userMe);
+const apiProfile = new Api(configApi);
 
-const popupWithImage = new PopupWithImage('.popup_type_zoom');
+const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
 
 const card = (...arg) => new Card(...arg);
 
@@ -65,7 +69,7 @@ const connectDeleteServer = (...arg) => apiCards.deleteCardServer(...arg);
 
 function setCards(renderer) {
   // запрос на все карточки
-  apiCards.getInfoServer()
+  apiCards.getInfoCards()
   .then((res) => {
     renderer(res[0]);
   });
@@ -81,7 +85,7 @@ function renderCards(item) {
 function setProfile(rendererInfo, renderAvatar) {
   // получает ответ с сервера
   apiProfile
-    .getInfoServer()
+    .getInfoUser()
     .then((info) => {
       rendererInfo(
         info.map((item) => ({ name: item.name, about: item.about }))
@@ -107,18 +111,18 @@ const showCardForm = {
 }; // начальный объект для новых карточек
 
 const popupClassFormProfile = new PopupWithForm( // форма новых данных
-  '.popup_type_profile',
+  selectorPopupForm.profile,
   showProfileForm,
   formRenderProfile
 );
 const popupClassFormCard = new PopupWithForm( // форма новой карточки
-  '.popup_type_card',
+  selectorPopupForm.card,
   showCardForm,
   renderCards
 );
 
 const popupClassFormAvatar = new PopupWithForm( // форма аватарки
-  '.popup_type_avatar',
+  selectorPopupForm.avatar,
   inputAvatar,
   formRenderAvatar
 );
@@ -127,7 +131,7 @@ function trashCard(id, functionRemove) {
   // удаление карточки
   inputId.value = id;
   const popupTrashCard = new PopupSubmit(
-    '.popup_type_trash',
+    selectorPopupForm.trash,
     inputId,
     connectDeleteServer,
     functionRemove
@@ -144,12 +148,12 @@ function formRenderCards(initialCardValues) {
       renderer: (item) => {
         const cardElement = card(
           item,
-          '#card',
+          idTemplateCard,
           popupWithImage,
           trashCard,
           cardLikeServer,
           cardDeleteLikeServer,
-          myID
+          configApi.myID
         ).generateCard();
         section.addItems(cardElement);
       },
@@ -169,12 +173,12 @@ function formRenderNewCards(initialCard) {
       renderer: (item) => {
         const cardElement = card(
           item,
-          '#card',
+          idTemplateCard,
           popupWithImage,
           trashCard,
           cardLikeServer,
           cardDeleteLikeServer,
-          myID
+          configApi.myID
         ).generateCard();
         section.addNewItems(cardElement);
       },
@@ -189,6 +193,12 @@ const formProfileValidation = new FormValidator(
   formProfile
 );
 formProfileValidation.enableValidation(); // включение валидации для профиля
+
+const formAvatarValidation = new FormValidator( // включение валидации для Аватарки
+  templateFormSelector,
+  formAvatar
+);
+formAvatarValidation.enableValidation();
 
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation(); // включение валидации для карточек

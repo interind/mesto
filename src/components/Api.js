@@ -1,12 +1,28 @@
 export class Api {
-  constructor(url, token, info) {
-    this._url = url;
-    this._token = token;
-    this._info = info;
+  constructor(options) {
+    this._url = options.url;
+    this._token = options.token;
+    this._user = options.userMe;
+    this._cards = options.newCards;
   }
 
-  getInfoServer() {
-    return fetch(`${this._url}${this._info}`, {
+  getInfoUser() {
+    return fetch(`${this._url}${this._user}`, {
+      headers: {
+        authorization: `${this._token}`,
+      },
+    })
+      .then((responce) => (responce.ok ? responce :  Promise.reject(responce)))
+      .then((response) => response.json())
+      .then((res) => JSON.stringify([res]))
+      .then((result) => {
+        return JSON.parse(result);
+      })
+      .catch((err) => console.log('GET', err));
+  }
+
+  getInfoCards() {
+    return fetch(`${this._url}${this._cards}`, {
       headers: {
         authorization: `${this._token}`,
       },
@@ -21,7 +37,7 @@ export class Api {
   }
 
   pathProfileServer(userInfo) {
-    return fetch(`${this._url}${this._info}`, {
+    return fetch(`${this._url}${this._user}`, {
       method: 'PATCH',
       headers: {
         authorization: `${this._token}`,
@@ -42,7 +58,7 @@ export class Api {
   }
 
   pathAvatarServer(userInfo) {
-    return fetch(`${this._url}${this._info}/avatar`, {
+    return fetch(`${this._url}${this._user}/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: `${this._token}`,
@@ -62,7 +78,7 @@ export class Api {
   }
 
   postNewCardServer(cardInfo) {
-    return fetch(`${this._url}${this._info}`, {
+    return fetch(`${this._url}${this._cards}`, {
       method: 'POST',
       headers: {
         authorization: `${this._token}`,
@@ -83,7 +99,7 @@ export class Api {
   }
 
   putLikeServer(infoId) {
-    return fetch(`${this._url}${this._info}/likes/${infoId}`, {
+    return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
       method: 'PUT',
       headers: {
         authorization: `${this._token}`,
@@ -100,7 +116,7 @@ export class Api {
   }
 
   deleteLikeServer(infoId) {
-    return fetch(`${this._url}${this._info}/likes/${infoId}`, {
+    return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
       method: 'DELETE',
       headers: {
         authorization: `${this._token}`,
@@ -117,7 +133,7 @@ export class Api {
   }
 
   deleteCardServer(id) {
-    return fetch(`${this._url}${this._info}/${id}`, {
+    return fetch(`${this._url}${this._cards}/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: `${this._token}`,
