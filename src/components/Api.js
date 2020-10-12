@@ -11,14 +11,7 @@ export class Api {
       headers: {
         authorization: `${this._token}`,
       },
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('GET', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   getInfoCards() {
@@ -26,14 +19,7 @@ export class Api {
       headers: {
         authorization: `${this._token}`,
       },
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('GET', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   updateUserInfo(userInfo) {
@@ -47,14 +33,7 @@ export class Api {
         name: userInfo.name,
         about: userInfo.job,
       }),
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('PATCH USER', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   updateUserAvatar(userInfo) {
@@ -67,14 +46,7 @@ export class Api {
       body: JSON.stringify({
         avatar: userInfo.avatar,
       }),
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('PATCH AVATAR', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   addCard(cardInfo) {
@@ -88,14 +60,7 @@ export class Api {
         name: cardInfo.place,
         link: cardInfo.card,
       }),
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('POST', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   addLike(infoId) {
@@ -105,14 +70,7 @@ export class Api {
         authorization: `${this._token}`,
         'Content-Type': 'application/json',
       },
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('PUT', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   deleteLike(infoId) {
@@ -122,14 +80,7 @@ export class Api {
         authorization: `${this._token}`,
         'Content-Type': 'application/json',
       },
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('PUT', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 
   deleteCard(id) {
@@ -139,13 +90,6 @@ export class Api {
         authorization: `${this._token}`,
         'Content-type': 'application/json; charset=UTF-8',
       },
-    })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.stringify([res]))
-      .then((result) => {
-        return JSON.parse(result);
-      })
-      .catch((err) => console.log('DELETE', err));
+    }).then((response) => (response.ok ? response : Promise.reject(response)));
   }
 }

@@ -11,12 +11,10 @@ export class UserInfo {
     return { name: this._user, about: this._job };
   }
   setUserInfo(info) {
-    this._user.textContent = info[0].name;
+    this._user.textContent = info.name;
     this._user.title = this._user.textContent;
-    this._job.textContent = info[0].about;
+    this._job.textContent = info.about;
     this._job.title = this._job.textContent;
-  }
-  setUserAvatar(info) {
     this._avatar.src = info.avatar;
   }
 }

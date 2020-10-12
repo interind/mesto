@@ -45,72 +45,97 @@ const userInfo = new UserInfo(selectorUser);
 
 const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 
-const setUserAvatar = (...arg) => userInfo.setUserAvatar(...arg);
 
 function formRenderAvatar(item) {
   // запрос на изменение аватара
   visualSubmit(buttonSubmitAvatar);
-  apiProfile.updateUserAvatar(item).then((info) => {
-    userInfo.setUserAvatar({ avatar: info[0].avatar });
-    visualSubmit(buttonSubmitAvatar);
-  });
+  apiProfile
+    .updateUserAvatar(item)
+    .then((response) => response.json())
+    .then((res) => JSON.parse(JSON.stringify(res)))
+    .then((info) => {
+      userInfo.setUserAvatar(info.avatar);
+    })
+    .finally(() => visualSubmit(buttonSubmitAvatar))
+    .catch((err) => console.log('Ошибка в данных профиля', err));
 }
 
 function formRenderProfile(item) {
   // запрос на изменение профиля
   visualSubmit(buttonSubmitProfile);
-  apiProfile.updateUserInfo(item).then((res) => {
-    userInfo.setUserInfo(res);
-    visualSubmit(buttonSubmitProfile);
-  });
+  apiProfile
+    .updateUserInfo(item)
+    .then((response) => response.json())
+    .then((res) => JSON.parse(JSON.stringify(res)))
+    .then((res) => {
+      userInfo.setUserInfo(res);
+    })
+    .finally(() => visualSubmit(buttonSubmitProfile))
+    .catch((err) => console.log('Ошибка в данных профиля', err));
 }
 
-const addCardLike = (...arg) => apiCards.addLike(...arg);
+const addCardLike = (...arg) => {
+  apiCards
+    .addLike(...arg)
+    .catch((err) => console.log('Ошибка нового лайка', err));
+};
 
-const cardDeleteLike = (...arg) => apiCards.deleteLike(...arg);
+const cardDeleteLike = (...arg) => {
+  apiCards
+    .deleteLike(...arg)
+    .catch((err) => console.log('Ошибка удаления лайка', err));
+};
 
-const deleteCard = (...arg) => apiCards.deleteCard(...arg);
+const deleteCard = (...arg) => {
+  apiCards
+    .deleteCard(...arg)
+    .catch((err) => console.log('Карточка осталась', err));
+};
 
 function setCards(renderer) {
   // запрос на все карточки
-  apiCards.getInfoCards().then((res) => {
-    renderer(res[0]);
-    console.log(res[0]);
-  });
+  apiCards
+    .getInfoCards()
+    .then((response) => response.json())
+    .then((res) => JSON.parse(JSON.stringify([res])))
+    .then((res) => {
+      renderer(res[0]);
+      console.log(res[0]);
+    })
+    .catch((err) => console.log('Что то с загрузкой карточек', err));
 }
+
+const addCardForRenderCard = (...arg) => formRenderCards(...arg);
 
 function renderCards(item) {
   // запрос на новую карточку
   visualSubmit(buttonSubmitCard);
-  apiCards.addCard(item).then((res) => {
-    formRenderCards(res);
-    visualSubmit(buttonSubmitCard);
-  });
+  apiCards
+    .addCard(item)
+    .then((response) => response.json())
+    .then((res) => JSON.parse(JSON.stringify([res])))
+    .then((res) => {
+      addCardForRenderCard(res);
+    })
+    .finally(() => visualSubmit(buttonSubmitCard))
+    .catch((err) => console.log('Что то с добавлением карточки', err));
 }
 
-function setProfile(rendererInfo, renderAvatar) {
+function setProfile(rendererInfo) {
   // получает ответ с сервера
   apiProfile
     .getInfoUser()
+    .then((response) => response.json())
+    .then((res) => JSON.parse(JSON.stringify(res)))
     .then((info) => {
-      rendererInfo(
-        info.map((item) => ({ name: item.name, about: item.about }))
-      );
-      inputName.placeholder = info[0].name;
-      inputJob.placeholder = info[0].about; 
-      return info;
+      rendererInfo(info);
+      inputName.placeholder = info.name;
+      inputJob.placeholder = info.about;
     })
-    .catch((err) => console.log('Информация о Профиле', err));
-  // нужно перенести
-  apiProfile
-    .getInfoUser()
-    .then((info) => {
-      renderAvatar({ avatar: info[0].avatar });
-    })
-    .catch((err) => console.log('Информация о Аватаре', err));
+    .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }
 
-setProfile(setUserInfo, setUserAvatar); // получает ответ с сервера
+setProfile(setUserInfo); // получает ответ с сервера
 
 setCards(formRenderCards); // получает ответ с сервера
 
@@ -191,16 +216,16 @@ formCardValidation.enableValidation(); // включение валидации 
 
 buttonEdit.addEventListener('mousedown', () => {
   popupClassFormProfile.open();
-  setTimeout( () => inputName.focus(), 100)
+  setTimeout(() => inputName.focus(), 100);
 });
 buttonAdd.addEventListener('mousedown', () => {
   popupClassFormCard.open();
-  setTimeout( () => inputPlace.focus(), 100)
+  setTimeout(() => inputPlace.focus(), 100);
 });
 profileBlock
   .querySelector(selectorUser.avatar)
   .addEventListener('click', () => {
     // открытие попапа с аватаром
     popupClassFormAvatar.open();
-    setTimeout( () => inputAvatar.focus(), 100);
+    setTimeout(() => inputAvatar.focus(), 100);
   });
