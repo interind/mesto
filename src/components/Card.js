@@ -49,9 +49,6 @@ export class Card {
     // поиск нескольких элементов.
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
-    this._avatarHover = this._element.querySelector('.element__avatar');
-    this._buttonLike.title = this._ownerID.name;
-    this._avatarHover.src = this._ownerID.avatar;
   }
 
   _setEventListeners() {

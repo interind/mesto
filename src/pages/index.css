@@ -41,7 +41,6 @@
 @import url(../blocks/page/__elements/page__elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__pic/element__pic.css);
-@import url(../blocks/element/__avatar/element__avatar.css);
 @import url(../blocks/element/__button-trash/element__button-trash.css);
 @import url(../blocks/element/__button-trash/_hidden/element__button-trash_hidden.css);
 @import url(../blocks/element/__info/element__info.css);
