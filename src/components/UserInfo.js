@@ -12,9 +12,9 @@ export class UserInfo {
   }
   setUserInfo(info) {
     this._user.textContent = info.name;
-    this._user.title = this._user.textContent;
+    this._user.title = info.name;
     this._job.textContent = info.about;
-    this._job.title = this._job.textContent;
+    this._job.title = info.about;
     this._avatar.src = info.avatar;
   }
 }

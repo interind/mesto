@@ -4,7 +4,7 @@ export default class Section {
     this._container = containerSelector;
   }
 
-  addItems(element) {
+  addItem(element) {
     this._container.append(element);
   }
 

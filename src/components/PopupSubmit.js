@@ -1,32 +1,32 @@
-import { PopupWithForm } from './PopupWithForm.js';
-export class PopupSubmit extends PopupWithForm {
-  constructor(popupSelector, input, callbackSubmit, elementRemove) {
-    super(popupSelector, callbackSubmit);
+import Popup from './Popup.js';
+export class PopupSubmit extends Popup {
+  constructor(api, popupSelector, id, elementRemove) {
+    super(popupSelector);
     this._popup = document.querySelector(this._popupSelector);
-    this.form = this._popup.querySelector('.popup__container');
-    this._input = input;
-    this._callbackSubmit = callbackSubmit.bind(this);
+    this._buttonSubmit = this._popup.querySelector('.popup__button-submit');
+    this._id = id;
+    this._api = api;
     this.elementRemove = elementRemove;
+    this._submit = this._submit.bind(this);
   }
 
   _setEventListeners() {
     super._setEventListeners();
-    this.form.addEventListener('submit', this._submit);
+    this._buttonSubmit.addEventListener('click', this._submit);
   }
 
-  _submit(evt) {
-    evt.preventDefault();
-    this._callbackSubmit(this._getInputValues());
-    this.close();
-    this.elementRemove.style.display = 'none';
+  _submit() {
+    this._api
+      .deleteCard(this._id)
+      .then(() => {
+        this.close();
+        this.elementRemove.style.display = 'none';
+      })
+      .catch((err) => console.log('Карточка осталась', err));
   }
 
   close() {
     super.close();
-    this.form.removeEventListener('submit', this._submit);
-  }
-
-  _getInputValues() {
-    return this._input.value;
+    this._buttonSubmit.removeEventListener('click', this._submit);
   }
 }

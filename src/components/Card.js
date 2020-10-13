@@ -3,8 +3,8 @@ export class Card {
     data,
     cardSelector,
     handleCardClick,
-    trashRequest,
-    likeRequest,
+    handleDeleteCardClick,
+    handleLikeCardClick,
     disLikesRequest,
     idMy
   ) {
@@ -16,8 +16,8 @@ export class Card {
     this._myId = idMy;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._trashRequest = trashRequest;
-    this._likeRequest = likeRequest;
+    this._handleDeleteCardClick = handleDeleteCardClick.bind(this);
+    this._handleLikeCardClick = handleLikeCardClick;
     this._disLikesRequest = disLikesRequest;
     this.remove = this.remove.bind(this);
   }
@@ -49,6 +49,7 @@ export class Card {
     // поиск нескольких элементов.
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
+    this._buttonLike.title = this._ownerID.name;
   }
 
   _setEventListeners() {
@@ -59,7 +60,7 @@ export class Card {
       // проверка есть ли мои лайки
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
       this._buttonTrash.addEventListener('click', () => {
-        this._trashRequest(this._id, this._element);
+        this._handleDeleteCardClick(this._id, this._element);
       });
     }
     this._element.addEventListener('click', (evt) => {
@@ -79,7 +80,7 @@ export class Card {
     } else {
       this._buttonLike.classList.add('element__button-like_color_black');
       this.likes.push(this._myId);
-      this._likeRequest(this._id);
+      this._handleLikeCardClick(this._id);
       this._counterLike();
     }
   }

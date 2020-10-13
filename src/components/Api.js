@@ -1,9 +1,9 @@
 export class Api {
-  constructor(options) {
+  constructor(options, user, cards) {
     this._url = options.url;
     this._token = options.token;
-    this._user = options.userMe;
-    this._cards = options.newCards;
+    this._user = user;
+    this._cards = cards;
   }
 
   getInfoUser() {

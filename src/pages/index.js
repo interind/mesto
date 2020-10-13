@@ -1,11 +1,13 @@
 'use strict';
-// import './index.css';
+import './index.css';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import { visualSubmit } from '../utils/utils.js';
 import {
   configApi,
+  userMe,
+  newCards,
   idTemplateCard,
   selectorPopupForm,
   profileBlock,
@@ -19,7 +21,6 @@ import {
   buttonAdd,
   containerCards,
   selectorUser,
-  inputId,
   buttonSubmitProfile,
   buttonSubmitCard,
   buttonSubmitAvatar,
@@ -33,9 +34,7 @@ import { PopupSubmit } from '../components/PopupSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
-const apiCards = new Api(configApi);
-
-const apiProfile = new Api(configApi);
+const api = new Api(configApi, userMe, newCards);
 
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
 
@@ -48,12 +47,13 @@ const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 function formRenderAvatar(item) {
   // запрос на изменение аватара
   visualSubmit(buttonSubmitAvatar);
-  apiProfile
+  api
     .updateUserAvatar(item)
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify(res)))
     .then((info) => {
       userInfo.setUserInfo(info);
+      popupClassFormAvatar.close();
     })
     .finally(() => visualSubmit(buttonSubmitAvatar))
     .catch((err) => console.log('Ошибка в данных профиля', err));
@@ -62,38 +62,31 @@ function formRenderAvatar(item) {
 function formRenderProfile(item) {
   // запрос на изменение профиля
   visualSubmit(buttonSubmitProfile);
-  apiProfile
+  api
     .updateUserInfo(item)
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify(res)))
     .then((res) => {
       userInfo.setUserInfo(res);
+      popupClassFormProfile.close();
     })
     .finally(() => visualSubmit(buttonSubmitProfile))
     .catch((err) => console.log('Ошибка в данных профиля', err));
 }
 
 const addCardLike = (...arg) => {
-  apiCards
-    .addLike(...arg)
-    .catch((err) => console.log('Ошибка нового лайка', err));
+  api.addLike(...arg).catch((err) => console.log('Ошибка нового лайка', err));
 };
 
 const cardDeleteLike = (...arg) => {
-  apiCards
+  api
     .deleteLike(...arg)
     .catch((err) => console.log('Ошибка удаления лайка', err));
 };
 
-const deleteCard = (...arg) => {
-  apiCards
-    .deleteCard(...arg)
-    .catch((err) => console.log('Карточка осталась', err));
-};
-
 function setCards(renderer) {
   // запрос на все карточки
-  apiCards
+  api
     .getInfoCards()
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify([res])))
@@ -109,12 +102,13 @@ const addCardForRenderCard = (...arg) => formRenderCards(...arg);
 function renderCards(item) {
   // запрос на новую карточку
   visualSubmit(buttonSubmitCard);
-  apiCards
+  api
     .addCard(item)
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify([res])))
     .then((res) => {
       addCardForRenderCard(res);
+      popupClassFormCard.close();
     })
     .finally(() => visualSubmit(buttonSubmitCard))
     .catch((err) => console.log('Что то с добавлением карточки', err));
@@ -122,7 +116,7 @@ function renderCards(item) {
 
 function setProfile(rendererInfo) {
   // получает ответ с сервера
-  apiProfile
+  api
     .getInfoUser()
     .then((response) => response.json())
     .then((res) => JSON.parse(JSON.stringify(res)))
@@ -162,17 +156,16 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   formRenderAvatar
 );
 
-function trashCard(id, elementRemove) {
+const handleDeleteCardClick = (id, elementRemove) => {
   // удаление карточки
-  inputId.value = id;
-  const popupTrashCard = new PopupSubmit(
+  const popupSubmitDeleteCard = new PopupSubmit(
+    api,
     selectorPopupForm.trash,
-    inputId,
-    deleteCard,
+    id,
     elementRemove
   );
-  popupTrashCard.open();
-}
+  popupSubmitDeleteCard.open();
+};
 
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
@@ -184,12 +177,12 @@ function formRenderCards(initialCardValues) {
           item,
           idTemplateCard,
           popupWithImage,
-          trashCard,
+          handleDeleteCardClick,
           addCardLike,
           cardDeleteLike,
           configApi.myID
         ).generateCard();
-        section.addItems(cardElement);
+        section.addItem(cardElement);
       },
     },
     containerCards

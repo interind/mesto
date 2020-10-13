@@ -18,13 +18,12 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
     this.form.removeEventListener('submit', this._submit);
+    this.form.reset();
   }
 
   _submit(evt) {
     evt.preventDefault();
     this._callbackSubmit(this._getInputValues());
-    this.close();
-    this.form.reset();
   }
 
   _getInputValues() {
