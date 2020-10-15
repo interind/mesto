@@ -111,8 +111,6 @@ function setProfile(rendererInfo) {
     .getInfoUser()
     .then((info) => {
       rendererInfo(info);
-      inputName.placeholder = 'Имя';
-      inputJob.placeholder = 'Профессия';
     })
     .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }
@@ -178,7 +176,7 @@ function formRenderCards(initialCardValues) {
           cardDeleteLike,
           configApi.myID
         ).generateCard();
-        section.addItem(cardElement);
+        section.addItem(cardElement, configApi.myID);
       },
     },
     containerCards
@@ -204,6 +202,8 @@ formCardValidation.enableValidation(); // включение валидации 
 
 buttonEdit.addEventListener('mousedown', () => {
   popupClassFormProfile.open();
+  inputName.value = showProfileForm.name.textContent;
+  inputJob.value = showProfileForm.about.textContent;
   setTimeout(() => inputName.focus(), 100);
 });
 buttonAdd.addEventListener('mousedown', () => {

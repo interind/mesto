@@ -32,6 +32,7 @@ export class Card {
   }
   generateCard() {
     this._element = this._getTemplate();
+    this._element.id = this._ownerID._id;
     this._imageCard = this._element.querySelector('.element__pic');
     this._imageCard.src = this._image;
     this._imageCard.alt = this._text;
