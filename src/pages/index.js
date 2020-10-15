@@ -111,8 +111,8 @@ function setProfile(rendererInfo) {
     .getInfoUser()
     .then((info) => {
       rendererInfo(info);
-      inputName.placeholder = info.name;
-      inputJob.placeholder = info.about;
+      inputName.placeholder = 'Имя';
+      inputJob.placeholder = 'Профессия';
     })
     .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }
