@@ -9,6 +9,7 @@ export class PopupWithForm extends Popup {
     this._infoList = Object.values(infoUser);
     this._submit = this._submit.bind(this);
     this.buttonSubmit = this.form.querySelector('.popup__button-submit');
+    this.close = this.close.bind(this);
   }
   _setEventListeners() {
     super._setEventListeners();

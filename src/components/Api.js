@@ -11,7 +11,10 @@ export class Api {
       headers: {
         authorization: `${this._token}`,
       },
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    })
+      .then((response) => (response.ok ? response : Promise.reject(response)))
+      .then((response) => response.json())
+      .then((res) => JSON.parse(JSON.stringify(res)));
   }
 
   getInfoCards() {
@@ -19,7 +22,10 @@ export class Api {
       headers: {
         authorization: `${this._token}`,
       },
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    })
+      .then((response) => (response.ok ? response : Promise.reject(response)))
+      .then((response) => response.json())
+      .then((res) => JSON.parse(JSON.stringify([res])));
   }
 
   updateUserInfo(userInfo) {
@@ -33,7 +39,9 @@ export class Api {
         name: userInfo.name,
         about: userInfo.job,
       }),
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    })
+      .then((response) => (response.ok ? response : Promise.reject(response)))
+      .then((response) => response.json());
   }
 
   updateUserAvatar(userInfo) {
@@ -46,7 +54,9 @@ export class Api {
       body: JSON.stringify({
         avatar: userInfo.avatar,
       }),
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    })
+      .then((response) => (response.ok ? response : Promise.reject(response)))
+      .then((response) => response.json());
   }
 
   addCard(cardInfo) {
@@ -60,7 +70,9 @@ export class Api {
         name: cardInfo.place,
         link: cardInfo.card,
       }),
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    })
+      .then((response) => (response.ok ? response : Promise.reject(response)))
+      .then((response) => response.json());
   }
 
   addLike(infoId) {

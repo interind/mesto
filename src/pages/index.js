@@ -49,14 +49,12 @@ function formRenderAvatar(item) {
   visualSubmit(buttonSubmitAvatar);
   api
     .updateUserAvatar(item)
-    .then((response) => response.json())
-    .then((res) => JSON.parse(JSON.stringify(res)))
     .then((info) => {
       userInfo.setUserInfo(info);
       popupClassFormAvatar.close();
     })
-    .finally(() => visualSubmit(buttonSubmitAvatar))
-    .catch((err) => console.log('Ошибка в данных профиля', err));
+    .catch((err) => console.log('Ошибка в данных профиля', err))
+    .finally(() => visualSubmit(buttonSubmitAvatar));
 }
 
 function formRenderProfile(item) {
@@ -64,14 +62,12 @@ function formRenderProfile(item) {
   visualSubmit(buttonSubmitProfile);
   api
     .updateUserInfo(item)
-    .then((response) => response.json())
-    .then((res) => JSON.parse(JSON.stringify(res)))
     .then((res) => {
       userInfo.setUserInfo(res);
       popupClassFormProfile.close();
     })
-    .finally(() => visualSubmit(buttonSubmitProfile))
-    .catch((err) => console.log('Ошибка в данных профиля', err));
+    .catch((err) => console.log('Ошибка в данных профиля', err))
+    .finally(() => visualSubmit(buttonSubmitProfile));
 }
 
 const addCardLike = (...arg) => {
@@ -88,11 +84,8 @@ function setCards(renderer) {
   // запрос на все карточки
   api
     .getInfoCards()
-    .then((response) => response.json())
-    .then((res) => JSON.parse(JSON.stringify([res])))
     .then((res) => {
       renderer(res[0]);
-      console.log(res[0]);
     })
     .catch((err) => console.log('Что то с загрузкой карточек', err));
 }
@@ -104,22 +97,18 @@ function renderCards(item) {
   visualSubmit(buttonSubmitCard);
   api
     .addCard(item)
-    .then((response) => response.json())
-    .then((res) => JSON.parse(JSON.stringify([res])))
     .then((res) => {
-      addCardForRenderCard(res);
+      addCardForRenderCard([res]);
       popupClassFormCard.close();
     })
-    .finally(() => visualSubmit(buttonSubmitCard))
-    .catch((err) => console.log('Что то с добавлением карточки', err));
+    .catch((err) => console.log('Что то с добавлением карточки', err))
+    .finally(() => visualSubmit(buttonSubmitCard));
 }
 
 function setProfile(rendererInfo) {
   // получает ответ с сервера
   api
     .getInfoUser()
-    .then((response) => response.json())
-    .then((res) => JSON.parse(JSON.stringify(res)))
     .then((info) => {
       rendererInfo(info);
       inputName.placeholder = info.name;
@@ -157,12 +146,19 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
 );
 
 const handleDeleteCardClick = (id, elementRemove) => {
+  const removalCard = () => {
+    api
+      .deleteCard(id)
+      .then(() => {
+        elementRemove.style.display = 'none';
+      })
+      .catch((err) => console.log('Карточка осталась', err))
+      .finally(() => popupSubmitDeleteCard.close());
+  };
   // удаление карточки
   const popupSubmitDeleteCard = new PopupSubmit(
-    api,
-    selectorPopupForm.trash,
-    id,
-    elementRemove
+    removalCard,
+    selectorPopupForm.trash
   );
   popupSubmitDeleteCard.open();
 };
