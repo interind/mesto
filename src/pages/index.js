@@ -144,7 +144,8 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
 );
 
 const handleDeleteCardClick = (id, elementRemove) => {
-  const removalCard = () => {
+  const removalCard = (evt) => {
+    evt.preventDefault();
     api
       .deleteCard(id)
       .then(() => {
