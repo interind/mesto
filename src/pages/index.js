@@ -50,7 +50,7 @@ function formRenderAvatar(item) {
   api
     .updateUserAvatar(item)
     .then((info) => {
-      userInfo.setUserInfo(info);
+      userInfo.setUserInfo({avatar: info.avatar});
       popupClassFormAvatar.close();
     })
     .catch((err) => console.log('Ошибка в данных профиля', err))
@@ -63,7 +63,7 @@ function formRenderProfile(item) {
   api
     .updateUserInfo(item)
     .then((res) => {
-      userInfo.setUserInfo(res);
+      userInfo.setUserInfo({name: res.name, about: res.about});
       popupClassFormProfile.close();
     })
     .catch((err) => console.log('Ошибка в данных профиля', err))
@@ -121,25 +121,18 @@ setCards(formRenderCards); // получает ответ с сервера
 
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
-const showCardForm = {
-  name: inputPlace,
-  link: inputCard,
-}; // начальный объект для новых карточек
 
 const popupClassFormProfile = new PopupWithForm( // форма новых данных
   selectorPopupForm.profile,
-  showProfileForm,
   formRenderProfile
 );
 const popupClassFormCard = new PopupWithForm( // форма новой карточки
   selectorPopupForm.card,
-  showCardForm,
   renderCards
 );
 
 const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   selectorPopupForm.avatar,
-  inputAvatar,
   formRenderAvatar
 );
 
