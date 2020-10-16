@@ -109,8 +109,9 @@ function setProfile(rendererInfo) {
   // получает ответ с сервера
   api
     .getInfoUser()
-    .then((info) => {
-      rendererInfo(info);
+    .then((res) => {
+      rendererInfo({name: res.name, about: res.about});
+      rendererInfo({avatar: res.avatar});
     })
     .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }

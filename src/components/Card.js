@@ -8,8 +8,8 @@ export class Card {
     disLikesRequest,
     idMy
   ) {
-    this._text = data.place || data.name;
-    this._image = data.card || data.link;
+    this._text = data.name;
+    this._image = data.link;
     this.likes = data.likes;
     this._id = data._id;
     this._ownerID = data.owner;
