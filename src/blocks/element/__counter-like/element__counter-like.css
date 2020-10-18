@@ -1,6 +1,4 @@
 .element__counter-like {
-  width: 100%;
-  transform: translate( 0, 100%);
   pointer-events: none;
   text-overflow: ellipsis;
   overflow: hidden;

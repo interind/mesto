@@ -50,7 +50,8 @@ export class Card {
     // поиск нескольких элементов.
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
-    this._buttonLike.title = this._ownerID.name;
+    this._imageCard.title = this._ownerID.name;
+    this._buttonLike.title = JSON.stringify(this.likes);
   }
 
   _setEventListeners() {
