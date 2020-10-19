@@ -42,7 +42,7 @@ export class Card {
     this._title.title = this._title.textContent;
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
-    this._buttonLike.title = JSON.stringify(this.likes);
+    this._buttonLike.title = this.likes.map((like) => like.name);
     this._setEventListeners();
     this._counterLike();
     return this._element;
