@@ -36,22 +36,16 @@ export class Card {
     this._imageCard = this._element.querySelector('.element__pic');
     this._imageCard.src = this._image;
     this._imageCard.alt = this._text;
-
+    this._imageCard.title = this._ownerID.name;
     this._title = this._element.querySelector('.element__title');
     this._title.textContent = this._text;
     this._title.title = this._title.textContent;
-    this._searchElement(this._element);
+    this._buttonTrash = this._element.querySelector('.element__button-trash');
+    this._buttonLike = this._element.querySelector('.element__button-like');
+    this._buttonLike.title = JSON.stringify(this.likes);
     this._setEventListeners();
     this._counterLike();
     return this._element;
-  }
-
-  _searchElement() {
-    // поиск нескольких элементов.
-    this._buttonTrash = this._element.querySelector('.element__button-trash');
-    this._buttonLike = this._element.querySelector('.element__button-like');
-    this._imageCard.title = this._ownerID.name;
-    this._buttonLike.title = JSON.stringify(this.likes);
   }
 
   _setEventListeners() {
