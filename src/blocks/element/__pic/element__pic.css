@@ -4,7 +4,10 @@
   height: 282px;
   object-fit: cover;
   object-position: center;
-  margin: 0;
+  background-image: url('../../../images/errorPic.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .element__pic:hover {

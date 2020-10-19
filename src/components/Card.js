@@ -42,7 +42,6 @@ export class Card {
     this._title.title = this._title.textContent;
     this._buttonTrash = this._element.querySelector('.element__button-trash');
     this._buttonLike = this._element.querySelector('.element__button-like');
-    this._buttonLike.title = this.likes.map((like) => like.name);
     this._setEventListeners();
     this._counterLike();
     return this._element;
@@ -83,9 +82,10 @@ export class Card {
 
   _counterLike() {
     // собирает информацию по лайкам
-    this._element.querySelector(
-      '.element__counter-like'
-    ).textContent = this.likes.length;
+    this._counter = this._element.querySelector('.element__counter-like');
+    this._counter.title = this.likes.map((like) => like.name);
+    this._counter.textContent = this.likes.length;
+
     if (this.likes.find((key) => key._id === this._myId)) {
       this._buttonLike.classList.add('element__button-like_color_black');
     }

@@ -16,7 +16,6 @@ import {
   formProfile,
   formCard,
   inputPlace,
-  inputCard,
   buttonEdit,
   buttonAdd,
   containerCards,

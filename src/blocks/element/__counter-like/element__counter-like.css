@@ -1,5 +1,8 @@
 .element__counter-like {
-  pointer-events: none;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.element__counter-like:hover {
+  cursor: default;
 }
