@@ -1,6 +1,11 @@
 .element__counter-like {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 1.23;
 }
 
 .element__counter-like:hover {
