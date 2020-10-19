@@ -47,7 +47,7 @@
 .element__button-like{display:flex;align-items:center;width:21px;height:19px;outline-style:none;background-repeat:no-repeat;border:0;padding:0;background-color:transparent;background-image:url(./images/GroupWhite.svg)}.element__button-like:hover{opacity:.6;cursor:pointer}.element__button-like:focus{outline:none;box-shadow:0 0 0 3px #87cefa}
 .element__button-like_color_black{background-image:url(./images/GroupBlack.svg)}
 .element__like{display:flex;flex-direction:column;justify-content:center;align-items:center;width:30px;margin:26px,0}
-.element__counter-like{text-overflow:ellipsis;overflow:hidden}.element__counter-like:hover{cursor:default}
+.element__counter-like{text-overflow:ellipsis;overflow:hidden;font-family:Inter;font-style:normal;font-weight:400;font-size:13px;line-height:1.23;transform:translateY(3px)}.element__counter-like:hover{cursor:default}
 .footer{max-width:318px;width:100%;background-color:#000}@media screen and (max-width:910px){.footer{max-width:282px;padding-left:10px}}@media screen and (max-width:320px){.footer{padding:0}}
 .page__footer{max-width:882px;width:100%;margin:0 auto 60px}@media screen and (max-width:898px){.page__footer{width:90%}}@media screen and (max-width:320px){.page__footer{margin-bottom:36px;width:88.12vw}}
 .footer__copyright{font-family:Inter,Arial,sans-serif;font-style:normal;font-weight:400;font-size:18px;line-height:1.22;margin:0;color:#545454}@media screen and (max-width:340px){.footer__copyright{font-size:14px;line-height:1.21}}
