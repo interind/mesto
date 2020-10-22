@@ -12,9 +12,8 @@ export class Api {
         authorization: `${this._token}`,
       },
     })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
-      .then((res) => JSON.parse(JSON.stringify(res)));
+    .then((response) => (response.ok ? response : Promise.reject(response)))
+    .then((response) => response.json());
   }
 
   getInfoCards() {

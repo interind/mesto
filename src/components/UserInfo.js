@@ -10,9 +10,10 @@ export class UserInfo {
   getUserInfo() {
     return { name: this._user, about: this._job};
   }
-  setUserInfo({name, about, avatar}) {
+  setUserInfo({name, about, avatar, _id}) {
     if(avatar) {
       this._avatar.src = avatar;
+      this._avatar.id = _id;
     }
     else {
       this._user.textContent = name;

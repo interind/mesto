@@ -8,6 +8,7 @@ import {
   configApi,
   userMe,
   newCards,
+  profileAvatar,
   idTemplateCard,
   selectorPopupForm,
   profileBlock,
@@ -49,7 +50,7 @@ function formRenderAvatar(item) {
   api
     .updateUserAvatar(item)
     .then((info) => {
-      userInfo.setUserInfo({avatar: info.avatar});
+      userInfo.setUserInfo({avatar: info.avatar, _id: info._id});
       popupClassFormAvatar.close();
     })
     .catch((err) => console.log('Ошибка в данных профиля', err))
@@ -108,9 +109,9 @@ function setProfile(rendererInfo) {
   // получает ответ с сервера
   api
     .getInfoUser()
-    .then((res) => {
-      rendererInfo({name: res.name, about: res.about});
-      rendererInfo({avatar: res.avatar});
+    .then((info) => {
+      rendererInfo({name: info.name, about: info.about});
+      rendererInfo({avatar: info.avatar, _id: info._id});
     })
     .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }
@@ -157,7 +158,7 @@ const handleDeleteCardClick = (id, elementRemove) => {
 
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
-
+  const id = profileAvatar.id;
   const section = new Section(
     {
       renderer: (item) => {
@@ -168,9 +169,9 @@ function formRenderCards(initialCardValues) {
           handleDeleteCardClick,
           addCardLike,
           cardDeleteLike,
-          configApi.myID
+          id
         ).generateCard();
-        section.addItem(cardElement, configApi.myID);
+        section.addItem(cardElement, id);
       },
     },
     containerCards
