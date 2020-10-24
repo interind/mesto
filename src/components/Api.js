@@ -6,14 +6,17 @@ export class Api {
     this._cards = cards;
   }
 
+  getResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInfoUser() {
     return fetch(`${this._url}${this._user}`, {
       headers: {
         authorization: `${this._token}`,
       },
     })
-    .then((response) => (response.ok ? response : Promise.reject(response)))
-    .then((response) => response.json());
+      .then(this.getResponse)
   }
 
   getInfoCards() {
@@ -22,8 +25,7 @@ export class Api {
         authorization: `${this._token}`,
       },
     })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json())
+      .then(this.getResponse)
       .then((res) => JSON.parse(JSON.stringify([res])));
   }
 
@@ -39,8 +41,7 @@ export class Api {
         about: userInfo.job,
       }),
     })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json());
+      .then(this.getResponse)
   }
 
   updateUserAvatar(userInfo) {
@@ -54,8 +55,7 @@ export class Api {
         avatar: userInfo.avatar,
       }),
     })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json());
+      .then(this.getResponse)
   }
 
   addCard(cardInfo) {
@@ -70,8 +70,7 @@ export class Api {
         link: cardInfo.card,
       }),
     })
-      .then((response) => (response.ok ? response : Promise.reject(response)))
-      .then((response) => response.json());
+      .then(this.getResponse)
   }
 
   addLike(infoId) {
@@ -81,7 +80,7 @@ export class Api {
         authorization: `${this._token}`,
         'Content-Type': 'application/json',
       },
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    }).then(this.getResponse);
   }
 
   deleteLike(infoId) {
@@ -91,7 +90,7 @@ export class Api {
         authorization: `${this._token}`,
         'Content-Type': 'application/json',
       },
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    }).then(this.getResponse);
   }
 
   deleteCard(id) {
@@ -101,6 +100,6 @@ export class Api {
         authorization: `${this._token}`,
         'Content-type': 'application/json; charset=UTF-8',
       },
-    }).then((response) => (response.ok ? response : Promise.reject(response)));
+    }).then(this.getResponse);
   }
 }
