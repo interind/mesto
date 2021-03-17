@@ -1,3 +1,4 @@
+import { imagesCheck } from '../utils/utils';
 export class Card {
   constructor(
     data,
@@ -30,11 +31,14 @@ export class Card {
 
     return cardElement;
   }
+
   generateCard() {
     this._element = this._getTemplate();
     this._element.id = this._ownerID._id;
     this._imageCard = this._element.querySelector('.element__pic');
-    this._imageCard.src = this._image;
+    imagesCheck(this._image)
+      .then((link) => this._imageCard.src = link)
+      .catch((err) => this._imageCard.src = err);
     this._imageCard.alt = this._text;
     this._imageCard.title = this._ownerID.name;
     this._title = this._element.querySelector('.element__title');

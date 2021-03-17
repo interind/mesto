@@ -12,14 +12,14 @@ export class UserInfo {
   }
   setUserInfo({name, about, avatar, _id}) {
     if(avatar) {
-      this._avatar.src = avatar;
+      this._avatar.style.backgroundImage = `url(${avatar})`;
       this._avatar.id = _id;
     }
     else {
       this._user.textContent = name;
       this._user.title = name;
       this._job.textContent = about;
-      this._job.title = about;  
+      this._job.title = about;
     }
   }
 }
