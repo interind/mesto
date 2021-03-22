@@ -1,51 +1,44 @@
 import { imagesCheck } from '../utils/utils';
+
 export class Card {
   constructor(
     data,
-    cardSelector,
+    idTemplateCard,
     handleCardClick,
     handleDeleteCardClick,
     handleLikeCardClick,
     disLikesRequest,
     idMy
   ) {
+    this._cardElement = document.querySelector(idTemplateCard).content;
     this._text = data.name;
     this._image = data.link;
     this.likes = data.likes;
     this._id = data._id;
     this._ownerID = data.owner;
     this._myId = idMy;
-    this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick.bind(this);
     this._handleLikeCardClick = handleLikeCardClick;
     this._disLikesRequest = disLikesRequest;
     this.remove = this.remove.bind(this);
-  }
-
-  _getTemplate() {
-    const cardElement = document
-      .querySelector(this._cardSelector)
-      .content.querySelector('.element')
-      .cloneNode(true);
-
-    return cardElement;
+    this._element = this._cardElement.querySelector('.element').cloneNode(true);
+    this._imageCard = this._element.querySelector('.element__pic');
+    this._title = this._element.querySelector('.element__title');
+    this._buttonTrash = this._element.querySelector('.element__button-trash');
+    this._buttonLike = this._element.querySelector('.element__button-like');
+    this._counter = this._element.querySelector('.element__counter-like');
   }
 
   generateCard() {
-    this._element = this._getTemplate();
     this._element.id = this._ownerID._id;
-    this._imageCard = this._element.querySelector('.element__pic');
     imagesCheck(this._image)
       .then((link) => this._imageCard.src = link)
       .catch((err) => this._imageCard.src = err);
     this._imageCard.alt = this._text;
     this._imageCard.title = this._ownerID.name;
-    this._title = this._element.querySelector('.element__title');
     this._title.textContent = this._text;
     this._title.title = this._title.textContent;
-    this._buttonTrash = this._element.querySelector('.element__button-trash');
-    this._buttonLike = this._element.querySelector('.element__button-like');
     this._setEventListeners();
     this._counterLike();
     return this._element;
@@ -86,7 +79,6 @@ export class Card {
 
   _counterLike() {
     // собирает информацию по лайкам
-    this._counter = this._element.querySelector('.element__counter-like');
     this._counter.title = this.likes.map((like) => like.name);
     this._counter.textContent = this.likes.length;
 

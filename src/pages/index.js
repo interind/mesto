@@ -9,7 +9,6 @@ import {
   userMe,
   newCards,
   profileAvatar,
-  idTemplateCard,
   selectorPopupForm,
   profileBlock,
   formAvatar,
@@ -33,6 +32,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupSubmit } from '../components/PopupSubmit.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
+import { idTemplateCard } from '../utils/constants';
 
 const api = new Api(configApi, userMe, newCards);
 
