@@ -1,5 +1,6 @@
 .popup__container {
   visibility: inherit;
+  opacity: inherit;
   display: flex;
   box-sizing: border-box;
   position: relative;
@@ -34,7 +35,7 @@
 
 @media screen and (max-width: 320px) {
   .popup__container {
-    width: 75%; 
+    width: 75%;
     padding: 30px 20px;
   }
 }

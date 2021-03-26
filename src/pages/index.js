@@ -26,6 +26,7 @@ import {
   idTemplateCard,
   inputName,
   inputJob,
+  loader,
 } from '../utils/constants.js';
 import Section from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -35,15 +36,14 @@ import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 
 const api = new Api(configApi, userMe, newCards);
-
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
-
 const createCard = (...arg) => new Card(...arg);
-
 const userInfo = new UserInfo(selectorUser);
-
 const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 
+function toggleLoader(bool) {
+  bool ? loader.classList.remove('loader_hidden') : loader.classList.add('loader_hidden');
+}
 function formRenderAvatar(item) {
   // запрос на изменение аватара
   visualSubmit(buttonSubmitAvatar);
@@ -81,13 +81,13 @@ const cardDeleteLike = (...arg) => {
 };
 
 function setCards(renderer) {
-  // запрос на все карточки
-  api
-    .getInfoCards()
+  toggleLoader(true)
+  api.getInfoCards()
     .then((res) => {
       renderer(res[0]);
     })
-    .catch((err) => console.log('Что то с загрузкой карточек', err));
+    .catch((err) => console.log('Что то с загрузкой карточек', err))
+    .finally(() => toggleLoader(false));
 }
 
 const addCardForRenderCard = (...arg) => formRenderCards(...arg);
@@ -95,23 +95,24 @@ const addCardForRenderCard = (...arg) => formRenderCards(...arg);
 function renderCards(item) {
   // запрос на новую карточку
   visualSubmit(buttonSubmitCard);
-  api
-    .addCard(item)
+  toggleLoader(true);
+  api.addCard(item)
     .then((res) => {
       addCardForRenderCard([res]);
       popupClassFormCard.close();
     })
     .catch((err) => console.log('Что то с добавлением карточки', err))
-    .finally(() => visualSubmit(buttonSubmitCard));
+    .finally(() => {
+      visualSubmit(buttonSubmitCard)
+      toggleLoader(false);
+    });
 }
 
 function setProfile(rendererInfo) {
   // получает ответ с сервера
-  api
-    .getInfoUser()
+  api.getInfoUser()
     .then((info) => {
-      rendererInfo({name: info.name, about: info.about});
-      rendererInfo({avatar: info.avatar, _id: info._id});
+      rendererInfo(info);
     })
     .catch((err) => console.log('Информация пользователя с ошибкой', err));
 }
@@ -196,19 +197,19 @@ const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation(); // включение валидации для карточек
 
 buttonEdit.addEventListener('mousedown', () => {
-  popupClassFormProfile.open();
   inputName.value = showProfileForm.name.textContent;
   inputJob.value = showProfileForm.about.textContent;
   setTimeout(() => inputName.focus(), 100);
+  popupClassFormProfile.open();
 });
 buttonAdd.addEventListener('mousedown', () => {
-  popupClassFormCard.open();
   setTimeout(() => inputPlace.focus(), 100);
+  popupClassFormCard.open();
 });
 profileBlock
   .querySelector(selectorUser.avatar)
   .addEventListener('click', () => {
     // открытие попапа с аватаром
-    popupClassFormAvatar.open();
     setTimeout(() => inputAvatar.focus(), 100);
+    popupClassFormAvatar.open();
   });

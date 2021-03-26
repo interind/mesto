@@ -7,6 +7,7 @@
   justify-content: center;
   gap: 18px;
   background-color: #000;
+  min-height: 50vh;
 }
 
 @media screen and (max-width: 881px) {

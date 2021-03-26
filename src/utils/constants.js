@@ -41,3 +41,4 @@ export const buttonSubmitAvatar = formAvatar.querySelector(
   '.popup__button-submit'
 );
 export const idTemplateCard = '#card';
+export const loader = document.querySelector('.loader');
