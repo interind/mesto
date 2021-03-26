@@ -1,39 +1,39 @@
 'use strict';
-import './index.css';
+import Section from '../components/Section.js';
+import { Api } from '../components/Api.js';
 import { Card } from '../components/Card.js';
-import { FormValidator } from '../components/FormValidator.js';
-import { templateFormSelector } from '../utils/templateFormSelector.js';
+import { UserInfo } from '../components/UserInfo.js';
 import { visualSubmit } from '../utils/utils.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { PopupSubmit } from '../components/PopupSubmit.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
-  configApi,
   userMe,
+  loader,
   newCards,
-  profileAvatar,
-  selectorPopupForm,
-  profileBlock,
-  formAvatar,
-  inputAvatar,
-  formProfile,
   formCard,
+  inputJob,
+  configApi,
+  addAvatar,
+  buttonAdd,
+  inputName,
+  formAvatar,
   inputPlace,
   buttonEdit,
-  buttonAdd,
-  containerCards,
+  formProfile,
+  inputAvatar,
   selectorUser,
-  buttonSubmitProfile,
-  buttonSubmitCard,
-  buttonSubmitAvatar,
+  profileAvatar,
+  containerCards,
   idTemplateCard,
-  inputName,
-  inputJob,
-  loader,
+  buttonSubmitCard,
+  selectorPopupForm,
+  buttonSubmitAvatar,
+  buttonSubmitProfile,
 } from '../utils/constants.js';
-import Section from '../components/Section.js';
-import { PopupWithImage } from '../components/PopupWithImage.js';
-import { PopupWithForm } from '../components/PopupWithForm.js';
-import { PopupSubmit } from '../components/PopupSubmit.js';
-import { UserInfo } from '../components/UserInfo.js';
-import { Api } from '../components/Api.js';
+import './index.css';
 
 const api = new Api(configApi, userMe, newCards);
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
@@ -50,7 +50,7 @@ function formRenderAvatar(item) {
   api
     .updateUserAvatar(item)
     .then((info) => {
-      userInfo.setUserInfo({avatar: info.avatar, _id: info._id});
+      userInfo.setUserInfo(info);
       popupClassFormAvatar.close();
     })
     .catch((err) => console.log('Ошибка в данных профиля', err))
@@ -63,7 +63,7 @@ function formRenderProfile(item) {
   api
     .updateUserInfo(item)
     .then((res) => {
-      userInfo.setUserInfo({name: res.name, about: res.about});
+      userInfo.setUserInfo(res);
       popupClassFormProfile.close();
     })
     .catch((err) => console.log('Ошибка в данных профиля', err))
@@ -79,16 +79,6 @@ const cardDeleteLike = (...arg) => {
     .deleteLike(...arg)
     .catch((err) => console.log('Ошибка удаления лайка', err));
 };
-
-function setCards(renderer) {
-  toggleLoader(true)
-  api.getInfoCards()
-    .then((res) => {
-      renderer(res[0]);
-    })
-    .catch((err) => console.log('Что то с загрузкой карточек', err))
-    .finally(() => toggleLoader(false));
-}
 
 const addCardForRenderCard = (...arg) => formRenderCards(...arg);
 
@@ -107,19 +97,18 @@ function renderCards(item) {
       toggleLoader(false);
     });
 }
-
-function setProfile(rendererInfo) {
-  // получает ответ с сервера
-  api.getInfoUser()
-    .then((info) => {
-      rendererInfo(info);
+function setInfoAll(rendererUser, renderCards) {
+  toggleLoader(true)
+  Promise.all([api.getInfoUser(), api.getInfoCards()])
+    .then(([users, cards]) => {
+      rendererUser(users);
+      renderCards(cards);
     })
-    .catch((err) => console.log('Информация пользователя с ошибкой', err));
+    .catch((err) => console.log('Данные с ошибкой', err))
+    .finally(() => toggleLoader(false));
 }
 
-setProfile(setUserInfo); // получает ответ с сервера
-
-setCards(formRenderCards); // получает ответ с сервера
+setInfoAll(setUserInfo, formRenderCards); // получает ответ с сервера
 
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
@@ -196,20 +185,21 @@ formAvatarValidation.enableValidation();
 const formCardValidation = new FormValidator(templateFormSelector, formCard);
 formCardValidation.enableValidation(); // включение валидации для карточек
 
-buttonEdit.addEventListener('mousedown', () => {
+function editInfoUser() {
   inputName.value = showProfileForm.name.textContent;
   inputJob.value = showProfileForm.about.textContent;
   setTimeout(() => inputName.focus(), 100);
   popupClassFormProfile.open();
-});
-buttonAdd.addEventListener('mousedown', () => {
+}
+function addPlaceCard() {
   setTimeout(() => inputPlace.focus(), 100);
   popupClassFormCard.open();
-});
-profileBlock
-  .querySelector(selectorUser.avatar)
-  .addEventListener('click', () => {
-    // открытие попапа с аватаром
-    setTimeout(() => inputAvatar.focus(), 100);
-    popupClassFormAvatar.open();
-  });
+}
+
+function editAvatarLink() {
+  setTimeout(() => inputAvatar.focus(), 100);
+  popupClassFormAvatar.open();
+}
+buttonEdit.addEventListener('mousedown', editInfoUser);
+buttonAdd.addEventListener('mousedown', addPlaceCard);
+addAvatar.addEventListener('click', editAvatarLink);

@@ -26,7 +26,6 @@ export class Api {
       },
     })
       .then(this.getResponse)
-      .then((res) => JSON.parse(JSON.stringify([res])));
   }
 
   updateUserInfo(userInfo) {

@@ -42,3 +42,4 @@ export const buttonSubmitAvatar = formAvatar.querySelector(
 );
 export const idTemplateCard = '#card';
 export const loader = document.querySelector('.loader');
+export const addAvatar = profileBlock.querySelector(selectorUser.avatar);

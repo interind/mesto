@@ -7,6 +7,7 @@
   max-width: 882px;
   width: 100%;
   min-width: 282px;
+  user-select: none;
 }
 
 @media screen and (max-width: 898px) {
