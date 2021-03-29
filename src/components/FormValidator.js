@@ -9,10 +9,6 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-
     this._inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
@@ -26,16 +22,10 @@ export class FormValidator {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-      });
-      inputElement.addEventListener('input', () => {
         this._toggleButtonState();
       });
-
       inputElement.addEventListener('focus', () => {
         this._toggleButtonState();
-      });
-
-      inputElement.addEventListener('focus', () => {
         this._clearError();
       });
     });
