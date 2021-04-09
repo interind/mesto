@@ -2,7 +2,6 @@ import Popup from './Popup.js';
 export class PopupSubmit extends Popup {
   constructor(deleteCard, popupSelector) {
     super(popupSelector);
-    this._popup = document.querySelector(this._popupSelector);
     this._form = document.forms.formTrash;
     this._deleteCard = deleteCard;
   }

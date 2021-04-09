@@ -3,7 +3,6 @@ export class PopupWithForm extends Popup {
   constructor(popupSelector, callbackSubmit) {
     super(popupSelector);
     this._callbackSubmit = callbackSubmit;
-    this._popup = document.querySelector(this._popupSelector);
     this.form = this._popup.querySelector('.popup__container');
     this._inputList = Array.from(this.form.querySelectorAll('.popup__input'));
     this._submit = this._submit.bind(this);
