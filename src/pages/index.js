@@ -25,7 +25,6 @@ import {
   formProfile,
   inputAvatar,
   selectorUser,
-  profileAvatar,
   containerCards,
   idTemplateCard,
   buttonSubmitCard,
@@ -127,13 +126,14 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   formRenderAvatar
 );
 
-const handleDeleteCardClick = (id, elementRemove) => {
+const handleDeleteCardClick = (card) => {
   const removalCard = (evt) => {
     evt.preventDefault();
+    debugger;
     api
-      .deleteCard(id)
+      .deleteCard(card.cardId)
       .then(() => {
-        elementRemove.style.display = 'none';
+        card.remove();
       })
       .catch((err) => console.log('Карточка осталась', err))
       .finally(() => popupSubmitDeleteCard.close());
@@ -148,7 +148,7 @@ const handleDeleteCardClick = (id, elementRemove) => {
 
 function formRenderCards(initialCardValues) {
   // функция получает данные с сервера
-  const id = profileAvatar.id;
+  const id = userInfo.getID;
   const section = new Section(
     {
       renderer: (item) => {
@@ -156,7 +156,7 @@ function formRenderCards(initialCardValues) {
           item,
           idTemplateCard,
           popupWithImage,
-          handleDeleteCardClick,
+          () => handleDeleteCardClick(cardElement),
           addCardLike,
           cardDeleteLike,
           id
@@ -200,6 +200,7 @@ function editAvatarLink() {
   setTimeout(() => inputAvatar.focus(), 100);
   popupClassFormAvatar.open();
 }
+
 buttonEdit.addEventListener('mousedown', editInfoUser);
 buttonAdd.addEventListener('mousedown', addPlaceCard);
 addAvatar.addEventListener('click', editAvatarLink);

@@ -10,14 +10,22 @@ export class UserInfo {
   getUserInfo() {
     return { name: this._user, about: this._job};
   }
+
+  get getID() {
+    return this.myID;
+  }
+
+  set setId(id) {
+    this.myID = id;
+  }
   setUserInfo({
     name = this._user.textContent,
     about = this._job.textContent,
     avatar = this._avatar.style.backgroundImage,
-    _id = this._avatar.id,
+    _id = this.getID,
   }) {
       this._avatar.style.backgroundImage = `url(${avatar})`;
-      this._avatar.id = _id;
+      this.setId = _id;
       this._user.textContent = name;
       this._user.title = name;
       this._job.textContent = about;

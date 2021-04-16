@@ -32,6 +32,7 @@ export class Card {
 
   generateCard() {
     this._element.id = this._ownerID._id;
+    this._element.cardId = this._id;
     imagesCheck(this._image)
       .then((link) => this._imageCard.src = link)
       .catch((err) => this._imageCard.src = err);
@@ -51,9 +52,7 @@ export class Card {
     if (this._myId === this._ownerID._id) {
       // проверка есть ли мои лайки
       this._buttonTrash.classList.toggle('element__button-trash_hidden');
-      this._buttonTrash.addEventListener('click', () => {
-        this._handleDeleteCardClick(this._id, this._element);
-      });
+      this._buttonTrash.addEventListener('click', this._handleDeleteCardClick);
     }
     this._element.addEventListener('click', (evt) => {
       this._zoom(evt);
