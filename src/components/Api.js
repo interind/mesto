@@ -72,19 +72,9 @@ export class Api {
       .then(this.getResponse)
   }
 
-  addLike(infoId) {
+  handleLikeCardClick(infoId, isLiked) {
     return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
-      method: 'PUT',
-      headers: {
-        authorization: `${this._token}`,
-        'Content-Type': 'application/json',
-      },
-    }).then(this.getResponse);
-  }
-
-  deleteLike(infoId) {
-    return fetch(`${this._url}${this._cards}/likes/${infoId}`, {
-      method: 'DELETE',
+      method: isLiked ? 'DELETE' : 'PUT',
       headers: {
         authorization: `${this._token}`,
         'Content-Type': 'application/json',

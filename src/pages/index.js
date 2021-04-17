@@ -36,7 +36,6 @@ import './index.css';
 
 const api = new Api(configApi, userMe, newCards);
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
-const createCard = (...arg) => new Card(...arg);
 const userInfo = new UserInfo(selectorUser);
 const setUserInfo = (...arg) => userInfo.setUserInfo(...arg);
 
@@ -68,16 +67,6 @@ function formRenderProfile(item) {
     .catch((err) => console.log('Ошибка в данных профиля', err))
     .finally(() => visualSubmit(buttonSubmitProfile));
 }
-
-const addCardLike = (...arg) => {
-  api.addLike(...arg).catch((err) => console.log('Ошибка нового лайка', err));
-};
-
-const cardDeleteLike = (...arg) => {
-  api
-    .deleteLike(...arg)
-    .catch((err) => console.log('Ошибка удаления лайка', err));
-};
 
 const addCardForRenderCard = (...arg) => formRenderCards(...arg);
 
@@ -129,7 +118,6 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
 const handleDeleteCardClick = (card) => {
   const removalCard = (evt) => {
     evt.preventDefault();
-    debugger;
     api
       .deleteCard(card.cardId)
       .then(() => {
@@ -138,7 +126,6 @@ const handleDeleteCardClick = (card) => {
       .catch((err) => console.log('Карточка осталась', err))
       .finally(() => popupSubmitDeleteCard.close());
   };
-  // удаление карточки
   const popupSubmitDeleteCard = new PopupSubmit(
     removalCard,
     selectorPopupForm.trash
@@ -147,21 +134,25 @@ const handleDeleteCardClick = (card) => {
 };
 
 function formRenderCards(initialCardValues) {
-  // функция получает данные с сервера
   const id = userInfo.getID;
   const section = new Section(
     {
       renderer: (item) => {
-        const cardElement = createCard(
+        const card = new Card(
           item,
           idTemplateCard,
           popupWithImage,
-          () => handleDeleteCardClick(cardElement),
-          addCardLike,
-          cardDeleteLike,
+          {
+            handleDeleteCardClick: () => handleDeleteCardClick(card.generateCard()),
+            handleLikeCardClick: () => {
+              api.handleLikeCardClick(card._id, card.isLiked())
+                .then((data) => card.setLike(data))
+                .catch((err) => console.log(err));
+            },
+          },
           id
-        ).generateCard();
-        section.addItem(cardElement, id);
+        );
+        section.addItem(card.generateCard(), id);
       },
     },
     containerCards
