@@ -68,36 +68,6 @@ function formRenderProfile(item) {
     .finally(() => visualSubmit(buttonSubmitProfile));
 }
 
-const addCardForRenderCard = (...arg) => formRenderCards(...arg);
-
-function renderCards(item) {
-  // запрос на новую карточку
-  visualSubmit(buttonSubmitCard);
-  toggleLoader(true);
-  api.addCard(item)
-    .then((res) => {
-      addCardForRenderCard([res]);
-      popupClassFormCard.close();
-    })
-    .catch((err) => console.log('Что то с добавлением карточки', err))
-    .finally(() => {
-      visualSubmit(buttonSubmitCard)
-      toggleLoader(false);
-    });
-}
-function setInfoAll(rendererUser, renderCards) {
-  toggleLoader(true)
-  Promise.all([api.getInfoUser(), api.getInfoCards()])
-    .then(([users, cards]) => {
-      rendererUser(users);
-      renderCards(cards);
-    })
-    .catch((err) => console.log('Данные с ошибкой', err))
-    .finally(() => toggleLoader(false));
-}
-
-setInfoAll(setUserInfo, formRenderCards); // получает ответ с сервера
-
 const showProfileForm = userInfo.getUserInfo(); // получение данных профиля со страницы
 
 
@@ -114,6 +84,9 @@ const popupClassFormAvatar = new PopupWithForm( // форма аватарки
   selectorPopupForm.avatar,
   formRenderAvatar
 );
+
+const myId = null;
+const createSection = new Section({renderer: (data) => createSection.addItem(createCards(data), false)}, containerCards);
 
 const handleDeleteCardClick = (card) => {
   const removalCard = (evt) => {
@@ -133,32 +106,22 @@ const handleDeleteCardClick = (card) => {
   popupSubmitDeleteCard.open();
 };
 
-function formRenderCards(initialCardValues) {
-  const id = userInfo.getID;
-  const section = new Section(
+function createCards(item) {
+  const card = new Card(
+    item,
+    idTemplateCard,
+    popupWithImage,
     {
-      renderer: (item) => {
-        const card = new Card(
-          item,
-          idTemplateCard,
-          popupWithImage,
-          {
-            handleDeleteCardClick: () => handleDeleteCardClick(card.generateCard()),
-            handleLikeCardClick: () => {
-              api.handleLikeCardClick(card._id, card.isLiked())
-                .then((data) => card.setLike(data))
-                .catch((err) => console.log(err));
-            },
-          },
-          id
-        );
-        section.addItem(card.generateCard(), id);
+      handleDeleteCardClick: () => handleDeleteCardClick(card.generateCard()),
+      handleLikeCardClick: () => {
+        api.handleLikeCardClick(card._id, card.isLiked())
+          .then((data) => card.setLike(data))
+          .catch((err) => console.log(err));
       },
+      myId: userInfo.getID,
     },
-    containerCards
   );
-
-  section.renderItems(initialCardValues);
+  return card.generateCard();
 }
 
 const formProfileValidation = new FormValidator(
@@ -191,6 +154,34 @@ function editAvatarLink() {
   setTimeout(() => inputAvatar.focus(), 100);
   popupClassFormAvatar.open();
 }
+
+function renderCards(item) {
+  // запрос на новую карточку
+  visualSubmit(buttonSubmitCard);
+  toggleLoader(true);
+  api.addCard(item)
+    .then((res) => {
+      createSection.addItem(createCards(res), true);
+      popupClassFormCard.close();
+    })
+    .catch((err) => console.log('Что то с добавлением карточки', err))
+    .finally(() => {
+      visualSubmit(buttonSubmitCard)
+      toggleLoader(false);
+    });
+}
+function setInfoAll() {
+  toggleLoader(true)
+  Promise.all([api.getInfoUser(), api.getInfoCards()])
+    .then(([users, cards]) => {
+      setUserInfo(users);
+      createSection.renderItems(cards);
+    })
+    .catch((err) => console.log('Данные с ошибкой', err))
+    .finally(() => toggleLoader(false));
+}
+
+setInfoAll(); // получает ответ с сервера
 
 buttonEdit.addEventListener('mousedown', editInfoUser);
 buttonAdd.addEventListener('mousedown', addPlaceCard);

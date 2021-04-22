@@ -8,8 +8,8 @@ export class Card {
     {
       handleDeleteCardClick,
       handleLikeCardClick,
+      myId,
     },
-    idMy
   ) {
     this._cardElement = document.querySelector(idTemplateCard).content;
     this._text = data.name;
@@ -17,7 +17,7 @@ export class Card {
     this.likes = data.likes;
     this._id = data._id;
     this._ownerID = data.owner;
-    this._myId = idMy;
+    this._myId = myId;
     this._handleCardClick = handleCardClick;
     this.handleDeleteCardClick = handleDeleteCardClick.bind(this);
     this.handleLikeCardClick = handleLikeCardClick.bind(this);
