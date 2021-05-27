@@ -3,6 +3,7 @@ export const selectorUser = {
   job: '.profile__subtitle',
   avatar: '.profile__avatar',
 };
+export let spanYear = document.querySelector('[data-span="year"]');
 export const configApi = {
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/',
   token: 'bba27b67-a97d-4fd9-b42d-01c5b1258337',

@@ -10,6 +10,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { templateFormSelector } from '../utils/templateFormSelector.js';
 import {
+  spanYear,
   userMe,
   loader,
   newCards,
@@ -33,7 +34,7 @@ import {
   buttonSubmitProfile,
 } from '../utils/constants.js';
 import './index.css';
-
+spanYear.textContent = new Date().getFullYear();
 const api = new Api(configApi, userMe, newCards);
 const popupWithImage = new PopupWithImage(selectorPopupForm.zoom);
 const userInfo = new UserInfo(selectorUser);
